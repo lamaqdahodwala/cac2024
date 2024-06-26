@@ -9,3 +9,24 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Course {
+  id      Int      @id @default(autoincrement())
+  lessons Lesson[]
+  title   String
+}
+
+model Lesson {
+  id         Int         @id @default(autoincrement())
+  paragraphs Paragraph[]
+  inCourse   Course      @relation(fields: [courseId], references: [id])
+  courseId   Int
+  title      String
+}
+
+model Paragraph {
+  id          Int    @id @default(autoincrement())
+  lesson      Lesson @relation(fields: [lessonId], references: [id])
+  textContent String
+  lessonId    Int
+}
