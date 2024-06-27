@@ -1,4 +1,4 @@
-import type { RequestEvent, RequestHandler } from "@sveltejs/kit"
+import { json, type RequestEvent, type RequestHandler } from "@sveltejs/kit"
 
 export interface RouteImplementation {
   call(props: object): Promise< object >
@@ -18,6 +18,14 @@ export class APIRoute implements Route {
       return await this.imp.call(
         this.props.getProps(event)
       )
+  }
+
+  createAPIRoute() {
+    let route: RequestHandler  = async (event) => {
+      return json(await this.callRoute(event))
+    }  
+
+    return route
   }
 }
 
