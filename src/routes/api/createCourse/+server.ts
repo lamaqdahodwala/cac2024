@@ -1,3 +1,3 @@
 import { route } from "./CreateCourse";
 
-export const GET = route.createAPIRoute()
+export const POST = route.createAPIRoute()
