@@ -1,4 +1,3 @@
-export interface RouteImplementation {
-    call(props: Record<string, any>): Promise<any>;
+export interface RouteImplementation<TProps, TResult> {
+    call(props: TProps): Promise<TResult>;
 }
-
