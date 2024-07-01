@@ -4,7 +4,7 @@ import { MultiProp } from '$lib/helpers/MultiProp';
 import type { PrismaClient } from '@prisma/client';
 import { error, type RequestEvent } from '@sveltejs/kit';
 
-class CreateCourse implements RouteImplementation {
+export class CreateCourse implements RouteImplementation {
 	async call(props: { prisma: PrismaClient; courseTitle: string }): Promise<object> {
 		return await props.prisma.course.create({
 			data: {
@@ -14,7 +14,7 @@ class CreateCourse implements RouteImplementation {
 	}
 }
 
-class CreateCourseProps implements PropGetter {
+export class CreateCourseProps implements PropGetter {
 	async getProps(event: RequestEvent): Promise<object> {
 		let json = await event.request.json();
 

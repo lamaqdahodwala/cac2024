@@ -16,7 +16,7 @@ export class APIRoute implements Route {
   constructor(private props: PropGetter, private imp: RouteImplementation){}
   async callRoute(event: RequestEvent): Promise<object> {
       return await this.imp.call(
-        this.props.getProps(event)
+        await this.props.getProps(event)
       )
   }
 
