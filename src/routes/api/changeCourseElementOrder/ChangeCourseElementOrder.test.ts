@@ -33,14 +33,14 @@ describe('ChangeCourseElementOrder', () => {
 		event.request.json.mockResolvedValueOnce({ courseId: "123", lessonId: "2", index: 0 });
 
 		let updatedCourse = {
-			...fakeCourse,
+      id: 123,
+      title: "Test Course",
 			lessons: [
 				{ id: 2, courseId: 123, title: "Lesson2" },
 				{ id: 1, courseId: 123, title: "Lesson1" }
 			]
 		};
-		prismaMock.course.update.mockResolvedValueOnce(updatedCourse);
 
-		expect(apiRoute.callRoute(event)).resolves.toBe(updatedCourse);
+		expect(apiRoute.callRoute(event)).resolves.toStrictEqual(updatedCourse);
 	});
 });
