@@ -14,6 +14,9 @@ model Course {
   id      Int      @id @default(autoincrement())
   lessons Lesson[]
   title   String
+  writer User @relation(fields: [writerId], references: [id])
+  writerId String
+
 }
 
 model Lesson {
@@ -41,6 +44,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   lessonsCompleted Lesson[]
+  written Course[]
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
