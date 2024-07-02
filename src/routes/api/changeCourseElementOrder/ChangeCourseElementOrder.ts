@@ -3,7 +3,7 @@ import { APIRoute } from '$lib/abstract/APIRoute';
 import { PrismaProps } from '$lib/generic/PrismaProps';
 import { MultiProp } from '$lib/helpers/MultiProp';
 import type { PrismaClient } from '@prisma/client';
-import type { RequestEvent } from '@sveltejs/kit';
+import { error, type RequestEvent } from '@sveltejs/kit';
 
 export class ChangeCourseElementOrder implements RouteImplementation {
 	async call(props: {
@@ -17,20 +17,22 @@ export class ChangeCourseElementOrder implements RouteImplementation {
           include: { lessons: true }
         });
       
-        if (!course) throw new Error('Course not found');
+        if (!course) throw error(404, 'Course not found');
         const lessonIndex = course.lessons.findIndex(lesson => lesson.id === Number(props.lessonId));
-        if (lessonIndex === -1) throw new Error('Lesson not found in the course');
-        if (props.index < 0 || props.index >= course.lessons.length) throw new Error('Invalid index');
+        if (lessonIndex === -1) throw error(404, 'Lesson not found in the course');
+        if (props.index < 0 || props.index >= course.lessons.length) throw error(400, 'Invalid index');
       
         const orderedLessonArray = course.lessons.map(lesson => ({
           where: { id: lesson.id },
           data: lesson
         }));
       
-        return await props.prisma.course.update({
+        await props.prisma.course.update({
           where: { id: Number(props.courseId) },
           data: { lessons: { updateMany: orderedLessonArray } }
         });
+
+      return orderedLessonArray
       }
 
     }
