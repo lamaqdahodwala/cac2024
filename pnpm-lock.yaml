@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@auth/prisma-adapter':
+        specifier: ^2.4.1
+        version: 2.4.1(@prisma/client@5.16.0(prisma@5.16.0))
       '@auth/sveltekit':
         specifier: ^1.4.1
         version: 1.4.1(@sveltejs/kit@2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1))(svelte@4.2.18)(vite@5.3.1))(svelte@4.2.18)
@@ -92,6 +95,11 @@ packages:
         optional: true
       nodemailer:
         optional: true
+
+  '@auth/prisma-adapter@2.4.1':
+    resolution: {integrity: sha512-VF5IOTHEWHX6WHUxIbsbc12m34cp5T82fzJfi7DmzwBZb89UsoROejV8l0B1dCTZ+pDIS0d4zN9dSa2gIKywNQ==}
+    peerDependencies:
+      '@prisma/client': '>=2.26.0 || >=3 || >=4 || >=5'
 
   '@auth/sveltekit@1.4.1':
     resolution: {integrity: sha512-oIt/eFoYJhsH6Tz625NIfctz5CFxTn1PNrl9FxlDB+S1j4Qli/LRF9hS5Ad24056keKSApXx9o61aQANDsrXLQ==}
@@ -1565,6 +1573,15 @@ snapshots:
       oauth4webapi: 2.11.1
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
+
+  '@auth/prisma-adapter@2.4.1(@prisma/client@5.16.0(prisma@5.16.0))':
+    dependencies:
+      '@auth/core': 0.34.1
+      '@prisma/client': 5.16.0(prisma@5.16.0)
+    transitivePeerDependencies:
+      - '@simplewebauthn/browser'
+      - '@simplewebauthn/server'
+      - nodemailer
 
   '@auth/sveltekit@1.4.1(@sveltejs/kit@2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1))(svelte@4.2.18)(vite@5.3.1))(svelte@4.2.18)':
     dependencies:
