@@ -23,9 +23,13 @@ export class MultiProp {
     return new Temp()
 	}
 
-  static mergeProps(getters: (new () => PropGetter)[]){
-    let first = new getters[0]()
-    let instances = getters.map((value) => new value())
+  static mergeProps(getters: ( (new () => PropGetter) | PropGetter )[]){
+    let instances = getters.map((value) =>{
+      if (typeof value === "function"){
+        return new value()
+      }
+      return value
+    } )
     return MultiProp.merge(instances)
   }
 }
