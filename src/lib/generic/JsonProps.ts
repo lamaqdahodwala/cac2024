@@ -9,5 +9,5 @@ export const jsonProps = (callback: (json: any) => object) => {
     }
   }
 
-  return new Temp()
+  return Temp
 }

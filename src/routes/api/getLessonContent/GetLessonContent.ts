@@ -19,7 +19,7 @@ export class GetLessonContent implements RouteImplementation {
 	}
 }
 
-const GetLessonProps = jsonProps((json) => ({
+export const GetLessonProps = jsonProps((json) => ({
 	lessonId: json.lessonId
 }));
 
