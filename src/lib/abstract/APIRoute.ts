@@ -13,7 +13,25 @@ export interface Route {
 }
 
 export class APIRoute implements Route {
-  constructor(private props: PropGetter, private imp: RouteImplementation){}
+  private props: PropGetter
+  private imp: RouteImplementation
+  constructor(props: PropGetter | (new () => PropGetter), imp: RouteImplementation | (new () => RouteImplementation)){
+    if (typeof props === "function"){
+      this.props = new props()
+    } 
+    else {
+      this.props = props
+    }
+
+    if (typeof imp === "function"){
+      this.imp = new imp()
+    } else {
+      this.imp = imp
+    }
+
+
+
+  }
   async callRoute(event: RequestEvent): Promise<object> {
       return await this.imp.call(
         await this.props.getProps(event)

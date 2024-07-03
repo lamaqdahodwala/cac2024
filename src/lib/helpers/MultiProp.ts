@@ -22,4 +22,10 @@ export class MultiProp {
 
     return new Temp()
 	}
+
+  static mergeProps(getters: (new () => PropGetter)[]){
+    let first = new getters[0]()
+    let instances = getters.map((value) => new value())
+    return MultiProp.merge(instances)
+  }
 }
