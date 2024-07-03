@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { PrismaClient } from '@prisma/client';
 import { error } from '@sveltejs/kit';
+import type { RequestEvent } from './$types';
 
 interface Request {
   json: () => Promise<any>;
@@ -10,7 +11,8 @@ type RequestHandler = (args: { request: Request }) => Promise<any>;
 
 const prisma = new PrismaClient();
 
-export const POST: RequestHandler = async ({ request }: { request: Request }) => {
+export const POST: RequestHandler = async (event) => {
+  let request = event.request
   try {
     const { userId, courseId } = await request.json();
 
@@ -36,3 +38,5 @@ export const POST: RequestHandler = async ({ request }: { request: Request }) =>
         throw error(500, 'Failed to add active course');
     }
 };
+
+
