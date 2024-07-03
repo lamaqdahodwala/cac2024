@@ -41,7 +41,7 @@ To make an actual API route, you need to combine both the PropGetter and the Rou
 
 ```javascript
 
-let route = new APIRoute(new ExampleProps(), new ExampleRoute())
+let route = new APIRoute(ExampleProps, ExampleRoute)
 
 ```
 This makes the experience very flexible, as you can simply pick and choose what props and what implementation you want, and reusing them is a breeze. 
