@@ -44,4 +44,18 @@ describe('MultiProp', () => {
         value: 1
     })
   })
+
+  it("can handle references to classes instead of an actual instance", async() => {
+    let newClass = MultiProp.mergeProps([TestingPropGetter1, TestingPropGetter1])
+    expect(newClass.getProps(event)).resolves.toEqual({
+        value: 1
+    })
+  })
+
+  it("can mix and match references to classes and class instances", async() => {
+    let newClass = MultiProp.mergeProps([TestingPropGetter1, new TestingPropGetter1()])
+    expect(newClass.getProps(event)).resolves.toEqual({
+        value: 1
+    })
+  })
 });
