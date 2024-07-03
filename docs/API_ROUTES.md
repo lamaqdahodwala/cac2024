@@ -61,3 +61,15 @@ new APIRoute(MultiProp.merge([new GetUserProps(), new GetFormDataProps()]), Exam
 ```
 
 There are also some prebuilt generic PropGetters that are waiting to be merged, such as `PrismaProps`, which adds a PrismaClient instance to the available props. All generics can be found in the src/lib/generic folder
+
+#### MultiProp.mergeClasses()
+
+This method takes in a list of _references_ to classes, and will instantiate them. This is to avoid the repetitive `new` syntax that comes with instantiating classes. It works the same as `merge` otherwise
+
+```
+MultiProp.merge([GetUserProps, GetFormDataProps])
+```
+
+##### jsonProps
+
+Many prop classes don't have much in the way of logic, and at a certain point writing them becomes tedious. To help, the jsonProps() function exists. It takes in a callback with a parameter of json, and a return value of the props you want. This function will create a class and write all the boilerplate for you.
