@@ -20,6 +20,9 @@ importers:
       prisma:
         specifier: ^5.16.0
         version: 5.16.0
+      svelte-add:
+        specifier: ^2.3.3
+        version: 2.3.3
       vitest-mock-extended:
         specifier: ^1.3.1
         version: 1.3.1(typescript@5.5.2)(vitest@1.6.0)
@@ -73,7 +76,7 @@ importers:
         specifier: ^5.0.3
         version: 5.3.1
       vitest:
-        specifier: ^1.2.0
+        specifier: ^1.6.0
         version: 1.6.0
 
 packages:
@@ -435,6 +438,18 @@ packages:
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
+
+  '@svelte-add/ast-manipulation@2.1.4':
+    resolution: {integrity: sha512-7IwH6RSrM3Gy2imHHFK2fsbPTo7VvwXKuPfFQK+dmu9aKNyVfyBgd7ZqdCAO6ZUP5ox51eYiHvL52S/LiBerAA==}
+
+  '@svelte-add/ast-tooling@2.1.3':
+    resolution: {integrity: sha512-dcOkwF81jF5TfIiSnbyU9mjWGVwrAPdbLs0gi/dRswMjDN0y+VR7s3ADzdwNVI4zBCh2vEfiJe7i0Y75RJ8ITA==}
+
+  '@svelte-add/config@1.1.1':
+    resolution: {integrity: sha512-3oyvaUmRDo7a8jP+Cf3oX7zF7+GmeKQG/ftkL+cVOTHwmJVrOxCXX0JoibKknFZ7Df5Qmvu6jGDjbAdqKtNOuw==}
+
+  '@svelte-add/core@2.8.3':
+    resolution: {integrity: sha512-hl00dynBIKdsVDQk8aAkLraGEIHSBDbHe2MiGTD8o3j8gjGEHcHgqmvT14/L5XbAYzTIMkKqYD668AFGeGOtKg==}
 
   '@sveltejs/adapter-auto@3.2.2':
     resolution: {integrity: sha512-Mso5xPCA8zgcKrv+QioVlqMZkyUQ5MjDJiEPuG/Z7cV/5tmwV7LmcVWk5tZ+H0NCOV1x12AsoSpt/CwFwuVXMA==}
@@ -1321,6 +1336,10 @@ packages:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
 
+  svelte-add@2.3.3:
+    resolution: {integrity: sha512-zRlGWsxxEQrB/167+z9YNGqX+ysAfVpha41IZ8jj179xQHpKoUikYVkzi/jEkCKKQPBqjzyIVOi2O83ILK9UbQ==}
+    hasBin: true
+
   svelte-check@3.8.4:
     resolution: {integrity: sha512-61aHMkdinWyH8BkkTX9jPLYxYzaAAz/FK/VQqdr2FiCQQ/q04WCwDlpGbHff1GdrMYTmW8chlTFvRWL9k0A8vg==}
     hasBin: true
@@ -1807,6 +1826,19 @@ snapshots:
     optional: true
 
   '@sinclair/typebox@0.27.8': {}
+
+  '@svelte-add/ast-manipulation@2.1.4':
+    dependencies:
+      '@svelte-add/ast-tooling': 2.1.3
+
+  '@svelte-add/ast-tooling@2.1.3': {}
+
+  '@svelte-add/config@1.1.1': {}
+
+  '@svelte-add/core@2.8.3':
+    dependencies:
+      '@svelte-add/ast-manipulation': 2.1.4
+      '@svelte-add/ast-tooling': 2.1.3
 
   '@sveltejs/adapter-auto@3.2.2(@sveltejs/kit@2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1))(svelte@4.2.18)(vite@5.3.1))':
     dependencies:
@@ -2744,6 +2776,11 @@ snapshots:
   supports-color@7.2.0:
     dependencies:
       has-flag: 4.0.0
+
+  svelte-add@2.3.3:
+    dependencies:
+      '@svelte-add/config': 1.1.1
+      '@svelte-add/core': 2.8.3
 
   svelte-check@3.8.4(postcss-load-config@3.1.4(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18):
     dependencies:
