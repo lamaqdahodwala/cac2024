@@ -67,7 +67,7 @@ There are also some prebuilt generic PropGetters that are waiting to be merged, 
 This method takes in a list of _references_ to classes, and will instantiate them. This is to avoid the repetitive `new` syntax that comes with instantiating classes. It works the same as `merge` otherwise
 
 ```
-MultiProp.merge([GetUserProps, GetFormDataProps])
+MultiProp.mergeClasses([GetUserProps, GetFormDataProps])
 ```
 
 ##### jsonProps
