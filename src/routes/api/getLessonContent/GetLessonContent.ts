@@ -24,5 +24,6 @@ const GetLessonProps = jsonProps((json) => ({
 }));
 
 export const route = new APIRoute(
-  MultiProp.mergeProps([PrismaProps, GetLessonProps])
+  MultiProp.mergeProps([PrismaProps, GetLessonProps]),
+  GetLessonContent
 )
