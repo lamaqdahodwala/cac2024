@@ -56,9 +56,12 @@ export class GetNextLessonInCourseProps implements PropGetter {
 	}
 }
 
-export const GetNextLessonProps = searchParamProps((params) => ({
-	courseId: params.get('courseId')
-}));
+export const GetNextLessonProps = searchParamProps(
+	(params) => ({
+		courseId: params.get('courseId')
+	}),
+	{ checkForNull: true }
+);
 
 export const route = new APIRoute(
 	MultiProp.merge([new PrismaProps(), new AuthProps(), new GetNextLessonInCourseProps()]),

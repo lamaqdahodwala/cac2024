@@ -21,13 +21,10 @@ export class GetLessonContent implements RouteImplementation {
 }
 
 export const GetLessonProps = searchParamProps((json) => {
-  let id = json.get("lessonId")
-
-  if (!id) throw error(400, "Provide a lesson ID")
 	return {
-		lessonId: id
+		lessonId: json.get("lessonId")
 	};
-});
+}, {checkForNull: true});
 
 export const route = new APIRoute(
 	MultiProp.mergeProps([PrismaProps, GetLessonProps]),
