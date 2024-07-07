@@ -1,4 +1,5 @@
 import type { PropGetter } from '$lib/abstract/APIRoute';
+import { prisma } from '$lib/db';
 import { error, type RequestEvent } from '@sveltejs/kit';
 
 export class AuthProps implements PropGetter {
@@ -10,8 +11,15 @@ export class AuthProps implements PropGetter {
 			throw error(403, 'Forbidden, please log in');
 		}
 
+    let userRole = await prisma.user.findUnique({
+      where: {
+        id: user.id
+      }
+    })
+
 		return {
-			user
+			...user,
+      role: userRole?.role
 		};
 	}
 }
