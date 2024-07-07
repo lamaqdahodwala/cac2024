@@ -43,6 +43,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   activeCourses Course[] @relation("ActiveCourses")
+  role String @default("user")
 }
  
 model Account {
