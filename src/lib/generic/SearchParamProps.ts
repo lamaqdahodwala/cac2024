@@ -1,14 +1,13 @@
 import type { PropGetter } from '$lib/abstract/APIRoute';
 import { error, type RequestEvent } from '@sveltejs/kit';
 
-export const jsonProps = (callback: (json: any) => object, config?: { checkForNull: boolean }) => {
+export const searchParamProps = (callback: (params: URLSearchParams) => object, config?: {checkForNull: boolean}) => {
 	class Temp implements PropGetter {
 		async getProps(event: RequestEvent): Promise<object> {
-			let json = await event.request.json();
-			let data = callback(json);
+			let params = event.url.searchParams;
+      let data = callback( params );
 
-			if (!config?.checkForNull) return data;
-
+      if (!config?.checkForNull) return data
 
 			let values = Object.entries(data);
 
@@ -21,6 +20,5 @@ export const jsonProps = (callback: (json: any) => object, config?: { checkForNu
 			return data;
 		}
 	}
-
 	return Temp;
 };

@@ -1,6 +1,7 @@
 import { APIRoute, type PropGetter, type RouteImplementation } from '$lib/abstract/APIRoute';
 import { AuthProps } from '$lib/generic/AuthProps';
 import { PrismaProps } from '$lib/generic/PrismaProps';
+import { searchParamProps } from '$lib/generic/SearchParamProps';
 import { MultiProp } from '$lib/helpers/MultiProp';
 import type { User } from '@auth/sveltekit';
 import type { PrismaClient } from '@prisma/client';
@@ -44,9 +45,8 @@ export class GetNextLessonInCourse implements RouteImplementation {
 
 export class GetNextLessonInCourseProps implements PropGetter {
 	async getProps(event: RequestEvent): Promise<object> {
-		let json = await event.request.json();
-
-		let courseId = json?.courseId;
+		let json = event.url.searchParams;
+		let courseId = json.get('courseId');
 
 		if (!courseId) throw error(400, 'Provide a course ID');
 
@@ -56,7 +56,14 @@ export class GetNextLessonInCourseProps implements PropGetter {
 	}
 }
 
+export const GetNextLessonProps = searchParamProps(
+	(params) => ({
+		courseId: params.get('courseId')
+	}),
+	{ checkForNull: true }
+);
+
 export const route = new APIRoute(
-  MultiProp.merge([new PrismaProps(), new AuthProps(), new GetNextLessonInCourseProps()]),
-  new GetNextLessonInCourse()
-)
+	MultiProp.merge([new PrismaProps(), new AuthProps(), new GetNextLessonInCourseProps()]),
+	new GetNextLessonInCourse()
+);
