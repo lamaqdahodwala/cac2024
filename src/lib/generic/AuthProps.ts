@@ -19,7 +19,7 @@ export class AuthProps implements PropGetter {
 
 		return {
 			...user,
-      role: userRole?.role
+      userRole: userRole?.role
 		};
 	}
 }
