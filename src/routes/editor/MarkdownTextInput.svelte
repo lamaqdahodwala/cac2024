@@ -7,5 +7,7 @@
 <textarea class="textarea" placeholder="Type your lesson here..." bind:value={rawContent}></textarea>
 
 <hr>
-{@html marked(rawContent)}
 
+<div class="content">
+  {@html marked(rawContent)}
+</div>
