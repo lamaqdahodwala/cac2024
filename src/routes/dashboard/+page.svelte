@@ -212,7 +212,7 @@
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title">
-                        Welcome to AI Blocks Clone
+                        Welcome to BrainBlox
                     </h1>
                     <h2 class="subtitle">
                         Your journey into the world of Artificial Intelligence starts here!
