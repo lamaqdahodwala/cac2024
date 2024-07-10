@@ -1,12 +1,12 @@
 <script lang="ts">
-  import "bulma/css/bulma.min.css"
 	import { onMount } from 'svelte';
 	import { fade, fly, slide, scale } from 'svelte/transition';
-	import { elasticOut } from 'svelte/easing';
+	import { elasticOut, backOut } from 'svelte/easing';
 	import { page } from '$app/stores';
   
 	let isNavVisible = true;
 	let activeSection: string | null = null;
+	let activeCategory: string | null = null;
 	let searchQuery = '';
 	let isSearchOpen = false;
 	let progressBar: HTMLElement | null = null;
@@ -20,9 +20,65 @@
 	  children?: NavItem[];
 	};
   
+	type Course = {
+	  name: string;
+	  href: string;
+	  icon: string;
+	  color: string;
+	};
+  
+	type Category = {
+	  name: string;
+	  courses: Course[];
+	  color: string;
+	};
+  
+	const categories: Category[] = [
+	  { 
+		name: 'MLExpert', 
+		color: '#FF6B6B',
+		courses: [
+		  { name: 'ML Content Index', href: '/courses/mlexpert/ml-content-index', icon: '📚', color: '#FF9FF3' },
+		  { name: 'ML Crash Course', href: '/courses/mlexpert/ml-crash-course', icon: '🚀', color: '#54A0FF' },
+		  { name: 'ML Coding Questions', href: '/courses/mlexpert/ml-coding-questions', icon: '💻', color: '#5CD859' },
+		  { name: 'Large-Scale ML', href: '/courses/mlexpert/large-scale-ml', icon: '🌐', color: '#FFA502' },
+		  { name: 'ML Design Questions', href: '/courses/mlexpert/ml-design-questions', icon: '🎨', color: '#FF6B6B' },
+		  { name: 'ML Quiz', href: '/courses/mlexpert/ml-quiz', icon: '❓', color: '#1DD1A1' },
+		  { name: 'ML Interview Tips', href: '/courses/mlexpert/ml-interview-tips', icon: '💼', color: '#5F27CD' },
+		]
+	  },
+	  { 
+		name: 'AlgoExpert', 
+		color: '#54A0FF',
+		courses: [
+		  { name: 'Data Structures', href: '/courses/algoexpert/data-structures', icon: '📊', color: '#FF6B6B' },
+		  { name: 'Sorting Algorithms', href: '/courses/algoexpert/sorting-algorithms', icon: '🔢', color: '#FF9FF3' },
+		  { name: 'Dynamic Programming', href: '/courses/algoexpert/dynamic-programming', icon: '🧠', color: '#54A0FF' },
+		]
+	  },
+	  { 
+		name: 'SystemsExpert', 
+		color: '#5CD859',
+		courses: [
+		  { name: 'Operating Systems', href: '/courses/systemsexpert/operating-systems', icon: '💾', color: '#FF6B6B' },
+		  { name: 'Networking', href: '/courses/systemsexpert/networking', icon: '🌐', color: '#54A0FF' },
+		  { name: 'Databases', href: '/courses/systemsexpert/databases', icon: '🗄️', color: '#5CD859' },
+		]
+	  },
+	  { 
+		name: 'FrontendExpert', 
+		color: '#FF9FF3',
+		courses: [
+		  { name: 'HTML & CSS', href: '/courses/frontendexpert/html-css', icon: '🎨', color: '#FF6B6B' },
+		  { name: 'JavaScript', href: '/courses/frontendexpert/javascript', icon: '🚀', color: '#FFA502' },
+		  { name: 'React', href: '/courses/frontendexpert/react', icon: '⚛️', color: '#54A0FF' },
+		]
+	  },
+	];
+  
 	const navItems: NavItem[] = [
 	  { name: 'Dashboard', icon: '📊', href: '/dashboard' },
-	  { name: 'Projects', icon: '🎨', href: '/projects' },
+	  { name: 'Collaborate', icon: '🎨', href: '/projects' },
 	  { 
 		name: 'Learn', 
 		icon: '📚', 
@@ -34,6 +90,7 @@
 		  { name: 'Tutorials', icon: '🎮', href: '/learn/tutorials' }
 		]
 	  },
+	  { name: 'Courses', icon: '🎓', href: '/courses' },
 	  { name: 'Playground', icon: '🛝', href: '/playground' },
 	  { 
 		name: 'About', 
@@ -45,7 +102,7 @@
 		  { name: 'Impact', icon: '🌟', href: '/about/impact' },
 		  { name: 'Contact', icon: '📞', href: '/about/contact' }
 		]
-	  }
+	  },
 	];
   
 	let prevScrollPos = 0;
@@ -64,8 +121,8 @@
 	  isSearchOpen = !isSearchOpen;
 	  if (isSearchOpen) {
 		setTimeout(() => {
-			const searchInput = document.querySelector('input[type="search"]') as HTMLInputElement;
-			searchInput?.focus();
+		  const searchInput = document.querySelector('input[type="search"]') as HTMLInputElement;
+		  searchInput?.focus();
 		}, 100);
 	  }
 	};
@@ -77,11 +134,11 @@
   
 	const handleSearch = () => {
 	  console.log('Searching for:', searchQuery);
-
 	};
   
 	onMount(() => {
 	  progressBar = document.querySelector('.progress-bar') as HTMLElement;
+	  activeCategory = categories[0].name; // Set the first category as active by default
 	});
   
 	let typingTimer: ReturnType<typeof setTimeout>;
@@ -134,6 +191,40 @@
 					<span class="text">{child.name}</span>
 				  </a>
 				{/each}
+			  </div>
+			{/if}
+			{#if item.name === 'Courses' && activeSection === item.name}
+			  <div class="course-explorer" in:scale={{duration: 200, start: 0.95, easing: backOut}} out:scale={{duration: 150, start: 0.95}}>
+				<div class="categories">
+				  {#each categories as category}
+					<div 
+					  class="category-item" 
+					  on:mouseenter={() => activeCategory = category.name}
+					  class:active={activeCategory === category.name}
+					  style="--category-color: {category.color}"
+					>
+					  {category.name}
+					</div>
+				  {/each}
+				</div>
+				<div class="courses">
+				  {#if activeCategory}
+					{#each categories.find(cat => cat.name === activeCategory)?.courses || [] as course (course.name)}
+					  <a 
+						href={course.href} 
+						class="course" 
+						style="--course-color: {course.color}"
+						in:fly={{y: 20, duration: 200, delay: 100}}
+						out:fly={{y: -20, duration: 150}}
+					  >
+						<span class="icon">{course.icon}</span>
+						<span class="text">{course.name}</span>
+					  </a>
+					{/each}
+				  {:else}
+					<div class="course-placeholder">Hover over a category to see courses</div>
+				  {/if}
+				</div>
 			  </div>
 			{/if}
 		  </div>
@@ -193,9 +284,11 @@
 	}
   
 	header {
+	  position: fixed;
 	  top: 0;
 	  left: 0;
 	  right: 0;
+	  z-index: 1000;
 	  background-color: var(--background-color);
 	  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 	  transition: all 0.3s ease;
@@ -286,116 +379,206 @@
 	  min-width: 200px;
 	}
   
-	.submenu-item {
-	  display: flex;
-	  align-items: center;
-	  padding: 0.5rem 1rem;
-	  color: var(--text-color);
-	  text-decoration: none;
-	  transition: all 0.2s ease;
-	}
-  
-	.submenu-item:hover {
-	  background-color: rgba(76, 175, 80, 0.1);
-	  color: var(--primary-color);
-	}
-  
-	.nav-controls {
-	  display: flex;
-	  align-items: center;
-	}
-  
-	.icon-btn {
-	  background: none;
-	  border: none;
-	  cursor: pointer;
-	  font-size: 1.2rem;
-	  margin: 0 0.5rem;
-	  padding: 0.5rem;
-	  border-radius: 50%;
-	  transition: all 0.3s ease;
-	}
-  
-	.icon-btn:hover {
-	  background-color: rgba(76, 175, 80, 0.1);
-	}
-  
-	.notifications {
-	  position: relative;
-	}
-  
-	.notification-badge {
-	  position: absolute;
-	  top: -5px;
-	  right: -5px;
-	  background-color: var(--accent-color);
-	  color: var(--text-color);
-	  font-size: 0.7rem;
-	  padding: 2px 5px;
-	  border-radius: 50%;
-	}
-  
-	.btn {
-	  text-decoration: none;
-	  padding: 0.5rem 1rem;
-	  border-radius: 20px;
-	  font-weight: bold;
-	  transition: all 0.3s ease;
-	}
-  
-	.btn-primary {
-	  background-color: var(--primary-color);
-	  color: white;
-	}
-  
-	.btn-primary:hover {
-	  background-color: #45a049;
-	  transform: translateY(-2px);
-	  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	}
-  
-	.search-overlay {
-	  position: absolute;
-	  top: 100%;
-	  left: 0;
-	  right: 0;
-	  background-color: var(--background-color);
-	  padding: 1rem;
-	  display: flex;
-	  justify-content: center;
-	  align-items: center;
-	  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	}
-  
-	.search-overlay input {
-	  width: 100%;
-	  max-width: 600px;
-	  padding: 0.5rem 1rem;
-	  font-size: 1rem;
-	  border: none;
-	  border-radius: 20px;
-	  background-color: rgba(76, 175, 80, 0.1);
-	}
-  
-	.close-search {
-	  background: none;
-	  border: none;
-	  font-size: 1.5rem;
-	  cursor: pointer;
-	  margin-left: 1rem;
-	}
-  
-	@media (max-width: 768px) {
-	  .nav-links {
-		display: none;
-	  }
-  
-	  .nav-controls {
-		margin-left: auto;
-	  }
-  
-	  .btn-primary {
-		display: none;
-	  }
-	}
-  </style>
+    .submenu-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .submenu-item:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--primary-color);
+  }
+
+  .nav-controls {
+    display: flex;
+    align-items: center;
+  }
+
+  .icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin: 0 0.5rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .icon-btn:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+  }
+
+  .notifications {
+    position: relative;
+  }
+
+  .notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    font-size: 0.7rem;
+    padding: 2px 5px;
+    border-radius: 50%;
+  }
+
+  .btn {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .search-overlay {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--background-color);
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .search-overlay input {
+    width: 100%;
+    max-width: 600px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 20px;
+    background-color: rgba(76, 175, 80, 0.1);
+  }
+
+  .close-search {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 1rem;
+  }
+
+  .course-explorer {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--background-color);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .categories {
+    width: 30%;
+    border-right: 1px solid var(--text-color);
+    padding-right: 1rem;
+  }
+
+  .category-item {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    background-color: rgba(var(--category-color), 0.1);
+  }
+
+  .category-item:hover,
+  .category-item.active {
+    background-color: var(--category-color);
+    color: white;
+  }
+
+  .courses {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .course {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    background-color: rgba(var(--course-color), 0.1);
+  }
+
+  .course:hover {
+    background-color: var(--course-color);
+    color: white;
+    transform: translateX(5px);
+  }
+
+  .course .icon {
+    margin-right: 0.5rem;
+  }
+
+  .course-placeholder {
+    color: var(--text-color);
+    opacity: 0.7;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+
+    .nav-controls {
+      margin-left: auto;
+    }
+
+    .btn-primary {
+      display: inline-block;
+    }
+
+    .course-explorer {
+      width: 90vw;
+      flex-direction: column;
+    }
+
+    .categories {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid var(--text-color);
+      padding-right: 0;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .courses {
+      width: 100%;
+    }
+  }
+</style>
