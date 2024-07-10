@@ -165,9 +165,9 @@
 		<a href="/" aria-label="Home">
 		  <svg width="40" height="40" viewBox="0 0 100 100">
 			<circle cx="50" cy="50" r="45" fill="#4CAF50" />
-			<text x="50" y="65" font-size="50" text-anchor="middle" fill="white">K</text>
+			<text x="50" y="65" font-size="50" text-anchor="middle" fill="white"></text>
 		  </svg>
-		  <span>DB</span>
+		  <span>BrainBlox</span>
 		</a>
 	  </div>
 	  <div class="nav-links">
