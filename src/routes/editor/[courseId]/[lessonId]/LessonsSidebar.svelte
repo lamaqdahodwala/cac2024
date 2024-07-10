@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import { goto } from '$app/navigation';
+	import LessonAddButton from './LessonAddButton.svelte';
 
 	export let courseId: number;
 	async function getAllLessons() {
@@ -32,6 +33,7 @@
 			{/each}
 		</div>
 
-    <button class="button is-primary">Add Lesson</button>
+    <LessonAddButton on:lessonCreated={e => navigate(e.detail.lessonId)}/>
+
 	{/await}
 </div>

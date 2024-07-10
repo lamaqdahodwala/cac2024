@@ -13,7 +13,8 @@ export class AddLessonToCourse implements RouteImplementation {
 		return await props.prisma.lesson.create({
 			data: {
 				courseId: Number(props.courseId),
-				title: props.lessonName
+				title: props.lessonName,
+        textContent: ''
 			}
 		});
 	}

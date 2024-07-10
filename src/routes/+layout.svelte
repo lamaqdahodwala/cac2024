@@ -1,4 +1,5 @@
 <script lang="ts">
+  import "bulma/css/bulma.min.css"
 	import { onMount } from 'svelte';
 	import { fade, fly, slide, scale } from 'svelte/transition';
 	import { elasticOut } from 'svelte/easing';
@@ -192,11 +193,9 @@
 	}
   
 	header {
-	  position: fixed;
 	  top: 0;
 	  left: 0;
 	  right: 0;
-	  z-index: 1000;
 	  background-color: var(--background-color);
 	  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 	  transition: all 0.3s ease;
