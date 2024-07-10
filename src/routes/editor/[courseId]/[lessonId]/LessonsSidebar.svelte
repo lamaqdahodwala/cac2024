@@ -27,9 +27,11 @@
 		<div class="menu-list">
 			{#each data as lesson}
 				<p>
-					<button class="link" on:click={() => navigate(lesson.id)}>{lesson.title}</button>
+					<button on:click={() => navigate(lesson.id)}>{lesson.title}</button>
 				</p>
 			{/each}
 		</div>
+
+    <button class="button is-primary">Add Lesson</button>
 	{/await}
 </div>
