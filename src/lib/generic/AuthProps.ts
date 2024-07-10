@@ -11,14 +11,16 @@ export class AuthProps implements PropGetter {
 			throw error(403, 'Forbidden, please log in');
 		}
 
+    if (!user.email) throw error(500, "IDK what happened")
+
     let userRole = await prisma.user.findUnique({
       where: {
-        id: user.id
+        email: user.email
       }
     })
 
 		return {
-			...user,
+			user: userRole,
       userRole: userRole?.role
 		};
 	}

@@ -47,7 +47,7 @@ export class UpdateLessonContentProps implements PropGetter {
     let lessonId = json.lessonId
     let newContent = json.newContent
 
-    if (!lessonId || !newContent) throw error(400, "Provide the required fields: lessonId, newContent")
+    if (lessonId === undefined || newContent === undefined) throw error(400, "Provide the required fields: lessonId, newContent")
 
     return {
       lessonId, 
