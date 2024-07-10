@@ -16,7 +16,7 @@ export class GetLessonContent implements RouteImplementation {
 
 		if (!lesson) throw error(404, 'Lesson not found');
 
-		return { textContent: lesson.textContent };
+		return { textContent: lesson.textContent, lessonName: lesson.title };
 	}
 }
 
