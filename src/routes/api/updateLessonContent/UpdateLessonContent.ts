@@ -1,4 +1,5 @@
 import { APIRoute, type PropGetter, type RouteImplementation } from '$lib/abstract/APIRoute';
+import insane from 'insane'
 import { AuthProps } from '$lib/generic/AuthProps';
 import { PrismaProps } from '$lib/generic/PrismaProps';
 import { MultiProp } from '$lib/helpers/MultiProp';
@@ -34,7 +35,7 @@ export class UpdateLessonContent implements RouteImplementation {
 				id: Number(props.lessonId)
 			},
       data: {
-        textContent: props.newContent
+        textContent: insane(props.newContent)
       }
 		});
 

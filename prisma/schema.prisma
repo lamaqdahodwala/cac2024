@@ -11,12 +11,14 @@ datasource db {
 }
 
 model Course {
+<<<<<<< HEAD
   id        Int      @id @default(autoincrement())
   lessons   Lesson[]
   title     String
   writer    User     @relation(fields: [writerId], references: [id])
   writerId  String
   activeFor User[]   @relation("ActiveCourses")
+  description String @default("")
 }
 
 model Lesson {
@@ -27,6 +29,7 @@ model Lesson {
   title         String
   completedBy   User[]
   quiz          Quiz?
+  description String @default("")
 }
 
 model Quiz {
