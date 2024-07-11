@@ -178,20 +178,20 @@
 </script>
 
 <svelte:head>
-    <title>AI Blocks Clone - Learning Dashboard</title>
+    <title>BrainBlox - AI Learning Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </svelte:head>
 
 {#if isLoading}
     <div class="pageloader is-active"><span class="title">Loading your AI adventure...</span></div>
 {:else}
-    <div class="container">
-        <!-- svelte-ignore a11y-no-redundant-roles -->
+    <div class="dashboard-container">
         <nav class="navbar is-light" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <a class="navbar-item" href="/">
-                    <img src="https://via.placeholder.com/112x28?text=AI+Blocks" alt="AI Blocks Logo" width="112" height="28">
+                    <img src="https://via.placeholder.com/112x28?text=BrainBlox" alt="BrainBlox Logo" width="112" height="28">
                 </a>
             </div>
             <div class="navbar-menu">
@@ -273,7 +273,7 @@
         </div>
 
         {#if activeTab === 'learning'}
-            <section class="section" in:fade>
+            <section class="section learning-journey" in:fade>
                 <h2 class="title is-2">Your Learning Journey</h2>
                 <div class="columns is-multiline">
                     {#each activeCourses as course}
@@ -323,7 +323,7 @@
                 </div>
             </section>
         {:else if activeTab === 'discover'}
-            <section class="section" in:fade>
+            <section class="section discover-courses" in:fade>
                 <h2 class="title is-2">Discover New Horizons</h2>
                 <div class="field">
                     <div class="control has-icons-left">
@@ -442,7 +442,6 @@
                 </header>
                 <section class="modal-card-body">
                     <div class="field">
-                        <!-- svelte-ignore a11y-label-has-associated-control -->
                         <label class="label">Share your thoughts</label>
                         <div class="control">
                             <textarea class="textarea" placeholder="What's on your mind?" bind:value={newCommunityPost}></textarea>
@@ -463,10 +462,7 @@
                                             </p>
                                         </div>
                                         <nav class="level is-mobile">
-                                            <!-- svelte-ignore a11y-no-static-element-interactions -->
                                             <div class="level-left">
-                                                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                                                <!-- svelte-ignore a11y-missing-attribute -->
                                                 <a class="level-item" aria-label="like" on:click={() => likeCommunityPost(index)}>
                                                     <span class="icon is-small">
                                                         <i class="fas fa-heart"></i>
@@ -496,6 +492,17 @@
 {/if}
 
 <style>
+    :global(body) {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f5f5;
+    }
+
+    .dashboard-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
     .pageloader {
         position: fixed;
         top: 0;
@@ -537,6 +544,15 @@
         height: 100%;
         display: flex;
         flex-direction: column;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 
     .card-content {
@@ -564,6 +580,9 @@
         color: #4a4a4a;
         display: flex;
         align-items: center;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        transition: all 0.3s ease;
     }
 
     .tab-button:hover {
@@ -586,5 +605,70 @@
     .community-posts {
         max-height: 400px;
         overflow-y: auto;
+    }
+
+    .hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .hero .title, .hero .subtitle {
+        color: white;
+    }
+
+    .learning-journey, .discover-courses {
+        padding: 2rem;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+    }
+
+    .title.is-2 {
+        font-weight: 600;
+        color: #363636;
+        margin-bottom: 1.5rem;
+    }
+
+    .progress {
+        height: 0.75rem;
+        border-radius: 0.375rem;
+    }
+
+    .tag {
+        font-weight: 500;
+    }
+
+    .button {
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-card-title {
+        font-weight: 600;
+    }
+
+    .input, .textarea {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .notification {
+        border-radius: 8px;
+    }
+
+    .columns {
+        margin-top: -0.75rem;
+        margin-bottom: -0.75rem;
+        margin-left: -0.75rem;
+        margin-right: -0.75rem;
+    }
+
+    .column {
+        padding: 0.75rem;
     }
 </style>
