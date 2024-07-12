@@ -1,42 +1,35 @@
 import { json } from '@sveltejs/kit';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient, type User } from '@prisma/client';
 import { error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
+import { APIRoute, type RouteImplementation } from '$lib/abstract/APIRoute';
+import { jsonProps } from '$lib/generic/JsonProps';
+import { MultiProp } from '$lib/helpers/MultiProp';
+import { PrismaProps } from '$lib/generic/PrismaProps';
+import { AuthProps } from '$lib/generic/AuthProps';
 
-interface Request {
-  json: () => Promise<any>;
+export class AddActiveCourse implements RouteImplementation {
+  async call(props: {prisma: PrismaClient, courseId: number, user: User}): Promise<object> {
+    return await props.prisma.course.update({
+      where: {
+        id: Number( props.courseId )
+      },
+      data: {
+        activeFor: {
+          connect: {
+            id: props.user.id
+          }
+        }
+      }
+    })
+  }
 }
 
-type RequestHandler = (args: { request: Request }) => Promise<any>;
+const AddActiveCourseProps = jsonProps((json) => ({
+  courseId: json.courseId
+}), {checkForNull: true})
 
-const prisma = new PrismaClient();
-
-export const POST: RequestHandler = async (event) => {
-  let request = event.request
-  try {
-    const { userId, courseId } = await request.json();
-
-    if (!userId || !courseId) {
-        throw error(400, 'Missing userId or courseId');
-    }
-
-    const updatedUser = await prisma.user.update({
-      where: { id: userId },
-      data: {
-        activeCourses: {
-          connect: { id: courseId }
-        }
-      },
-      include: {
-        activeCourses: true
-      }
-    });
-
-    return json({ success: true, user: updatedUser });
-  } catch (err) {
-        console.error('Error adding active course:', err);
-        throw error(500, 'Failed to add active course');
-    }
-};
-
-
+export const route = new APIRoute(
+  MultiProp.mergeProps([PrismaProps, AddActiveCourseProps, AuthProps]),
+  AddActiveCourse
+)
