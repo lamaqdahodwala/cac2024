@@ -396,33 +396,13 @@
 {:else}
     <div class="dashboard-wrapper">
         <!-- svelte-ignore a11y-no-redundant-roles -->
-        <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="/">
-                    <img src="https://via.placeholder.com/112x28?text=BrainBlox" alt="BrainBlox Logo" width="112" height="28">
-                </a>
-            </div>
-            <div class="navbar-menu">
-                <div class="navbar-end">
-                    <a class="navbar-item" href="/profile">
-                        <span class="icon"><i class="fas fa-user"></i></span>
-                        <span>Profile</span>
-                    </a>
-                    <a class="navbar-item" href="/settings">
-                        <span class="icon"><i class="fas fa-cog"></i></span>
-                        <span>Settings</span>
-                    </a>
-                </div>
-            </div>
-        </nav>
-
         <section class="hero is-primary is-bold is-fullwidth">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title">
+                    <h1 class="title is-3 mb-6">
                         Welcome to BrainBlox
                     </h1>
-                    <h2 class="subtitle">
+                    <h2 class="subtitle is-4 mb-6">
                         Your journey into the world of Artificial Intelligence starts here!
                     </h2>
                     <div class="level">
