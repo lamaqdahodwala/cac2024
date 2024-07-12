@@ -1,13 +1,24 @@
-import type { PageLoad } from "./$types";
+import type { PageLoad } from './$types';
 
-export const load: PageLoad = async(event) => {
-  let lessonId = event.params.lessonId
+export const load: PageLoad = async (event) => {
+	let lessonId = event.params.lessonId;
+	let courseId = event.params.courseId;
 
-  let res = await event.fetch(`/api/getLessonContent?lessonId=${lessonId}&renderHTML=true`)
+	await event.fetch('/api/addActiveCourse', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			courseId: courseId
+		})
+	});
 
-  let json = await res.json()
+	let res = await event.fetch(`/api/getLessonContent?lessonId=${lessonId}&renderHTML=true`);
 
-  return {
-    lesson: json
-  }
-}
+	let json = await res.json();
+
+	return {
+		lesson: { ...json, id: lessonId }
+	};
+};

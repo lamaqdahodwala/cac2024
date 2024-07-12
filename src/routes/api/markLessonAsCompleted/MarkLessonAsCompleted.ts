@@ -8,7 +8,7 @@ import type { RequestEvent } from '@sveltejs/kit';
 
 export class MarkLessonAsCompleted implements RouteImplementation {
 	async call(props: { user: User; prisma: PrismaClient; lessonId: string }): Promise<object> {
-		return await props.prisma.user.update({
+		await props.prisma.user.update({
 			where: {
 				id: props.user.id
 			},
@@ -20,6 +20,10 @@ export class MarkLessonAsCompleted implements RouteImplementation {
 				}
 			}
 		});
+		return {
+			success: true,
+			lessonId: props.lessonId
+		};
 	}
 }
 
