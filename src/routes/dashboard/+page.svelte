@@ -906,7 +906,25 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     margin-top: 2rem;
     backdrop-filter: blur(10px);
+    height: 4100%; 
+    width: 1160px; 
+    max-width: 1160px; 
+    margin-left: auto;
+    margin-right: auto;
+
 }
+
+.learning-journey,
+.discover-courses {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.learning-journey:hover,
+.discover-courses:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
 
 .title.is-2 {
     font-weight: 600;
@@ -959,7 +977,7 @@
 
 .column {
     padding: 0.75rem;
-    height: 500px; /* Fixed height for each course card */
+    height: 500%px; /* Fixed height for each course card */
     width: 33.33%; /* Fixed width for each course card (3 columns) */
 }
 
@@ -1051,8 +1069,8 @@
 
 .card {
     height: 100%;
-    width: 100%;
-    display: flex;
+    width: 1101.72px;
+    display: block;
     flex-direction: column;
     border-radius: 15px;
     overflow: hidden;
