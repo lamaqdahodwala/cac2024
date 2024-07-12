@@ -5,9 +5,10 @@ import { searchParamProps } from '$lib/generic/SearchParamProps';
 import { MultiProp } from '$lib/helpers/MultiProp';
 import type { PrismaClient } from '@prisma/client';
 import { error } from '@sveltejs/kit';
+import { marked } from 'marked';
 
 export class GetLessonContent implements RouteImplementation {
-	async call(props: { prisma: PrismaClient; lessonId: string }): Promise<object> {
+	async call(props: { prisma: PrismaClient; lessonId: string, renderHTML: boolean }): Promise<object> {
 		let lesson = await props.prisma.lesson.findUnique({
 			where: {
 				id: Number(props.lessonId)
@@ -16,13 +17,17 @@ export class GetLessonContent implements RouteImplementation {
 
 		if (!lesson) throw error(404, 'Lesson not found');
 
-		return { textContent: lesson.textContent, lessonName: lesson.title };
+    let content = ( props.renderHTML ? marked(lesson.textContent) : lesson.textContent )
+		return { textContent: ( content ), lessonName: lesson.title };
 	}
 }
 
 export const GetLessonProps = searchParamProps((json) => {
+  let renderHTML: boolean = !!json.get("renderHTML")
+
 	return {
-		lessonId: json.get("lessonId")
+		lessonId: json.get("lessonId"), 
+    renderHTML: renderHTML
 	};
 }, {checkForNull: true});
 

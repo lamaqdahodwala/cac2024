@@ -3,8 +3,7 @@
 	export let data: PageData;
 </script>
 
-<!-- {JSON.stringify( data.lessons )} -->
-{JSON.stringify(data.courseInfo)}
+
 
 <div class="container">
 	<div class="box">

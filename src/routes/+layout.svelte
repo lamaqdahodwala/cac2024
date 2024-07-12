@@ -3,6 +3,7 @@
   import { fade, fly, slide, scale } from 'svelte/transition';
   import { elasticOut, backOut } from 'svelte/easing';
   import { page } from '$app/stores';
+  import 'bulma/bulma.scss'
 
   let isNavVisible = true;
   let activeSection: string | null = null;
@@ -307,7 +308,6 @@
   }
 
   header {
-    position: fixed;
     top: 0;
     left: 0;
     right: 0;
