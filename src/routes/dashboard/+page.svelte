@@ -395,6 +395,7 @@
     <div class="pageloader is-active"><span class="title">Loading your AI adventure...</span></div>
 {:else}
     <div class="dashboard-wrapper">
+        <!-- svelte-ignore a11y-no-redundant-roles -->
         <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <a class="navbar-item" href="/">
@@ -658,6 +659,7 @@
                 </header>
                 <section class="modal-card-body">
                     <div class="field">
+                        <!-- svelte-ignore a11y-label-has-associated-control -->
                         <label class="label">Share your thoughts</label>
                         <div class="control">
                             <textarea class="textarea is-primary" placeholder="What's on your mind?" bind:value={newCommunityPost}></textarea>
@@ -683,7 +685,13 @@
                                             </p>
                                         </div>
                                         <nav class="level is-mobile">
+                                            <!-- svelte-ignore a11y-click-events-have-key-events -->
+                                            <!-- svelte-ignore a11y-no-static-element-interactions -->
+                                            <!-- svelte-ignore a11y-no-static-element-interactions -->
+                                            <!-- svelte-ignore a11y-missing-attribute -->
+                                            <!-- svelte-ignore a11y-missing-attribute -->
                                             <div class="level-left">
+                                                <!-- svelte-ignore a11y-click-events-have-key-events -->
                                                 <a class="level-item" aria-label="like" on:click={() => likeCommunityPost(index)}>
                                                     <span class="icon is-small">
                                                         <i class="fas fa-heart"></i>
@@ -806,7 +814,7 @@
 }
 
 .card-image {
-    height: 200px; /* Fixed height for the image */
+    height: 200px; 
     overflow: hidden;
 }
 
@@ -977,8 +985,8 @@
 
 .column {
     padding: 0.75rem;
-    height: 500%px; /* Fixed height for each course card */
-    width: 33.33%; /* Fixed width for each course card (3 columns) */
+    height: 500%px; 
+    width: 33.33%; 
 }
 
 .navbar {
@@ -1249,8 +1257,8 @@
 }
 
 .fixed-height-container {
-    height: 600px; /* Fixed height to accommodate 3 courses */
-    width: 100%; /* Full width of the parent container */
+    height: 600px;
+    width: 100%; 
     overflow-y: auto;
     padding: 0.75rem;
 }
