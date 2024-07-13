@@ -17,6 +17,8 @@
 
 		return json;
 	}
+
+
 </script>
 
 {#await getQuiz() then data}
