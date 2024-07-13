@@ -524,50 +524,50 @@
                     </div>
                     <div class="columns is-multiline fixed-height-container">
                         {#each filterCourses(availableCourses) as course}
-                        <div class="column is-one-third" in:scale="{{ duration: 300, start: 0.8 }}">
-                            <div class="card">
-                                <div class="card-image">
-                                    <figure class="image is-4by3">
-                                        <img src={course.imageUrl} alt={course.title}>
-                                    </figure>
-                                </div>
-                                <div class="card-content">
-                                    <p class="title is-4 mb-3">{course.title}</p>
-                                    <div class="tags mb-3">
-                                        <span class="tag is-info is-light mr-2">{course.difficulty}</span>
-                                        <span class="tag is-warning is-light">{course.duration}</span>
-                                    </div>
-                                    <p class="content mb-4">{course.description}</p>
-                                    <div class="tags mb-4">
-                                        {#each course.tags as tag}
-                                            <span class="tag is-primary is-light mr-2 mb-2">{tag}</span>
-                                        {/each}
-                                    </div>
-                                    <div class="level is-mobile">
-                                        <div class="level-left">
-                                            <div class="level-item">
-                                                <p class="subtitle is-6">
-                                                    <span class="icon has-text-warning mr-1">
-                                                        <i class="fas fa-star"></i>
-                                                    </span>
-                                                    {course.rating.toFixed(1)}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="level-right">
-                                            <div class="level-item">
-                                                <button class="button is-primary is-rounded animated-button" on:click={() => { selectedCourseId = course.id; addActiveCourse(); }}>
-                                                    <span class="icon mr-1">
-                                                        <i class="fas fa-plus"></i>
-                                                    </span>
-                                                    <span>Add to My Courses</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            <div class="column is-one-third" in:scale="{{ duration: 300, start: 0.8 }}">
+    <div class="card">
+        <div class="card-image">
+            <figure class="image is-4by3">
+                <img src={course.imageUrl} alt={course.title}>
+            </figure>
+        </div>
+        <div class="card-content">
+            <p class="title is-4 mb-3">{course.title}</p>
+            <div class="tags mb-3">
+                <span class="tag is-info is-light mr-2">{course.difficulty}</span>
+                <span class="tag is-warning is-light">{course.duration}</span>
+            </div>
+            <p class="content mb-4">{course.description}</p>
+            <div class="tags mb-4">
+                {#each course.tags as tag}
+                    <span class="tag is-primary is-light mr-2 mb-2">{tag}</span>
+                {/each}
+            </div>
+            <div class="level is-mobile">
+                <div class="level-left">
+                    <div class="level-item">
+                        <p class="subtitle is-6">
+                            <span class="icon has-text-warning mr-1">
+                                <i class="fas fa-star"></i>
+                            </span>
+                            {course.rating.toFixed(1)}
+                        </p>
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item">
+                        <button class="button is-primary is-rounded animated-button" on:click={() => { selectedCourseId = course.id; addActiveCourse(); }}>
+                            <span class="icon mr-1">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span>Add to My Courses</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                         {/each}
                     </div>
                 </section>
@@ -1133,7 +1133,7 @@
 }
 
 .option-button:hover {
-    background-color: #f0f0f0;
+    background-color: #d7ffea;
     transform: translateY(-2px);
 }
 
