@@ -23,10 +23,16 @@
 	{#if data.quiz}
 		<div class="modal {modalOpen ? 'is-active' : ''}" id="modal">
 			<div class="modal-background" on:click={() => (modalOpen = !modalOpen)}></div>
-			<div class="modal-content">
-				<div class="box">
+			<div class="modal-card">
+				<header class="modal-card-head">
+          <p class="modal-card-title">Quiz</p>
+          <button class="delete" aria-label="close" on:click={() => modalOpen = !modalOpen}></button>
+        </header>
+
+				<div class="modal-card-body">
 					{#each data.quiz.questions as question}
 						<Question {question} />
+						<hr />
 					{/each}
 				</div>
 			</div>

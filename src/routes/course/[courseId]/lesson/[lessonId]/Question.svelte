@@ -43,7 +43,7 @@
 {/each}
 
 {#if isCorrect !== undefined}
-	<div class="message {isCorrect ? 'is-success' : 'is-danger'} is-small">
+	<div class="message {isCorrect ? 'is-success' : 'is-danger'} is-small mt-6">
 		<div class="message-header">
 			{#if isCorrect}
 				<p>Correct!</p>
@@ -58,4 +58,3 @@
 	</div>
 {/if}
 
-<br />
