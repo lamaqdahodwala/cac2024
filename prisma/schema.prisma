@@ -37,6 +37,31 @@ model Exercise {
   content     String
   lesson      Lesson    @relation(fields: [lessonId], references: [id])
   lessonId    Int
+  instructions     Instruction[]
+  dataset          Dataset?
+  passRequirements PassRequirement[]
+}
+
+model Instruction {
+  id        Int       @id @default(autoincrement())
+  content   String
+  exercise  Exercise  @relation(fields: [exerciseId], references: [id])
+  exerciseId Int  @unique
+}
+
+model Dataset {
+  id        Int       @id @default(autoincrement())
+  name      String
+  path      String
+  exercise  Exercise  @relation(fields: [exerciseId], references: [id])
+  exerciseId Int @unique
+}
+
+model PassRequirement {
+  id        Int       @id @default(autoincrement())
+  criteria  String
+  exercise  Exercise  @relation(fields: [exerciseId], references: [id])
+  exerciseId Int @unique
 }
 
 model Quiz {
@@ -116,3 +141,5 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+
