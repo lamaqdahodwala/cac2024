@@ -1,6 +1,8 @@
 <script lang="ts">
 	import IntersectionObserver from 'svelte-intersection-observer';
 	import type { PageData } from './$types';
+	import Quizzer from './Quizzer.svelte';
+	import { setContext } from 'svelte';
 	export let data: PageData;
 	let bottomDiv: HTMLDivElement;
 
@@ -15,6 +17,8 @@
 			})
 		});
 	}
+
+  setContext("lessonId", data.lesson.id)
 </script>
 
 <div class="m-5">
@@ -28,4 +32,5 @@
 	<IntersectionObserver element={bottomDiv} let:intersecting on:observe={markAsRead}></IntersectionObserver>
 
 	<div id="bottom" bind:this={bottomDiv}></div>
+  <Quizzer/>
 </div>
