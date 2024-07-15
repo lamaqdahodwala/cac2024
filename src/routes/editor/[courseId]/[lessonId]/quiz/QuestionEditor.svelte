@@ -9,22 +9,50 @@
 		}[];
 	};
 
-  function getCorrectAnswer(){
-    let correctIndex = question.answers.findIndex((value) => value.isCorrect)
-    return question.answers[correctIndex].id
+	function getCorrectAnswer() {
+		let correctIndex = question.answers.findIndex((value) => value.isCorrect);
+		return question.answers[correctIndex].id;
+	}
+
+	let correctAnswer: any = getCorrectAnswer();
+
+	let timer: number | undefined;
+	const debounceSave = () => {
+		clearTimeout(timer);
+		timer = setTimeout(() => updateQuestionText(), 500);
+	};
+
+	async function updateQuestionText() {
+    await fetch('/api/updateQuestionText', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				questionId: question.id,
+				newText: questionText
+			})
+    })
   }
 
-	let correctAnswer: any = getCorrectAnswer()  
+	async function updateCorrectAnswer(correctAnswer) {
+		await fetch('/api/changeCorrectAnswer', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				questionId: question.id,
+				correctAnswerId: correctAnswer
+			})
+		});
+	}
 
-	function updateCorrectAnswer(correctAnswer) {
-    console.log("updating")
-  }
-
-	$: updateCorrectAnswer(correctAnswer);
+  let questionText = question.question
 </script>
 
 <div class="field">
-	<input class="input" value={question.question} />
+	<input class="input" bind:value={questionText} on:input={debounceSave}/>
 	{#each question.answers as answer}
 		<p>
 			<input
@@ -33,7 +61,8 @@
 				bind:group={correctAnswer}
 				name="isCorrect{question.id}"
 				class="checkbox"
-        checked={answer.id === correctAnswer.id}
+				checked={answer.id === correctAnswer.id}
+				on:change={() => updateCorrectAnswer(correctAnswer)}
 			/>{answer.answerText}
 		</p>
 	{/each}
