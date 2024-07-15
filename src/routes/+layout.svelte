@@ -1,234 +1,164 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { fade, fly, slide, scale } from 'svelte/transition';
-	import { elasticOut, backOut } from 'svelte/easing';
-	import { page } from '$app/stores';
-	import 'bulma/bulma.scss';
+  import { onMount } from 'svelte';
+  import { fade, fly, slide, scale } from 'svelte/transition';
+  import { elasticOut, backOut } from 'svelte/easing';
+  import { page } from '$app/stores';
+  import 'bulma/bulma.scss'
 
-	let isNavVisible = true;
-	let activeSection: string | null = null;
-	let activeCategory: string | null = null;
-	let searchQuery = '';
-	let isSearchOpen = false;
-	let progressBar: HTMLElement | null = null;
-	let notificationCount = 7;
-	let isColorThemeLight = true;
+  let isNavVisible = true;
+  let activeSection: string | null = null;
+  let activeCategory: string | null = null;
+  let searchQuery = '';
+  let isSearchOpen = false;
+  let progressBar: HTMLElement | null = null;
+  let notificationCount = 7;
+  let isColorThemeLight = true;
 
-	type NavItem = {
-		name: string;
-		icon: string;
-		href: string;
-		children?: NavItem[];
-	};
+  type NavItem = {
+    name: string;
+    icon: string;
+    href: string;
+    children?: NavItem[];
+  };
 
-	type Course = {
-		name: string;
-		href: string;
-		icon: string;
-		color: string;
-	};
+  type Course = {
+    name: string;
+    href: string;
+    icon: string;
+    color: string;
+  };
 
-	type Category = {
-		name: string;
-		courses: Course[];
-		color: string;
-	};
+  type Category = {
+    name: string;
+    courses: Course[];
+    color: string;
+  };
 
-	const categories: Category[] = [
-		{
-			name: 'MLExpert',
-			color: '#FF6B6B',
-			courses: [
-				{
-					name: 'ML Content Index',
-					href: '/courses/mlexpert/ml-content-index',
-					icon: '📚',
-					color: '#FF9FF3'
-				},
-				{
-					name: 'ML Crash Course',
-					href: '/courses/mlexpert/ml-crash-course',
-					icon: '🚀',
-					color: '#54A0FF'
-				},
-				{
-					name: 'ML Coding Questions',
-					href: '/courses/mlexpert/ml-coding-questions',
-					icon: '💻',
-					color: '#5CD859'
-				},
-				{
-					name: 'Large-Scale ML',
-					href: '/courses/mlexpert/large-scale-ml',
-					icon: '🌐',
-					color: '#FFA502'
-				},
-				{
-					name: 'ML Design Questions',
-					href: '/courses/mlexpert/ml-design-questions',
-					icon: '🎨',
-					color: '#FF6B6B'
-				},
-				{ name: 'ML Quiz', href: '/courses/mlexpert/ml-quiz', icon: '❓', color: '#1DD1A1' },
-				{
-					name: 'ML Interview Tips',
-					href: '/courses/mlexpert/ml-interview-tips',
-					icon: '💼',
-					color: '#5F27CD'
-				}
-			]
-		},
-		{
-			name: 'AlgoExpert',
-			color: '#54A0FF',
-			courses: [
-				{
-					name: 'Data Structures',
-					href: '/courses/algoexpert/data-structures',
-					icon: '📊',
-					color: '#FF6B6B'
-				},
-				{
-					name: 'Sorting Algorithms',
-					href: '/courses/algoexpert/sorting-algorithms',
-					icon: '🔢',
-					color: '#FF9FF3'
-				},
-				{
-					name: 'Dynamic Programming',
-					href: '/courses/algoexpert/dynamic-programming',
-					icon: '🧠',
-					color: '#54A0FF'
-				}
-			]
-		},
-		{
-			name: 'SystemsExpert',
-			color: '#5CD859',
-			courses: [
-				{
-					name: 'Operating Systems',
-					href: '/courses/systemsexpert/operating-systems',
-					icon: '💾',
-					color: '#FF6B6B'
-				},
-				{
-					name: 'Networking',
-					href: '/courses/systemsexpert/networking',
-					icon: '🌐',
-					color: '#54A0FF'
-				},
-				{
-					name: 'Databases',
-					href: '/courses/systemsexpert/databases',
-					icon: '🗄️',
-					color: '#5CD859'
-				}
-			]
-		},
-		{
-			name: 'FrontendExpert',
-			color: '#FF9FF3',
-			courses: [
-				{
-					name: 'HTML & CSS',
-					href: '/courses/frontendexpert/html-css',
-					icon: '🎨',
-					color: '#FF6B6B'
-				},
-				{
-					name: 'JavaScript',
-					href: '/courses/frontendexpert/javascript',
-					icon: '🚀',
-					color: '#FFA502'
-				},
-				{ name: 'React', href: '/courses/frontendexpert/react', icon: '⚛️', color: '#54A0FF' }
-			]
-		}
-	];
+  const categories: Category[] = [
+    { 
+      name: 'MLExpert', 
+      color: '#FF6B6B',
+      courses: [
+        { name: 'ML Content Index', href: '/courses/mlexpert/ml-content-index', icon: '📚', color: '#FF9FF3' },
+        { name: 'ML Crash Course', href: '/courses/mlexpert/ml-crash-course', icon: '🚀', color: '#54A0FF' },
+        { name: 'ML Coding Questions', href: '/courses/mlexpert/ml-coding-questions', icon: '💻', color: '#5CD859' },
+        { name: 'Large-Scale ML', href: '/courses/mlexpert/large-scale-ml', icon: '🌐', color: '#FFA502' },
+        { name: 'ML Design Questions', href: '/courses/mlexpert/ml-design-questions', icon: '🎨', color: '#FF6B6B' },
+        { name: 'ML Quiz', href: '/courses/mlexpert/ml-quiz', icon: '❓', color: '#1DD1A1' },
+        { name: 'ML Interview Tips', href: '/courses/mlexpert/ml-interview-tips', icon: '💼', color: '#5F27CD' },
+      ]
+    },
+    { 
+      name: 'AlgoExpert', 
+      color: '#54A0FF',
+      courses: [
+        { name: 'Data Structures', href: '/courses/algoexpert/data-structures', icon: '📊', color: '#FF6B6B' },
+        { name: 'Sorting Algorithms', href: '/courses/algoexpert/sorting-algorithms', icon: '🔢', color: '#FF9FF3' },
+        { name: 'Dynamic Programming', href: '/courses/algoexpert/dynamic-programming', icon: '🧠', color: '#54A0FF' },
+      ]
+    },
+    { 
+      name: 'SystemsExpert', 
+      color: '#5CD859',
+      courses: [
+        { name: 'Operating Systems', href: '/courses/systemsexpert/operating-systems', icon: '💾', color: '#FF6B6B' },
+        { name: 'Networking', href: '/courses/systemsexpert/networking', icon: '🌐', color: '#54A0FF' },
+        { name: 'Databases', href: '/courses/systemsexpert/databases', icon: '🗄️', color: '#5CD859' },
+      ]
+    },
+    { 
+      name: 'FrontendExpert', 
+      color: '#FF9FF3',
+      courses: [
+        { name: 'HTML & CSS', href: '/courses/frontendexpert/html-css', icon: '🎨', color: '#FF6B6B' },
+        { name: 'JavaScript', href: '/courses/frontendexpert/javascript', icon: '🚀', color: '#FFA502' },
+        { name: 'React', href: '/courses/frontendexpert/react', icon: '⚛️', color: '#54A0FF' },
+      ]
+    },
+  ];
 
-	const navItems: NavItem[] = [
-		{ name: 'Dashboard', icon: '📊', href: '/dashboard' },
-		{ name: 'Collaborate', icon: '🎨', href: '/projects' },
-		{ name: 'Courses', icon: '🎓', href: '/courses' },
-		{ name: 'Playground', icon: '🛝', href: '/playground' },
-		{ name: 'Blog', icon: '✍️', href: '/blog' },
-		{
-			name: 'About',
-			icon: 'ℹ️',
-			href: '/about',
-			children: [
-				{ name: 'Our Team', icon: '👥', href: '/about/meettheteam' },
-				{ name: 'Our Story', icon: '📚', href: '/about/story' },
-				{ name: 'Impact', icon: '🌟', href: '/about/impact' },
-				{ name: 'Contact', icon: '📞', href: '/about/contact' }
-			]
-		}
-	];
+  const navItems: NavItem[] = [
+    { name: 'Dashboard', icon: '📊', href: '/dashboard' },
+    { name: 'Collaborate', icon: '🎨', href: '/projects' },
+    { name: 'Courses', icon: '🎓', href: '/courses' },
+    { name: 'Playground', icon: '🛝', href: '/playground' },
+    { name: 'Blog', icon: '✍️', href: '/blog' },
+    { 
+      name: 'About', 
+      icon: 'ℹ️', 
+      href: '/about',
+      children: [
+        { name: 'Our Team', icon: '👥', href: '/about/meettheteam' },
+        { name: 'Our Story', icon: '📚', href: '/about/story' },
+        { name: 'Impact', icon: '🌟', href: '/about/impact' },
+        { name: 'Contact', icon: '📞', href: '/about/contact' }
+      ]
+    },
+  ];
 
-	let prevScrollPos = 0;
-	const handleScroll = () => {
-		const currentScrollPos = window.pageYOffset;
-		isNavVisible = prevScrollPos > currentScrollPos || currentScrollPos < 50;
-		prevScrollPos = currentScrollPos;
+  let prevScrollPos = 0;
+  const handleScroll = () => {
+    const currentScrollPos = window.pageYOffset;
+    isNavVisible = prevScrollPos > currentScrollPos || currentScrollPos < 50;
+    prevScrollPos = currentScrollPos;
 
-		const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-		const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-		const scrolled = (winScroll / height) * 100;
-		if (progressBar) progressBar.style.width = scrolled + '%';
-	};
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    if (progressBar) progressBar.style.width = scrolled + "%";
+  };
 
-	const toggleSearch = () => {
-		isSearchOpen = !isSearchOpen;
-		if (isSearchOpen) {
-			setTimeout(() => {
-				const searchInput = document.querySelector('input[type="search"]') as HTMLInputElement;
-				searchInput?.focus();
-			}, 100);
-		}
-	};
+  const toggleSearch = () => {
+    isSearchOpen = !isSearchOpen;
+    if (isSearchOpen) {
+      setTimeout(() => {
+        const searchInput = document.querySelector('input[type="search"]') as HTMLInputElement;
+        searchInput?.focus();
+      }, 100);
+    }
+  };
 
-	const toggleColorTheme = () => {
-		isColorThemeLight = !isColorThemeLight;
-		document.body.classList.toggle('dark-theme');
-	};
+  const toggleColorTheme = () => {
+    isColorThemeLight = !isColorThemeLight;
+    document.body.classList.toggle('dark-theme');
+  };
 
-	const handleSearch = () => {
-		console.log('Searching for:', searchQuery);
-	};
+  const handleSearch = () => {
+    console.log('Searching for:', searchQuery);
+  };
 
-	onMount(() => {
-		progressBar = document.querySelector('.progress-bar') as HTMLElement;
-		activeCategory = categories[0].name; // Set the first category as active by default
-	});
+  onMount(() => {
+    progressBar = document.querySelector('.progress-bar') as HTMLElement;
+    activeCategory = categories[0].name; // Set the first category as active by default
+  });
 
-	let typingTimer: ReturnType<typeof setTimeout>;
-	const doneTyping = () => {
-		handleSearch();
-	};
+  let typingTimer: ReturnType<typeof setTimeout>;
+  const doneTyping = () => {
+    handleSearch();
+  };
 
-	$: {
-		clearTimeout(typingTimer);
-		if (searchQuery) {
-			typingTimer = setTimeout(doneTyping, 1000);
-		}
-	}
+  $: {
+    clearTimeout(typingTimer);
+    if (searchQuery) {
+      typingTimer = setTimeout(doneTyping, 1000);
+    }
+  }
 
-	let hoveredCategory: string | null = null;
-	let hoveredCourse: string | null = null;
+  let hoveredCategory: string | null = null;
+  let hoveredCourse: string | null = null;
 
-	const handleCategoryHover = (category: string) => {
-		hoveredCategory = category;
-		activeCategory = category;
-	};
+  const handleCategoryHover = (category: string) => {
+    hoveredCategory = category;
+    activeCategory = category;
+  };
 
-	const handleCourseHover = (course: string) => {
-		hoveredCourse = course;
-	};
+  const handleCourseHover = (course: string) => {
+    hoveredCourse = course;
+  };
 
-	const handleCourseLeave = () => {
-		hoveredCourse = null;
-	};
+  const handleCourseLeave = () => {
+    hoveredCourse = null;
+  };
 </script>
 
 <svelte:window on:scroll={handleScroll} />
@@ -249,69 +179,76 @@
     </div>
     <div class="nav-links">
       {#each navItems as item}
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div 
-          class="nav-item" 
-          class:active={$page.url.pathname.startsWith(item.href)}
-          on:mouseenter={() => activeSection = item.name}
-          on:mouseleave={() => activeSection = null}
-        >
-          <a href={item.href}>
-            <span class="icon">{item.icon}</span>
-            <span class="text">{item.name}</span>
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <div 
+    class="nav-item" 
+    class:active={$page.url.pathname.startsWith(item.href)}
+    on:mouseenter={() => activeSection = item.name}
+    on:mouseleave={() => activeSection = null}
+  >
+    {#if item.name === 'Courses' || item.name === 'About'}
+      <span class="nav-link">
+        <span class="icon">{item.icon}</span>
+        <span class="text">{item.name}</span>
+      </span>
+    {:else}
+      <a href={item.href} class="nav-link">
+        <span class="icon">{item.icon}</span>
+        <span class="text">{item.name}</span>
+      </a>
+    {/if}
+    {#if item.children && activeSection === item.name}
+      <div class="submenu" in:scale={{duration: 200, start: 0.95}} out:scale={{duration: 150, start: 0.95}}>
+        {#each item.children as child}
+          <a href={child.href} class="submenu-item">
+            <span class="icon">{child.icon}</span>
+            <span class="text">{child.name}</span>
           </a>
-          {#if item.children && activeSection === item.name}
-            <div class="submenu" in:scale={{duration: 200, start: 0.95}} out:scale={{duration: 150, start: 0.95}}>
-              {#each item.children as child}
-                <a href={child.href} class="submenu-item">
-                  <span class="icon">{child.icon}</span>
-                  <span class="text">{child.name}</span>
+        {/each}
+      </div>
+    {/if}
+    {#if item.name === 'Courses' && activeSection === item.name}
+      <div class="course-explorer" in:scale={{duration: 200, start: 0.95, easing: backOut}} out:scale={{duration: 150, start: 0.95}}>
+        <div class="categories">
+          {#each categories as category}
+            <div 
+              class="category-item" 
+              on:mouseenter={() => handleCategoryHover(category.name)}
+              class:active={activeCategory === category.name}
+              style="--category-color: {category.color}"
+            >
+              <span class="category-icon">{category.name[0]}</span>
+              <span class="category-name">{category.name}</span>
+            </div>
+          {/each}
+        </div>
+        <div class="courses">
+          {#if activeCategory}
+            <div class="courses-grid">
+              {#each categories.find(cat => cat.name === activeCategory)?.courses || [] as course (course.name)}
+                <a 
+                  href={course.href} 
+                  class="course" 
+                  style="--course-color: {course.color}"
+                  on:mouseenter={() => handleCourseHover(course.name)}
+                  on:mouseleave={handleCourseLeave}
+                >
+                  <span class="course-icon">{course.icon}</span>
+                  <span class="course-name">{course.name}</span>
+                  {#if hoveredCourse === course.name}
+                    <span class="course-details">Click to explore</span>
+                  {/if}
                 </a>
               {/each}
             </div>
-          {/if}
-          {#if item.name === 'Courses' && activeSection === item.name}
-            <div class="course-explorer" in:scale={{duration: 200, start: 0.95, easing: backOut}} out:scale={{duration: 150, start: 0.95}}>
-              <div class="categories">
-                {#each categories as category}
-                  <div 
-                    class="category-item" 
-                    on:mouseenter={() => handleCategoryHover(category.name)}
-                    class:active={activeCategory === category.name}
-                    style="--category-color: {category.color}"
-                  >
-                    <span class="category-icon">{category.name[0]}</span>
-                    <span class="category-name">{category.name}</span>
-                  </div>
-                {/each}
-              </div>
-              <div class="courses">
-                {#if activeCategory}
-                  <div class="courses-grid">
-                    {#each categories.find(cat => cat.name === activeCategory)?.courses || [] as course (course.name)}
-                      <a 
-                        href={course.href} 
-                        class="course" 
-                        style="--course-color: {course.color}"
-                        on:mouseenter={() => handleCourseHover(course.name)}
-                        on:mouseleave={handleCourseLeave}
-                      >
-                        <span class="course-icon">{course.icon}</span>
-                        <span class="course-name">{course.name}</span>
-                        {#if hoveredCourse === course.name}
-                          <span class="course-details">Click to explore</span>
-                        {/if}
-                      </a>
-                    {/each}
-                  </div>
-                {:else}
-                  <div class="course-placeholder">Hover over a category to see courses</div>
-                {/if}
-              </div>
-            </div>
+          {:else}
+            <div class="course-placeholder">Hover over a category to see courses</div>
           {/if}
         </div>
-      {/each}
+      </div>
+    {/if}
+  </div>
+{/each}
     </div>
     <div class="nav-controls">
       <button class="icon-btn search-btn" on:click={toggleSearch} aria-label="Search">
@@ -345,75 +282,75 @@
 </header>
 
 <main>
-	<slot />
+  <slot />
 </main>
 
 <style>
-	:root {
-		--primary-color: #4caf50;
-		--secondary-color: #2196f3;
-		--accent-color: #ffc107;
-		--text-color: #333;
-		--background-color: #ffffff;
-		--nav-height: 70px;
-	}
+  :root {
+    --primary-color: #4CAF50;
+    --secondary-color: #2196F3;
+    --accent-color: #FFC107;
+    --text-color: #333;
+    --background-color: #FFFFFF;
+    --nav-height: 70px;
+  }
 
-	.dark-theme {
-		--primary-color: #66bb6a;
-		--secondary-color: #42a5f5;
-		--accent-color: #ffca28;
-		--text-color: #e0e0e0;
-		--background-color: #121212;
-	}
+  .dark-theme {
+    --primary-color: #66BB6A;
+    --secondary-color: #42A5F5;
+    --accent-color: #FFCA28;
+    --text-color: #E0E0E0;
+    --background-color: #121212;
+  }
 
-	header {
-		top: 0;
-		left: 0;
-		right: 0;
-		z-index: 1000;
-		background-color: var(--background-color);
-		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-		transition: all 0.3s ease;
-	}
+  header {
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: var(--background-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
 
-	header.hidden {
-		transform: translateY(-100%);
-	}
+  header.hidden {
+    transform: translateY(-100%);
+  }
 
-	.progress-container {
-		width: 100%;
-		height: 4px;
-		background: #ccc;
-	}
+  .progress-container {
+    width: 100%;
+    height: 4px;
+    background: #ccc;
+  }
 
-	.progress-bar {
-		height: 4px;
-		background: var(--primary-color);
-		width: 0%;
-	}
+  .progress-bar {
+    height: 4px;
+    background: var(--primary-color);
+    width: 0%;
+  }
 
-	nav {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 0 2rem;
-		height: var(--nav-height);
-	}
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: var(--nav-height);
+  }
 
-	.logo a {
-		display: flex;
-		align-items: center;
-		text-decoration: none;
-		color: var(--primary-color);
-		font-weight: bold;
-		font-size: 1.5rem;
-	}
+  .logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
 
-	.logo svg {
-		margin-right: 0.5rem;
-	}
+  .logo svg {
+    margin-right: 0.5rem;
+  }
 
   .nav-links {
     display: flex;
@@ -422,322 +359,346 @@
     flex-grow: 1;
   }
 
-	.nav-item {
-		position: relative;
-		margin: 0 0.5rem;
-	}
+  .nav-link {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
 
-	.nav-item a {
-		text-decoration: none;
-		color: var(--text-color);
-		font-weight: 500;
-		font-size: 1rem;
-		padding: 0.5rem 1rem;
-		border-radius: 20px;
-		transition: all 0.3s ease;
-		display: flex;
-		align-items: center;
-	}
+.nav-item.active .nav-link {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: var(--primary-color);
+}
 
-	.nav-item.active a {
-		background-color: rgba(76, 175, 80, 0.1);
-		color: var(--primary-color);
-	}
+.nav-link:hover {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
 
-	.nav-item a:hover {
-		background-color: rgba(76, 175, 80, 0.1);
-		color: var(--primary-color);
-		transform: translateY(-2px);
-	}
+  .nav-item {
+    position: relative;
+    margin: 0 0.5rem;
+  }
 
-	.icon {
-		margin-right: 0.5rem;
-		font-size: 1.2rem;
-	}
+  .nav-item a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
 
-	.submenu {
-		position: absolute;
-		top: 100%;
-		left: 50%;
-		transform: translateX(-50%);
-		background-color: var(--background-color);
-		border-radius: 10px;
-		padding: 1rem;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-		z-index: 10;
-		min-width: 200px;
-		display: grid;
-		grid-template-columns: repeat(1, 1fr);
-		gap: 0.5rem;
-	}
+  .nav-item.active a {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--primary-color);
+  }
 
-	.submenu-item {
-		display: flex;
-		align-items: center;
-		padding: 0.5rem 1rem;
-		color: var(--text-color);
-		text-decoration: none;
-		transition: all 0.2s ease;
-		border-radius: 8px;
-		white-space: nowrap;
-	}
+  .nav-item a:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+  }
 
-	.submenu-item:hover {
-		background-color: rgba(76, 175, 80, 0.1);
-		color: var(--primary-color);
-		transform: translateX(5px);
-	}
+  .icon {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+  }
 
-	.nav-controls {
-		display: flex;
-		align-items: center;
-	}
+  .submenu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--background-color);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    min-width: 200px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 0.5rem;
+  }
 
-	.icon-btn {
-		background: none;
-		border: none;
-		cursor: pointer;
-		font-size: 1.2rem;
-		margin: 0 0.5rem;
-		padding: 0.5rem;
-		border-radius: 50%;
-		transition: all 0.3s ease;
-	}
+  .submenu-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
 
-	.icon-btn:hover {
-		background-color: rgba(76, 175, 80, 0.1);
-	}
+  .submenu-item:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--primary-color);
+    transform: translateX(5px);
+  }
 
-	.notifications {
-		position: relative;
-	}
+  .nav-controls {
+    display: flex;
+    align-items: center;
+  }
 
-	.notification-badge {
-		position: absolute;
-		top: -5px;
-		right: -5px;
-		background-color: var(--accent-color);
-		color: var(--text-color);
-		font-size: 0.7rem;
-		padding: 2px 5px;
-		border-radius: 50%;
-	}
+  .icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin: 0 0.5rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
 
-	.btn {
-		text-decoration: none;
-		padding: 0.5rem 1rem;
-		border-radius: 20px;
-		font-weight: bold;
-		transition: all 0.3s ease;
-		white-space: nowrap;
-	}
+  .icon-btn:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+  }
 
-	.btn-primary {
-		background-color: var(--primary-color);
-		color: white;
-	}
+  .notifications {
+    position: relative;
+  }
 
-	.btn-primary:hover {
-		background-color: #45a049;
-		transform: translateY(-2px);
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	}
+  .notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    font-size: 0.7rem;
+    padding: 2px 5px;
+    border-radius: 50%;
+  }
 
-	.search-overlay {
-		position: absolute;
-		top: 100%;
-		left: 0;
-		right: 0;
-		background-color: var(--background-color);
-		padding: 1rem;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	}
+  .btn {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
 
-	.search-overlay input {
-		width: 100%;
-		max-width: 600px;
-		padding: 0.5rem 1rem;
-		font-size: 1rem;
-		border: none;
-		border-radius: 20px;
-		background-color: rgba(76, 175, 80, 0.1);
-	}
+  .btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+  }
 
-	.close-search {
-		background: none;
-		border: none;
-		font-size: 1.5rem;
-		cursor: pointer;
-		margin-left: 1rem;
-	}
+  .btn-primary:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
-	.course-explorer {
-		position: absolute;
-		top: 100%;
-		left: 50%;
-		transform: translateX(-50%);
-		background-color: var(--background-color);
-		border-radius: 15px;
-		padding: 1.5rem;
-		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-		z-index: 10;
-		width: 800px;
-		display: flex;
-		justify-content: space-between;
-		overflow: hidden;
-	}
+  .search-overlay {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--background-color);
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
-	.categories {
-		width: 30%;
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
+  .search-overlay input {
+    width: 100%;
+    max-width: 600px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 20px;
+    background-color: rgba(76, 175, 80, 0.1);
+  }
 
-	.category-item {
-		display: flex;
-		align-items: center;
-		padding: 0.75rem 1rem;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		border-radius: 10px;
-		background-color: rgba(var(--category-color), 0.1);
-	}
+  .close-search {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 1rem;
+  }
 
-	.category-item:hover,
-	.category-item.active {
-		background-color: var(--category-color);
-		color: white;
-		transform: translateX(5px);
-	}
+  .course-explorer {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--background-color);
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    width: 800px;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+  }
 
-	.category-icon {
-		width: 30px;
-		height: 30px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background-color: rgba(255, 255, 255, 0.2);
-		border-radius: 50%;
-		margin-right: 0.75rem;
-		font-weight: bold;
-	}
+  .categories {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
 
-	.category-name {
-		font-weight: 500;
-	}
+  .category-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    background-color: rgba(var(--category-color), 0.1);
+  }
 
-	.courses {
-		width: 65%;
-		display: flex;
-		flex-direction: column;
-	}
+  .category-item:hover,
+  .category-item.active {
+    background-color: var(--category-color);
+    color: white;
+    transform: translateX(5px);
+  }
 
-	.courses-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-		gap: 0.75rem;
-	}
+  .category-icon {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    font-weight: bold;
+  }
 
-	.course {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		padding: 0.75rem;
-		color: var(--text-color);
-		text-decoration: none;
-		transition: all 0.3s ease;
-		border-radius: 10px;
-		background-color: rgba(var(--course-color), 0.1);
-		text-align: center;
-		position: relative;
-		overflow: hidden;
-		height: 100px;
-	}
+  .category-name {
+    font-weight: 500;
+  }
 
-	.course:hover {
-		background-color: rgba(var(--course-color), 0.3);
-		color: var(--text-color);
-		transform: translateY(-3px);
-		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-	}
+  .courses {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+  }
 
-	.course-icon {
-		font-size: 1.8rem;
-		margin-bottom: 0.3rem;
-	}
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
+  }
 
-	.course-name {
-		font-weight: 500;
-		font-size: 0.9rem;
-		transition: all 0.3s ease;
-	}
+  .course {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    background-color: rgba(var(--course-color), 0.1);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    height: 100px;
+  }
 
-	.course-details {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		background-color: rgba(0, 0, 0, 0.7);
-		color: white;
-		padding: 0.3rem;
-		font-size: 0.8rem;
-		transform: translateY(100%);
-		transition: all 0.3s ease;
-	}
+  .course:hover {
+    background-color: rgba(var(--course-color), 0.3);
+    color: var(--text-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
 
-	.course:hover .course-details {
-		transform: translateY(0);
-	}
+  .course-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+  }
 
-	.course-placeholder {
-		color: var(--text-color);
-		opacity: 0.7;
-		text-align: center;
-		padding: 1rem;
-		font-style: italic;
-	}
+  .course-name {
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
 
-	@media (max-width: 900px) {
-		.course-explorer {
-			width: 90vw;
-			flex-direction: column;
-		}
+  .course-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.3rem;
+    font-size: 0.8rem;
+    transform: translateY(100%);
+    transition: all 0.3s ease;
+  }
 
-		.categories {
-			width: 100%;
-			flex-direction: row;
-			overflow-x: auto;
-			padding-bottom: 1rem;
-			margin-bottom: 1rem;
-		}
+  .course:hover .course-details {
+    transform: translateY(0);
+  }
 
-		.category-item {
-			flex-shrink: 0;
-		}
+  .course-placeholder {
+    color: var(--text-color);
+    opacity: 0.7;
+    text-align: center;
+    padding: 1rem;
+    font-style: italic;
+  }
 
-		.courses {
-			width: 100%;
-		}
+  @media (max-width: 900px) {
+    .course-explorer {
+      width: 90vw;
+      flex-direction: column;
+    }
 
-		.courses-grid {
-			grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-		}
-	}
+    .categories {
+      width: 100%;
+      flex-direction: row;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
 
-	nav {
-		justify-content: center;
-	}
+    .category-item {
+      flex-shrink: 0;
+    }
 
-	.logo {
-		margin-right: auto;
-	}
+    .courses {
+      width: 100%;
+    }
 
-	.nav-controls {
-		margin-left: auto;
-	}
+    .courses-grid {
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+  }
+
+  nav {
+    justify-content: center;
+  }
+
+  .logo {
+    margin-right: auto;
+  }
+
+  .nav-controls {
+    margin-left: auto;
+  }
 </style>

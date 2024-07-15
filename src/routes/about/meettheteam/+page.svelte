@@ -495,9 +495,9 @@
   }
 
   .page-container {
-    background-color: var(--background-color);
-    color: var(--text-color);
-  }
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: var(--text-color);
+}
 
 	.navbar-placeholder {
 		height: 295.5px;
@@ -1379,7 +1379,7 @@
 
 /* Team member card styles */
 .team-member {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #F6F8FB;
   backdrop-filter: blur(10px);
   border-radius: 20px;
   overflow: hidden;
