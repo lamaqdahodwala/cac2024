@@ -419,18 +419,6 @@ onMount(() => {
 {/if}
 
 <style>
-  
-
-  :global(body) {
-    font-family: "BlinkMacSystemFont", -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    background-attachment: fixed;
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-}
 
   * {
     font-family: "BlinkMacSystemFont", -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -439,6 +427,11 @@ onMount(() => {
   .page-container {
     background-color: var(--background-color);
     color: var(--text-color);
+  }
+
+  .page-container {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: var(--text-color);
   }
 
   .navbar-placeholder {
@@ -672,7 +665,7 @@ onMount(() => {
   }
 
   .team-member {
-    background-color: var(--card-background);
+    background-color: #ECF0F1;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 15px 30px var(--shadow-color);
@@ -1280,21 +1273,10 @@ onMount(() => {
 }
 
 /* Team member card styles */
-.team-member {
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
 .team-member:hover {
   transform: translateY(-10px) scale(1.02);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
-
 
 .team-member::before {
   content: '';
