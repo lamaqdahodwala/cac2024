@@ -285,6 +285,8 @@
   <slot />
 </main>
 
+
+
 <style>
   :root {
     --primary-color: #4CAF50;
@@ -700,5 +702,32 @@
 
   .nav-controls {
     margin-left: auto;
+  }
+
+  header nav .nav-link {
+    font-weight: 600;
+    font-family: "BlinkMacSystemFont", -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 16px
+  }
+
+  header nav .nav-item a {
+    font-weight: 600;
+    font-family: "BlinkMacSystemFont", -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  }
+
+  :global(*) {
+    font-family: "BlinkMacSystemFont", -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
+  }
+  header,
+  nav,
+  .nav-link,
+  .nav-item a,
+  .btn,
+  .submenu-item,
+  .category-name,
+  .course-name {
+    font-family: "BlinkMacSystemFont", -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
+    font-size: 16px;
+    font-weight: 600;
   }
 </style>
