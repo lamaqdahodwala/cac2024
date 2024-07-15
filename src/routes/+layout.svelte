@@ -179,69 +179,76 @@
     </div>
     <div class="nav-links">
       {#each navItems as item}
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div 
-          class="nav-item" 
-          class:active={$page.url.pathname.startsWith(item.href)}
-          on:mouseenter={() => activeSection = item.name}
-          on:mouseleave={() => activeSection = null}
-        >
-          <a href={item.href}>
-            <span class="icon">{item.icon}</span>
-            <span class="text">{item.name}</span>
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <div 
+    class="nav-item" 
+    class:active={$page.url.pathname.startsWith(item.href)}
+    on:mouseenter={() => activeSection = item.name}
+    on:mouseleave={() => activeSection = null}
+  >
+    {#if item.name === 'Courses' || item.name === 'About'}
+      <span class="nav-link">
+        <span class="icon">{item.icon}</span>
+        <span class="text">{item.name}</span>
+      </span>
+    {:else}
+      <a href={item.href} class="nav-link">
+        <span class="icon">{item.icon}</span>
+        <span class="text">{item.name}</span>
+      </a>
+    {/if}
+    {#if item.children && activeSection === item.name}
+      <div class="submenu" in:scale={{duration: 200, start: 0.95}} out:scale={{duration: 150, start: 0.95}}>
+        {#each item.children as child}
+          <a href={child.href} class="submenu-item">
+            <span class="icon">{child.icon}</span>
+            <span class="text">{child.name}</span>
           </a>
-          {#if item.children && activeSection === item.name}
-            <div class="submenu" in:scale={{duration: 200, start: 0.95}} out:scale={{duration: 150, start: 0.95}}>
-              {#each item.children as child}
-                <a href={child.href} class="submenu-item">
-                  <span class="icon">{child.icon}</span>
-                  <span class="text">{child.name}</span>
+        {/each}
+      </div>
+    {/if}
+    {#if item.name === 'Courses' && activeSection === item.name}
+      <div class="course-explorer" in:scale={{duration: 200, start: 0.95, easing: backOut}} out:scale={{duration: 150, start: 0.95}}>
+        <div class="categories">
+          {#each categories as category}
+            <div 
+              class="category-item" 
+              on:mouseenter={() => handleCategoryHover(category.name)}
+              class:active={activeCategory === category.name}
+              style="--category-color: {category.color}"
+            >
+              <span class="category-icon">{category.name[0]}</span>
+              <span class="category-name">{category.name}</span>
+            </div>
+          {/each}
+        </div>
+        <div class="courses">
+          {#if activeCategory}
+            <div class="courses-grid">
+              {#each categories.find(cat => cat.name === activeCategory)?.courses || [] as course (course.name)}
+                <a 
+                  href={course.href} 
+                  class="course" 
+                  style="--course-color: {course.color}"
+                  on:mouseenter={() => handleCourseHover(course.name)}
+                  on:mouseleave={handleCourseLeave}
+                >
+                  <span class="course-icon">{course.icon}</span>
+                  <span class="course-name">{course.name}</span>
+                  {#if hoveredCourse === course.name}
+                    <span class="course-details">Click to explore</span>
+                  {/if}
                 </a>
               {/each}
             </div>
-          {/if}
-          {#if item.name === 'Courses' && activeSection === item.name}
-            <div class="course-explorer" in:scale={{duration: 200, start: 0.95, easing: backOut}} out:scale={{duration: 150, start: 0.95}}>
-              <div class="categories">
-                {#each categories as category}
-                  <div 
-                    class="category-item" 
-                    on:mouseenter={() => handleCategoryHover(category.name)}
-                    class:active={activeCategory === category.name}
-                    style="--category-color: {category.color}"
-                  >
-                    <span class="category-icon">{category.name[0]}</span>
-                    <span class="category-name">{category.name}</span>
-                  </div>
-                {/each}
-              </div>
-              <div class="courses">
-                {#if activeCategory}
-                  <div class="courses-grid">
-                    {#each categories.find(cat => cat.name === activeCategory)?.courses || [] as course (course.name)}
-                      <a 
-                        href={course.href} 
-                        class="course" 
-                        style="--course-color: {course.color}"
-                        on:mouseenter={() => handleCourseHover(course.name)}
-                        on:mouseleave={handleCourseLeave}
-                      >
-                        <span class="course-icon">{course.icon}</span>
-                        <span class="course-name">{course.name}</span>
-                        {#if hoveredCourse === course.name}
-                          <span class="course-details">Click to explore</span>
-                        {/if}
-                      </a>
-                    {/each}
-                  </div>
-                {:else}
-                  <div class="course-placeholder">Hover over a category to see courses</div>
-                {/if}
-              </div>
-            </div>
+          {:else}
+            <div class="course-placeholder">Hover over a category to see courses</div>
           {/if}
         </div>
-      {/each}
+      </div>
+    {/if}
+  </div>
+{/each}
     </div>
     <div class="nav-controls">
       <button class="icon-btn search-btn" on:click={toggleSearch} aria-label="Search">
@@ -351,6 +358,30 @@
     justify-content: center;
     flex-grow: 1;
   }
+
+  .nav-link {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.nav-item.active .nav-link {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: var(--primary-color);
+}
+
+.nav-link:hover {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
 
   .nav-item {
     position: relative;
