@@ -10,26 +10,26 @@ export class MultiProp {
 				for (let index = 0; index < getters.length; index++) {
 					const element = getters[index];
 
-          mergedResults = {
-            ...mergedResults,
-            ...await element.getProps(event)
-          }
+					mergedResults = {
+						...mergedResults,
+						...(await element.getProps(event))
+					};
 				}
 
 				return mergedResults;
 			}
 		}
 
-    return new Temp()
+		return new Temp();
 	}
 
-  static mergeProps(getters: ( (new () => PropGetter) | PropGetter )[]){
-    let instances = getters.map((value) =>{
-      if (typeof value === "function"){
-        return new value()
-      }
-      return value
-    } )
-    return MultiProp.merge(instances)
-  }
+	static mergeProps(getters: ((new () => PropGetter) | PropGetter)[]) {
+		let instances = getters.map((value) => {
+			if (typeof value === 'function') {
+				return new value();
+			}
+			return value;
+		});
+		return MultiProp.merge(instances);
+	}
 }

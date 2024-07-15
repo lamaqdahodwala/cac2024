@@ -10,13 +10,13 @@ export class GetCourseInfo implements RouteImplementation {
 			where: {
 				id: Number(props.courseId)
 			},
-      include: {
-        writer: {
-          select: {
-            name: true
-          }
-        }
-      },
+			include: {
+				writer: {
+					select: {
+						name: true
+					}
+				}
+			}
 		});
 		return {
 			course
@@ -29,5 +29,5 @@ export const route = new APIRoute(
 		PrismaProps,
 		searchParamProps((params) => ({ courseId: params.get('courseId') }), { checkForNull: true })
 	]),
-  GetCourseInfo
+	GetCourseInfo
 );

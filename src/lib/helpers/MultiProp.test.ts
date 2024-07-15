@@ -1,6 +1,6 @@
 import type { PropGetter } from '$lib/abstract/APIRoute';
 import type { RequestEvent } from '@sveltejs/kit';
-import { MultiProp } from './MultiProp'
+import { MultiProp } from './MultiProp';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { mockDeep, mockReset } from 'vitest-mock-extended';
 
@@ -20,42 +20,39 @@ class TestingPropGetter2 implements PropGetter {
 	}
 }
 
-
-
-let event = mockDeep<RequestEvent>()
+let event = mockDeep<RequestEvent>();
 
 describe('MultiProp', () => {
-  beforeEach(() => {
-    mockReset(event)
-  })
+	beforeEach(() => {
+		mockReset(event);
+	});
 	it('merges the output of multiple PropGetters', async () => {
-    let newClass = MultiProp.merge([new TestingPropGetter1(), new TestingPropGetter2()])
+		let newClass = MultiProp.merge([new TestingPropGetter1(), new TestingPropGetter2()]);
 
-    expect(newClass.getProps(event)).resolves.toEqual({
-        value: 1,
-        newValue: 2
-    })
-  });
+		expect(newClass.getProps(event)).resolves.toEqual({
+			value: 1,
+			newValue: 2
+		});
+	});
 
-  it("overwrites previous results if they are the same", async() => {
+	it('overwrites previous results if they are the same', async () => {
+		let newClass = MultiProp.merge([new TestingPropGetter1(), new TestingPropGetter1()]);
+		expect(newClass.getProps(event)).resolves.toEqual({
+			value: 1
+		});
+	});
 
-    let newClass = MultiProp.merge([new TestingPropGetter1(), new TestingPropGetter1()])
-    expect(newClass.getProps(event)).resolves.toEqual({
-        value: 1
-    })
-  })
+	it('can handle references to classes instead of an actual instance', async () => {
+		let newClass = MultiProp.mergeProps([TestingPropGetter1, TestingPropGetter1]);
+		expect(newClass.getProps(event)).resolves.toEqual({
+			value: 1
+		});
+	});
 
-  it("can handle references to classes instead of an actual instance", async() => {
-    let newClass = MultiProp.mergeProps([TestingPropGetter1, TestingPropGetter1])
-    expect(newClass.getProps(event)).resolves.toEqual({
-        value: 1
-    })
-  })
-
-  it("can mix and match references to classes and class instances", async() => {
-    let newClass = MultiProp.mergeProps([TestingPropGetter1, new TestingPropGetter1()])
-    expect(newClass.getProps(event)).resolves.toEqual({
-        value: 1
-    })
-  })
+	it('can mix and match references to classes and class instances', async () => {
+		let newClass = MultiProp.mergeProps([TestingPropGetter1, new TestingPropGetter1()]);
+		expect(newClass.getProps(event)).resolves.toEqual({
+			value: 1
+		});
+	});
 });

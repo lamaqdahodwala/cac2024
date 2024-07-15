@@ -18,7 +18,7 @@
 		});
 	}
 
-  setContext("lessonId", data.lesson.id)
+	setContext('lessonId', data.lesson.id);
 </script>
 
 <div class="m-5">
@@ -29,8 +29,9 @@
 	<div class="content is-size-5">
 		{@html data.lesson.textContent}
 	</div>
-	<IntersectionObserver element={bottomDiv} let:intersecting on:observe={markAsRead}></IntersectionObserver>
+	<IntersectionObserver element={bottomDiv} let:intersecting on:observe={markAsRead}
+	></IntersectionObserver>
 
 	<div id="bottom" bind:this={bottomDiv}></div>
-  <Quizzer/>
+	<Quizzer />
 </div>

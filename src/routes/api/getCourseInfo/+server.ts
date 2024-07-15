@@ -1,3 +1,3 @@
-import { route } from "./GetCourseInfo";
+import { route } from './GetCourseInfo';
 
-export const GET = route.createAPIRoute()
+export const GET = route.createAPIRoute();

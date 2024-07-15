@@ -9,16 +9,16 @@ export class GetAllLessonsInCourse implements RouteImplementation {
 	async call(props: { prisma: PrismaClient; courseId: string }): Promise<object> {
 		return await props.prisma.lesson.findMany({
 			where: {
-				courseId: Number( props.courseId )
+				courseId: Number(props.courseId)
 			}
 		});
 	}
 }
 
 export const route = new APIRoute(
-  MultiProp.mergeProps([
-    PrismaProps, 
-    searchParamProps(params => ({courseId: params.get("courseId")}), {checkForNull: true})
-  ]),
-  GetAllLessonsInCourse
-)
+	MultiProp.mergeProps([
+		PrismaProps,
+		searchParamProps((params) => ({ courseId: params.get('courseId') }), { checkForNull: true })
+	]),
+	GetAllLessonsInCourse
+);

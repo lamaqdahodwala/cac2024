@@ -9,27 +9,30 @@ import { PrismaProps } from '$lib/generic/PrismaProps';
 import { AuthProps } from '$lib/generic/AuthProps';
 
 export class AddActiveCourse implements RouteImplementation {
-  async call(props: {prisma: PrismaClient, courseId: number, user: User}): Promise<object> {
-    return await props.prisma.course.update({
-      where: {
-        id: Number( props.courseId )
-      },
-      data: {
-        activeFor: {
-          connect: {
-            id: props.user.id
-          }
-        }
-      }
-    })
-  }
+	async call(props: { prisma: PrismaClient; courseId: number; user: User }): Promise<object> {
+		return await props.prisma.course.update({
+			where: {
+				id: Number(props.courseId)
+			},
+			data: {
+				activeFor: {
+					connect: {
+						id: props.user.id
+					}
+				}
+			}
+		});
+	}
 }
 
-const AddActiveCourseProps = jsonProps((json) => ({
-  courseId: json.courseId
-}), {checkForNull: true})
+const AddActiveCourseProps = jsonProps(
+	(json) => ({
+		courseId: json.courseId
+	}),
+	{ checkForNull: true }
+);
 
 export const route = new APIRoute(
-  MultiProp.mergeProps([PrismaProps, AddActiveCourseProps, AuthProps]),
-  AddActiveCourse
-)
+	MultiProp.mergeProps([PrismaProps, AddActiveCourseProps, AuthProps]),
+	AddActiveCourse
+);

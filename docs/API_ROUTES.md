@@ -2,7 +2,7 @@
 
 The main idea of the code in place to help write backend API routes is that the code should be composable rather than inheritance based. There are multiple interfaces to help you create SOLID code.
 
-## RouteImplementation 
+## RouteImplementation
 
 This is the main interface that should be implemented when doing any business logic related to the API Route. To use it, simply implement it and start writing
 
@@ -15,8 +15,7 @@ class ExampleRoute implements RouteImplementation {
 }
 ```
 
-## PropGetter 
-
+## PropGetter
 
 To get extra props that are required for the implementation, you can implement the PropGetter interface
 
@@ -40,11 +39,10 @@ Data returned from getProps() will be passed to RouteImplementation.
 To make an actual API route, you need to combine both the PropGetter and the RouteImplementation together into a single APIRoute. This is done like so:
 
 ```javascript
-
-let route = new APIRoute(ExampleProps, ExampleRoute)
-
+let route = new APIRoute(ExampleProps, ExampleRoute);
 ```
-This makes the experience very flexible, as you can simply pick and choose what props and what implementation you want, and reusing them is a breeze. 
+
+This makes the experience very flexible, as you can simply pick and choose what props and what implementation you want, and reusing them is a breeze.
 
 ## MultiProp
 
@@ -54,7 +52,7 @@ To aid in reusing PropGetter classes that you have written, and to avoid boilerp
 MultiProp.merge([new GetUserProps(), new GetFormDataProps()])
 ```
 
-The merged class can then be used in APIRoutes: 
+The merged class can then be used in APIRoutes:
 
 ```
 new APIRoute(MultiProp.merge([new GetUserProps(), new GetFormDataProps()]), ExampleRoute)

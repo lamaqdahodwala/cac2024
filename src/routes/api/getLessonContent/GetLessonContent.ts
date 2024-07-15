@@ -8,7 +8,11 @@ import { error } from '@sveltejs/kit';
 import { marked } from 'marked';
 
 export class GetLessonContent implements RouteImplementation {
-	async call(props: { prisma: PrismaClient; lessonId: string, renderHTML: boolean }): Promise<object> {
+	async call(props: {
+		prisma: PrismaClient;
+		lessonId: string;
+		renderHTML: boolean;
+	}): Promise<object> {
 		let lesson = await props.prisma.lesson.findUnique({
 			where: {
 				id: Number(props.lessonId)
@@ -17,19 +21,22 @@ export class GetLessonContent implements RouteImplementation {
 
 		if (!lesson) throw error(404, 'Lesson not found');
 
-    let content = ( props.renderHTML ? marked(lesson.textContent) : lesson.textContent )
-		return { textContent: ( content ), lessonName: lesson.title };
+		let content = props.renderHTML ? marked(lesson.textContent) : lesson.textContent;
+		return { textContent: content, lessonName: lesson.title };
 	}
 }
 
-export const GetLessonProps = searchParamProps((json) => {
-  let renderHTML: boolean = !!json.get("renderHTML")
+export const GetLessonProps = searchParamProps(
+	(json) => {
+		let renderHTML: boolean = !!json.get('renderHTML');
 
-	return {
-		lessonId: json.get("lessonId"), 
-    renderHTML: renderHTML
-	};
-}, {checkForNull: true});
+		return {
+			lessonId: json.get('lessonId'),
+			renderHTML: renderHTML
+		};
+	},
+	{ checkForNull: true }
+);
 
 export const route = new APIRoute(
 	MultiProp.mergeProps([PrismaProps, GetLessonProps]),

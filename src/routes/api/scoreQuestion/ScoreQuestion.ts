@@ -27,7 +27,6 @@ export class ScoreQuestion implements RouteImplementation {
 			isUserCorrect = true;
 		}
 
-
 		let incorrectAnswerExplanation = await props.prisma.quizQuestion.findUnique({
 			where: {
 				id: props.questionId
