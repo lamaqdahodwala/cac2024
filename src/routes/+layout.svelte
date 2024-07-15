@@ -80,17 +80,6 @@
   const navItems: NavItem[] = [
     { name: 'Dashboard', icon: '📊', href: '/dashboard' },
     { name: 'Collaborate', icon: '🎨', href: '/projects' },
-    { 
-      name: 'Learn', 
-      icon: '📚', 
-      href: '/learn',
-      children: [
-        { name: 'Quizzes', icon: '🧠', href: '/learn/quizzes' },
-        { name: 'Lessons', icon: '📖', href: '/learn/lessons' },
-        { name: 'Exercises', icon: '💪', href: '/learn/exercises' },
-        { name: 'Tutorials', icon: '🎮', href: '/learn/tutorials' }
-      ]
-    },
     { name: 'Courses', icon: '🎓', href: '/courses' },
     { name: 'Playground', icon: '🛝', href: '/playground' },
     { name: 'Blog', icon: '✍️', href: '/blog' },
@@ -99,7 +88,7 @@
       icon: 'ℹ️', 
       href: '/about',
       children: [
-        { name: 'Our Team', icon: '👥', href: '/about/team' },
+        { name: 'Our Team', icon: '👥', href: '/about/meettheteam' },
         { name: 'Our Story', icon: '📚', href: '/about/story' },
         { name: 'Impact', icon: '🌟', href: '/about/impact' },
         { name: 'Contact', icon: '📞', href: '/about/contact' }
