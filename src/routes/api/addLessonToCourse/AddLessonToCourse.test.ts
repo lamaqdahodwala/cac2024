@@ -15,7 +15,6 @@ describe('CreateCourse', () => {
 	let props = MultiProp.merge([prismaProps, new AddLessonToCourseProps()]);
 	let apiRoute = new APIRoute(props, new AddLessonToCourse());
 
-
 	beforeEach(() => {
 		mockReset(event);
 		mockReset(prismaMock);
@@ -24,11 +23,14 @@ describe('CreateCourse', () => {
 	it('Can add a paragraph to a lesson', async () => {
 		let fakeLesson = {
 			id: 123,
-      courseId: 456, 
-      title: "Learn How To Make ChatGPT"
+			courseId: 456,
+			title: 'Learn How To Make ChatGPT'
 		};
 		prismaMock.lesson.create.mockResolvedValueOnce(fakeLesson);
-		event.request.json.mockResolvedValueOnce({ courseId: "456", title: "Learn How To Make ChatGPT" });
+		event.request.json.mockResolvedValueOnce({
+			courseId: '456',
+			title: 'Learn How To Make ChatGPT'
+		});
 
 		expect(apiRoute.callRoute(event)).resolves.toBe(fakeLesson);
 	});

@@ -31,6 +31,6 @@ export const UpdateQuestionTextProps = jsonProps(
 );
 
 export const route = new APIRoute(
-  MultiProp.mergeProps([AuthProps, UpdateQuestionTextProps, PrismaProps]),
-  UpdateQuestionText
-)
+	MultiProp.mergeProps([AuthProps, UpdateQuestionTextProps, PrismaProps]),
+	UpdateQuestionText
+);

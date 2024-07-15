@@ -1,3 +1,3 @@
-import { route } from "./ChangeCourseElementOrder";
+import { route } from './ChangeCourseElementOrder';
 
-export const POST = route.createAPIRoute()
+export const POST = route.createAPIRoute();

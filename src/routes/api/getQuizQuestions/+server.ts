@@ -1,3 +1,3 @@
-import { route } from "./GetQuizQuestions";
+import { route } from './GetQuizQuestions';
 
-export const GET = route.createAPIRoute()
+export const GET = route.createAPIRoute();

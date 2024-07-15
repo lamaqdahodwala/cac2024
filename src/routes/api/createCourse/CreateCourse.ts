@@ -34,4 +34,3 @@ export const route = new APIRoute(
 	MultiProp.merge([new PrismaProps(), new CreateCourseProps()]),
 	new CreateCourse()
 );
-

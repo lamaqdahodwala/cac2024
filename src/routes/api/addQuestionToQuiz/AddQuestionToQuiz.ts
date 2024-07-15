@@ -15,9 +15,9 @@ export class AddQuestionToQuiz implements RouteImplementation {
 		prisma: PrismaClient;
 		quizId: number;
 		question: string;
-    user: User
+		user: User;
 	}): Promise<QuizQuestion> {
-    let userId = props.user.id
+		let userId = props.user.id;
 		const quiz = await props.prisma.quiz.findUnique({
 			where: { id: props.quizId },
 			include: { lesson: { include: { inCourse: true } } }
@@ -26,7 +26,7 @@ export class AddQuestionToQuiz implements RouteImplementation {
 			throw error(404, 'Quiz not found');
 		}
 		const user = await props.prisma.user.findUnique({
-			where: { id: userId}
+			where: { id: userId }
 		});
 		if (!user || (user.role !== 'admin' && user.id !== quiz.lesson.inCourse.writerId)) {
 			throw error(403, 'Unauthorized to add questions to this quiz');
@@ -45,7 +45,7 @@ export class AddQuestionToQuiz implements RouteImplementation {
 						data: {
 							quizQuestion: { connect: { id: quizQuestion.id } },
 							answerText: answer,
-							isCorrect: index === 0,
+							isCorrect: index === 0
 						}
 					})
 				)

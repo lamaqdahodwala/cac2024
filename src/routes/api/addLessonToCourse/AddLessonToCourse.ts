@@ -14,7 +14,7 @@ export class AddLessonToCourse implements RouteImplementation {
 			data: {
 				courseId: Number(props.courseId),
 				title: props.lessonName,
-        textContent: ''
+				textContent: ''
 			}
 		});
 	}
@@ -35,6 +35,6 @@ export class AddLessonToCourseProps implements PropGetter {
 }
 
 export const route = new APIRoute(
-  MultiProp.merge([new PrismaProps(), new AddLessonToCourseProps()]),
-  new AddLessonToCourse()
-)
+	MultiProp.merge([new PrismaProps(), new AddLessonToCourseProps()]),
+	new AddLessonToCourse()
+);

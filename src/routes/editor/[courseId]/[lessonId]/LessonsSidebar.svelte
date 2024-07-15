@@ -33,7 +33,6 @@
 			{/each}
 		</div>
 
-    <LessonAddButton on:lessonCreated={e => navigate(e.detail.lessonId)}/>
-
+		<LessonAddButton on:lessonCreated={(e) => navigate(e.detail.lessonId)} />
 	{/await}
 </div>

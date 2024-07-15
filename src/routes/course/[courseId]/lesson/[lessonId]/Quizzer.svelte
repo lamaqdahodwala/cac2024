@@ -10,30 +10,28 @@
 	let modalOpen = false;
 	let id = getContext('lessonId');
 
-  let numQuestions = 0
+	let numQuestions = 0;
 
 	async function getQuiz() {
 		let res = await fetch(`/api/getQuizQuestions?lessonId=${id}`);
 
 		let json = await res.json();
 
-    numQuestions = json.quiz.questions.length - 1
+		numQuestions = json.quiz.questions.length - 1;
 
 		return json;
 	}
 
-  function incrementPageNumber(){
-    if ( pageNumber + 1 > numQuestions) return
-    pageNumber = pageNumber + 1
-  }
+	function incrementPageNumber() {
+		if (pageNumber + 1 > numQuestions) return;
+		pageNumber = pageNumber + 1;
+	}
 
-  function decrementPageNumber(){
-    if ( pageNumber - 1 < 0) return
-    pageNumber = pageNumber - 1
-  }
+	function decrementPageNumber() {
+		if (pageNumber - 1 < 0) return;
+		pageNumber = pageNumber - 1;
+	}
 	let pageNumber = 0;
-
-  
 </script>
 
 {#await getQuiz() then data}

@@ -1,3 +1,3 @@
-import { route } from "./UpdateLessonContent";
+import { route } from './UpdateLessonContent';
 
-export const POST = route.createAPIRoute()
+export const POST = route.createAPIRoute();

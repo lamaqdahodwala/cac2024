@@ -42,7 +42,7 @@ export class AddQuizToLessonProps implements PropGetter {
 			throw error(400, 'Please provide a lessonId');
 		}
 		return {
-			lessonId: Number(lessonId),
+			lessonId: Number(lessonId)
 		};
 	}
 }

@@ -4,7 +4,10 @@ import { mockDeep, mockReset, type DeepMockProxy } from 'vitest-mock-extended';
 import type { RequestEvent } from '@sveltejs/kit';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { MultiProp } from '$lib/helpers/MultiProp';
-import { ChangeCourseElementOrderProps, ChangeCourseElementOrder } from './ChangeCourseElementOrder';
+import {
+	ChangeCourseElementOrderProps,
+	ChangeCourseElementOrder
+} from './ChangeCourseElementOrder';
 import { APIRoute } from '$lib/abstract/APIRoute';
 
 describe('ChangeCourseElementOrder', () => {
@@ -23,21 +26,21 @@ describe('ChangeCourseElementOrder', () => {
 	it('Can change the order of lessons in a course', async () => {
 		let fakeCourse = {
 			id: 123,
-			title: "Test Course",
+			title: 'Test Course',
 			lessons: [
-				{ id: 1, courseId: 123, title: "Lesson1" },
-				{ id: 2, courseId: 123, title: "Lesson2" }
+				{ id: 1, courseId: 123, title: 'Lesson1' },
+				{ id: 2, courseId: 123, title: 'Lesson2' }
 			]
 		};
 		prismaMock.course.findUnique.mockResolvedValueOnce(fakeCourse);
-		event.request.json.mockResolvedValueOnce({ courseId: "123", lessonId: "2", index: 0 });
+		event.request.json.mockResolvedValueOnce({ courseId: '123', lessonId: '2', index: 0 });
 
 		let updatedCourse = {
-      id: 123,
-      title: "Test Course",
+			id: 123,
+			title: 'Test Course',
 			lessons: [
-				{ id: 2, courseId: 123, title: "Lesson2" },
-				{ id: 1, courseId: 123, title: "Lesson1" }
+				{ id: 2, courseId: 123, title: 'Lesson2' },
+				{ id: 1, courseId: 123, title: 'Lesson1' }
 			]
 		};
 

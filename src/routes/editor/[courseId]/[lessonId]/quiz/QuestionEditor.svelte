@@ -23,7 +23,7 @@
 	};
 
 	async function updateQuestionText() {
-    await fetch('/api/updateQuestionText', {
+		await fetch('/api/updateQuestionText', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -32,8 +32,8 @@
 				questionId: question.id,
 				newText: questionText
 			})
-    })
-  }
+		});
+	}
 
 	async function updateCorrectAnswer(correctAnswer) {
 		await fetch('/api/changeCorrectAnswer', {
@@ -48,11 +48,11 @@
 		});
 	}
 
-  let questionText = question.question
+	let questionText = question.question;
 </script>
 
 <div class="field">
-	<input class="input" bind:value={questionText} on:input={debounceSave}/>
+	<input class="input" bind:value={questionText} on:input={debounceSave} />
 	{#each question.answers as answer}
 		<p>
 			<input

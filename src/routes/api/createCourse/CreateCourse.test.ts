@@ -23,10 +23,10 @@ describe('CreateCourse', () => {
 	it('Can create a course', async () => {
 		let fakeCourse = {
 			id: 123,
-      title: "New Course"
+			title: 'New Course'
 		};
 		prismaMock.course.create.mockResolvedValueOnce(fakeCourse);
-		event.request.json.mockResolvedValueOnce({ courseTitle: "New Course" });
+		event.request.json.mockResolvedValueOnce({ courseTitle: 'New Course' });
 
 		expect(apiRoute.callRoute(event)).resolves.toBe(fakeCourse);
 	});

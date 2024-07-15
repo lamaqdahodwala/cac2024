@@ -1,3 +1,3 @@
-import { route } from "./GetAllActiveCourses";
+import { route } from './GetAllActiveCourses';
 
-export const GET = route.createAPIRoute()
+export const GET = route.createAPIRoute();

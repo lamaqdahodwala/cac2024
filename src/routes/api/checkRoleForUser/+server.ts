@@ -1,3 +1,3 @@
-import { route } from "./CheckRoleForUser";
+import { route } from './CheckRoleForUser';
 
-export const GET = route.createAPIRoute()
+export const GET = route.createAPIRoute();

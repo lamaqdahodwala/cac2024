@@ -9,7 +9,6 @@ export const jsonProps = (callback: (json: any) => object, config?: { checkForNu
 
 			if (!config?.checkForNull) return data;
 
-
 			let values = Object.entries(data);
 
 			values.forEach((value) => {
