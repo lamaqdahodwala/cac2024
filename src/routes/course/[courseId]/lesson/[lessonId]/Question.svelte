@@ -31,24 +31,33 @@
 		incorrectAnswerExplanation = json.incorrectAnswerExplanation;
 	}
 
-	function shuffleList(arr: any[]) {
+	function shuffleList(array: any[]) {
 		function pickRandomIndex(array: any[]) {
 			return Math.floor(Math.random() * array.length);
 		}
 
+    let arr = array
 		let newArray = [];
+
+    function addRandomItemToArray(arr: any[], newArray: any[]){
+			let randomIndex = pickRandomIndex(arr);
+			let removedElement = arr[randomIndex]
+      if (newArray.includes(removedElement)){
+        return addRandomItemToArray(arr, newArray)
+      }
+			newArray.push(removedElement);
+    }
 
     let arrayLength = arr.length
 		for (let index = 0; index < arrayLength; index++) {
-			let randomIndex = pickRandomIndex(arr);
-			let removedElement = arr.splice(randomIndex, 1);
-			newArray.push(removedElement[0]);
+      addRandomItemToArray(array, newArray)
 		}
 
     return newArray
 	}
 
-  let shuffledAnswers = shuffleList(question.answers)
+
+  $: shuffledAnswers = shuffleList(question.answers)
 </script>
 
 <p class="subtitle is-4">{question.question}</p>
