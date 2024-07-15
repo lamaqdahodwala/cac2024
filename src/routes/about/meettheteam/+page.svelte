@@ -2022,16 +2022,6 @@ onMount(() => {
   opacity: 0.5;
 }
 
-.animated-bg span {
-  position: absolute;
-  display: block;
-  width: 20px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.2);
-  animation: move 25s linear infinite;
-  bottom: -150px;
-}
-
 @keyframes move {
   0% {
     transform: translateY(0) rotate(0deg);
