@@ -438,10 +438,7 @@
 <svelte:head>
 	<title>BrainBlox - AI Learning Dashboard</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
-	<link
-		rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-	/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 	<link
 		href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
 		rel="stylesheet"
@@ -517,66 +514,84 @@
 			</div>
 
 			{#if activeTab === 'learning'}
-				<section class="section learning-journey" in:fade>
-					<h2 class="title is-2">Your Learning Journey</h2>
-					<div class="columns is-multiline fixed-height-container">
-						{#each activeCourses as course}
-							<div
-								class="column is-one-third"
-								in:fly={{ y: 200, duration: 1000, easing: quintOut }}
-							>
-								<div class="card">
-									<div class="card-image">
-										<figure class="image is-4by3">
-											<img src={course.imageUrl} alt={course.title} />
-										</figure>
-									</div>
-									<header class="card-header">
-										<p class="card-header-title">{course.title}</p>
-										<button
-											class="card-header-icon"
-											aria-label="remove course"
-											on:click={() => removeActiveCourse(course.id)}
-										>
-											<span class="icon">
-												<i class="fas fa-times"></i>
-											</span>
-										</button>
-									</header>
-									<div class="card-content">
-										<progress
-											class="progress {getProgressColor(course.progress)}"
-											value={course.progress}
-											max="100">{course.progress}%</progress
-										>
-										<p class="subtitle is-6">Progress: {course.progress}%</p>
-										<p>Last accessed: {course.lastAccessed}</p>
-										<a href={`/course/${course.id}`} class="button is-primary is-fullwidth mt-4">
-											<span class="icon">
-												<i class="fas fa-play"></i>
-											</span>
-											<span>Continue Learning</span>
-										</a>
-									</div>
-								</div>
-							</div>
-						{/each}
-					</div>
-					<div class="buttons is-centered mt-6">
-						<button class="button is-info is-large animated-button" on:click={startQuiz}>
-							<span class="icon">
-								<i class="fas fa-question-circle"></i>
-							</span>
-							<span>Take a Quick Quiz</span>
-						</button>
-						<button class="button is-success is-large animated-button" on:click={toggleCommunity}>
-							<span class="icon">
-								<i class="fas fa-users"></i>
-							</span>
-							<span>Community Hub</span>
-						</button>
-					</div>
-				</section>
+    <section class="section learning-journey" in:fade>
+        <h2 class="title is-2">Your Learning Journey</h2>
+        {#if activeCourses.length === 0}
+            <div class="columns is-centered mb-6">
+                <div class="column is-half">
+                    <div class="box has-text-centered">
+                        <p class="title is-4 mb-4">Ready to start your AI journey?</p>
+                        <button
+                            class="button is-primary is-large animated-button"
+                            on:click={() => activeTab = 'discover'}
+                        >
+                            <span class="icon">
+                                <i class="fas fa-search"></i>
+                            </span>
+                            <span>Discover New Courses</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {:else}
+            <div class="columns is-multiline fixed-height-container mb-6">
+                {#each activeCourses as course}
+                    <div class="column is-one-third" in:fly={{ y: 200, duration: 1000, easing: quintOut }}>
+                        <div class="card">
+                            <div class="card-image">
+                                <figure class="image is-4by3">
+                                    <img src={course.imageUrl} alt={course.title} />
+                                </figure>
+                            </div>
+                            <header class="card-header">
+                                <p class="card-header-title">{course.title}</p>
+                                <button
+                                    class="card-header-icon"
+                                    aria-label="remove course"
+                                    on:click={() => removeActiveCourse(course.id)}
+                                >
+                                    <span class="icon">
+                                        <i class="fas fa-times"></i>
+                                    </span>
+                                </button>
+                            </header>
+                            <div class="card-content">
+                                <progress
+                                    class="progress {getProgressColor(course.progress)}"
+                                    value={course.progress}
+                                    max="100">{course.progress}%</progress
+                                >
+                                <p class="subtitle is-6">Progress: {course.progress}%</p>
+                                <p>Last accessed: {course.lastAccessed}</p>
+                                <a href={`/course/${course.id}`} class="button is-primary is-fullwidth mt-4">
+                                    <span class="icon">
+                                        <i class="fas fa-play"></i>
+                                    </span>
+                                    <span>Continue Learning</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {/each}
+            </div>
+        {/if}
+        
+        <!-- Quiz and Community buttons (always visible) -->
+        <div class="buttons is-centered mt-6">
+            <button class="button is-info is-large animated-button" on:click={startQuiz}>
+                <span class="icon">
+                    <i class="fas fa-question-circle"></i>
+                </span>
+                <span>Take a Quick Quiz</span>
+            </button>
+            <button class="button is-success is-large animated-button" on:click={toggleCommunity}>
+                <span class="icon">
+                    <i class="fas fa-users"></i>
+                </span>
+                <span>Community Hub</span>
+            </button>
+        </div>
+    </section>
 			{:else if activeTab === 'discover'}
 				<section class="section discover-courses" in:fade>
 					<h2 class="title is-2">Discover New Horizons</h2>
@@ -1351,4 +1366,102 @@
 		overflow-y: auto;
 		padding: 0.75rem;
 	}
+	.card-header-icon {
+    background: none;
+    border: none;
+    color: #4a4a4a;
+    cursor: pointer;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.card-header-icon:hover {
+    color: #f14668;
+    transform: scale(1.1);
+}
+
+.card-header-icon .icon {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.card-header-icon .fa-times {
+    font-size: 1.2rem;
+}
+
+/* Normalize font weights and styles */
+body, button, input, select, textarea {
+	font-family: "BlinkMacSystemFont", -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+.title {
+  font-weight: 600 !important;
+}
+
+.subtitle {
+  font-weight: 400 !important;
+}
+
+.button {
+  font-weight: 500 !important;
+}
+
+.card-header-title {
+  font-weight: 600 !important;
+}
+
+.menu-label {
+  font-weight: 600 !important;
+}
+
+.navbar-item {
+  font-weight: 500 !important;
+}
+
+/* Prevent browser-specific font rendering differences */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ensure consistent font sizing */
+html {
+  font-size: 16px;
+}
+
+/* Prevent text inflation on mobile devices */
+body {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Normalize line heights */
+p, ul, ol {
+  line-height: 1.5;
+}
+
+/* Ensure consistent font weights for form elements */
+input, select, textarea {
+  font-weight: 400 !important;
+}
+
+/* Prevent bold text in placeholders */
+::placeholder {
+  font-weight: 400 !important;
+}
+
+/* Ensure consistent font weight in all browsers */
+b, strong {
+  font-weight: 600;
+}
 </style>
