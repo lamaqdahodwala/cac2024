@@ -1,4 +1,6 @@
 <script lang="ts">
+	import AnswerEditor from "./AnswerEditor.svelte";
+
 	export let question: {
 		question: string;
 		id: string;
@@ -63,7 +65,7 @@
 				class="checkbox"
 				checked={answer.id === correctAnswer.id}
 				on:change={() => updateCorrectAnswer(correctAnswer)}
-			/>{answer.answerText}
+			/> <AnswerEditor answerId={Number( answer.id )} answerText={answer.answerText}/>
 		</p>
 	{/each}
 </div>
