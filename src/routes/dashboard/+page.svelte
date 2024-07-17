@@ -987,7 +987,9 @@
 		margin-bottom: 2rem;
 		position: relative;
 		overflow: hidden;
-		border-radius: 0 0 30px 30px;
+		border-radius: 0 0 50px 50px;
+		height: 307.5px;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 	}
 
 	.hero::after {

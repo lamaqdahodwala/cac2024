@@ -479,7 +479,7 @@
     position: absolute;
     top: -5px;
     right: -5px;
-    background-color: var(--accent-color);
+    background-color: #FFC107;
     color: var(--text-color);
     font-size: 0.7rem;
     padding: 2px 5px;

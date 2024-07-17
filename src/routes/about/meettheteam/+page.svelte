@@ -499,16 +499,21 @@
   color: var(--text-color);
 }
 
-	.navbar-placeholder {
-		height: 295.5px;
-		background: linear-gradient(135deg, #20b2aa 0%, #00ced1 100%);
-		border-radius: 0 0 50px 50px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 2rem;
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-	}
+.navbar-placeholder {
+    height: 307.5px;
+    background: linear-gradient(135deg, #4f9a94 0%, #57b6ad 50%, #60c1b8 100%);
+    border-radius: 0 0 50px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+	
 
 	.intro-text {
 		text-align: center;
@@ -629,16 +634,19 @@
 	}
 
 	.fun-meter {
-		background-color: var(--card-background);
-		border-radius: 20px;
-		padding: 2rem;
-		margin-bottom: 3rem;
-		text-align: center;
-		box-shadow: 0 15px 30px var(--shadow-color);
-		position: relative; /* Added for pseudo-element use */
-		overflow: hidden; /* Added for pseudo-element use */
-		background: linear-gradient(135deg, #e0f5d3, #d0f0fd, #48c78e);
-	}
+    background-color: var(--card-background);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    box-shadow: 0 15px 30px var(--shadow-color);
+    position: relative; /* Added for pseudo-element use */
+    overflow: hidden; /* Added for pseudo-element use */
+    background: linear-gradient(135deg, rgba(224, 245, 211, 0.8), rgba(208, 240, 253, 0.8)), url('https://www.transparenttextures.com/patterns/cubes.png');
+    background-size: cover;
+    background-blend-mode: overlay;
+}
+
 
 	.fun-meter h3 {
 		color: #363636;
@@ -1341,7 +1349,7 @@
 		--text-color: #363636;
 		--card-background: #ecf0f1;
 		--shadow-color: rgba(44, 62, 80, 0.1);
-		--background-color: #f5f7fa;
+		--background-color: #ffffff;
 	}
 
 	/* Navbar styles */
@@ -2223,4 +2231,5 @@
     transform: scale(1.05);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
 </style>
