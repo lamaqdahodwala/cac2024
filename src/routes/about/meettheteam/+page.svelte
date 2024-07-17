@@ -744,11 +744,6 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
-	.team-member:hover {
-		transform: translateY(-10px) rotate(2deg);
-		box-shadow: 0 20px 40px var(--shadow-color);
-	}
-
 	.team-member::before {
 		content: '';
 		position: absolute;
@@ -1254,10 +1249,6 @@
 		perspective: 1000px;
 	}
 
-	.team-member:hover {
-		animation: cardHover 0.5s ease-in-out;
-	}
-
 	@keyframes cardHover {
 		0% {
 			transform: rotateY(0deg);
@@ -1388,10 +1379,6 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.team-member:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
 
 
 	.team-member::before {
@@ -1829,10 +1816,6 @@
 		transform-style: preserve-3d;
 	}
 
-	.team-member:hover {
-		animation: cardHover 0.5s ease-in-out;
-	}
-
 	@keyframes cardHover {
 		0% {
 			transform: rotateY(0deg);
@@ -2196,4 +2179,48 @@
 	.team-member:hover .floating-label {
 		opacity: 1;
 	}
+
+	/* Navbar styles */
+.navbar {
+  background-color: #FFFFFF !important;
+  font-weight: 1000;
+}
+
+.team-member:hover {
+		transform: translateY(-10px) !important;
+		box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2) !important;
+	}
+
+	.team-member {
+		transition:
+			transform 0.3s ease,
+			box-shadow 0.3s ease !important;
+	}
+	.achievement {
+		background-color: #48C78E;
+		color: white;
+		padding: 0.75rem 1.5rem;
+		border-radius: 10px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%; 
+		min-height: 50px; 
+		text-align: center;
+		}
+
+		.achievement p {
+		margin: 0;
+		}
+
+			.sort-controls button {
+    /* Existing styles */
+    transition: all 0.3s ease;
+}
+
+.sort-controls button:hover {
+    background-color: #5ad8a4; /* Lighter shade of the accent color */
+    transform: scale(1.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
 </style>
