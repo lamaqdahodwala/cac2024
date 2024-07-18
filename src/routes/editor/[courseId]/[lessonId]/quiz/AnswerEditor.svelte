@@ -8,8 +8,17 @@
 	}
 
 	async function save() {
-    await fetch("/api/updateAnswerContent")
-  }
+		await fetch('/api/updateAnswerContent', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				newAnswerContent: answerText,
+				answerId: answerId
+			})
+		});
+	}
 
 	let timer: number | undefined;
 	const debounce = () => {
@@ -20,7 +29,15 @@
 
 <div>
 	{#if editing}
-		<input type="text" on:blur={() => (editing = false)} use:focus bind:value={answerText} on:input={debounce}/>
+		<form on:submit|preventDefault={() => (editing = false)}>
+			<input
+				type="text"
+				on:blur={() => (editing = false)}
+				use:focus
+				bind:value={answerText}
+				on:input={debounce}
+			/>
+		</form>
 	{:else}
 		<p on:dblclick={() => (editing = true)} id="answerLine">
 			{answerText}
