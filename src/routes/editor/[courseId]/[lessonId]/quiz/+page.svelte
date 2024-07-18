@@ -11,7 +11,9 @@
 </script>
 
 {#each data.quiz.questions as i}
-	<QuestionEditor question={i} />
+	<div class="my-6">
+		<QuestionEditor question={i} on:answerAdded={refetchLoadData} />
+	</div>
 {/each}
 
 <AddQuestionButton on:questionAdded={refetchLoadData} quizId={Number(data.quiz.id)}

@@ -1,6 +1,8 @@
 <script lang="ts">
-	import AnswerEditor from "./AnswerEditor.svelte";
+	import { createEventDispatcher } from 'svelte';
+	import AnswerEditor from './AnswerEditor.svelte';
 
+  let dispatch = createEventDispatcher()
 	export let question: {
 		question: string;
 		id: string;
@@ -50,13 +52,27 @@
 		});
 	}
 
+	async function addAnswer() {
+		await fetch('/api/addAnswerToQuestion', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				questionId: question.id
+			})
+		});
+
+    dispatch("answerAdded")
+	}
+
 	let questionText = question.question;
 </script>
 
 <div class="field">
 	<input class="input" bind:value={questionText} on:input={debounceSave} />
 	{#each question.answers as answer}
-		<p>
+		<p class="is-flex is-flex-direction-row is-gap-1">
 			<input
 				type="radio"
 				value={answer.id}
@@ -65,7 +81,9 @@
 				class="checkbox"
 				checked={answer.id === correctAnswer.id}
 				on:change={() => updateCorrectAnswer(correctAnswer)}
-			/> <AnswerEditor answerId={Number( answer.id )} answerText={answer.answerText}/>
+			/>
+			<AnswerEditor answerId={Number(answer.id)} answerText={answer.answerText} />
 		</p>
 	{/each}
+	<button class="button is-small is-ghost" on:click={addAnswer}>Add Answer</button>
 </div>
