@@ -519,8 +519,6 @@
         {#if activeCourses.length === 0}
             <div class="columns is-centered mb-6">
                 <div class="column is-half">
-                    <div class="box has-text-centered">
-                        <p class="title is-4 mb-4">Ready to start your AI journey?</p>
                         <button
                             class="button is-primary is-large animated-button"
                             on:click={() => activeTab = 'discover'}
@@ -530,7 +528,6 @@
                             </span>
                             <span>Discover New Courses</span>
                         </button>
-                    </div>
                 </div>
             </div>
         {:else}
@@ -1467,3 +1464,4 @@ b, strong {
   font-weight: 600;
 }
 </style>
+
