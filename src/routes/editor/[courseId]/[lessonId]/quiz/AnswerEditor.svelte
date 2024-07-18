@@ -1,7 +1,10 @@
 <script lang="ts">
+	import { createEventDispatcher } from "svelte";
+
 	export let answerId: number;
 	export let answerText: string;
 	let editing = false;
+  let dispatch = createEventDispatcher()
 
 	function focus(el: HTMLInputElement) {
 		el.focus();
@@ -25,6 +28,19 @@
 		clearTimeout(timer);
 		timer = setTimeout(() => save(), 500);
 	};
+
+  async function deleteAnswerChoice(){
+    await fetch("/api/deleteAnswer", {
+      method: "POST",
+      headers: {
+        'Content-Type': "application/json"
+      },
+      body: JSON.stringify({
+        answerId: answerId
+      })
+    })
+    dispatch("answerDeleted")
+  }
 </script>
 
 <div>
@@ -39,9 +55,19 @@
 			/>
 		</form>
 	{:else}
-		<p on:dblclick={() => (editing = true)} id="answerLine">
-			{answerText}
-		</p>
+		<div class="dropdown is-hoverable">
+			<p on:dblclick={() => (editing = true)} id="answerLine" class="dropdown-trigger">
+				{answerText}
+			</p>
+			<div class="dropdown-menu">
+				<div class="dropdown-content">
+					<div class="columns">
+						<button class="button is-small column" on:click={() => editing = true}>Edit</button>
+						<button class="button is-small column p-3" on:click={deleteAnswerChoice}>Delete</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	{/if}
 </div>
 

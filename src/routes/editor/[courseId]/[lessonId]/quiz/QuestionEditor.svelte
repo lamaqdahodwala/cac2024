@@ -82,7 +82,7 @@
 				checked={answer.id === correctAnswer.id}
 				on:change={() => updateCorrectAnswer(correctAnswer)}
 			/>
-			<AnswerEditor answerId={Number(answer.id)} answerText={answer.answerText} />
+			<AnswerEditor answerId={Number(answer.id)} answerText={answer.answerText} on:answerDeleted={() => dispatch("answerAdded")}/>
 		</p>
 	{/each}
 	<button class="button is-small is-ghost" on:click={addAnswer}>Add Answer</button>
