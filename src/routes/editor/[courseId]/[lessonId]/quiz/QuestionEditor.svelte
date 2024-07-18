@@ -66,10 +66,23 @@
     dispatch("answerAdded")
 	}
 
+  async function deleteQuestion(){
+    await fetch("/api/deleteQuestion", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        questionId: question.id
+      })
+    })
+  }
+
 	let questionText = question.question;
 </script>
 
 <div class="field">
+  <button class="button is-danger is-inverted is-small m-1">Delete</button>
 	<input class="input" bind:value={questionText} on:input={debounceSave} />
 	{#each question.answers as answer}
 		<p class="is-flex is-flex-direction-row is-gap-1">
