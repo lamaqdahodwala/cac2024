@@ -29,7 +29,6 @@
 
     Blockly.defineBlocksWithJsonArray([ {
       "message0": "Alert user with message %1",
-
     } ])
 
 		// The toolbox gets passed to the configuration struct during injection.
