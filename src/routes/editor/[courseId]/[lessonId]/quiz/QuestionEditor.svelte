@@ -82,7 +82,7 @@
 </script>
 
 <div class="field">
-  <button class="button is-danger is-inverted is-small m-1">Delete</button>
+  <button class="button is-danger is-inverted is-small m-1" on:click={deleteQuestion}>Delete</button>
 	<input class="input" bind:value={questionText} on:input={debounceSave} />
 	{#each question.answers as answer}
 		<p class="is-flex is-flex-direction-row is-gap-1">

@@ -74,7 +74,7 @@ model Quiz {
 
 model QuizQuestion {
   id                         Int         @id @default(autoincrement())
-  quiz                       Quiz        @relation(fields: [quizId], references: [id])
+  quiz                       Quiz        @relation(fields: [quizId], references: [id], onDelete: Cascade)
   quizId                     Int
   question                   String
   incorrectAnswerExplanation String?
@@ -83,7 +83,7 @@ model QuizQuestion {
 
 model QuizAnswer {
   id             Int          @id @default(autoincrement())
-  quizQuestion   QuizQuestion @relation(fields: [quizQuestionId], references: [id])
+  quizQuestion   QuizQuestion @relation(fields: [quizQuestionId], references: [id], onDelete: Cascade) 
   quizQuestionId Int
   answerText     String
   isCorrect      Boolean
