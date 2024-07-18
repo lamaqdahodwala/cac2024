@@ -76,6 +76,7 @@
         questionId: question.id
       })
     })
+    dispatch("answerAdded")
   }
 
 	let questionText = question.question;
