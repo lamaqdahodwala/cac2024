@@ -16,7 +16,8 @@ export class ScoreQuestion implements RouteImplementation {
 				quizQuestionId: props.questionId
 			},
 			select: {
-				id: true
+				id: true,
+        answerText: true
 			}
 		});
 
@@ -26,6 +27,9 @@ export class ScoreQuestion implements RouteImplementation {
 		if (correctAnswerIds.includes(props.chosenAnswerId)) {
 			isUserCorrect = true;
 		}
+
+    let correctAnswerText = correctAnswers[0].answerText
+
 
 		let incorrectAnswerExplanation = await props.prisma.quizQuestion.findUnique({
 			where: {
@@ -38,7 +42,8 @@ export class ScoreQuestion implements RouteImplementation {
 
 		return {
 			isUserCorrect,
-			incorrectAnswerExplanation: incorrectAnswerExplanation?.incorrectAnswerExplanation
+			incorrectAnswerExplanation: incorrectAnswerExplanation?.incorrectAnswerExplanation,
+      correctAnswerChoice: correctAnswerText
 		};
 	}
 }

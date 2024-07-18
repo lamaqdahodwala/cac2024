@@ -5,7 +5,6 @@
 	type Question = {
 		question: String;
 	};
-	export let questions;
 
 	let modalOpen = false;
 	let id = getContext('lessonId');
@@ -46,19 +45,22 @@
 				</header>
 
 				<div class="modal-card-body">
-					<Question question={data.quiz.questions[pageNumber]} />
+          {#each data.quiz.questions as question}
+            <Question {question}></Question>
+            <hr>
+          {/each}
 				</div>
 
-				<div class="modal-card-foot">
-					<div class="columns">
-						<div class="column">
-							<button class="button" on:click={decrementPageNumber}>Previous</button>
-						</div>
-						<div class="column">
-							<button class="button" on:click={incrementPageNumber}>Next</button>
-						</div>
-					</div>
-				</div>
+				<!-- <div class="modal-card-foot"> -->
+				<!-- 	<div class="columns"> -->
+				<!-- 		<div class="column"> -->
+				<!-- 			<button class="button" on:click={decrementPageNumber}>Previous</button> -->
+				<!-- 		</div> -->
+				<!-- 		<div class="column"> -->
+				<!-- 			<button class="button" on:click={incrementPageNumber}>Next</button> -->
+				<!-- 		</div> -->
+				<!-- 	</div> -->
+				<!-- </div> -->
 			</div>
 		</div>
 
