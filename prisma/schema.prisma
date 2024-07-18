@@ -77,8 +77,8 @@ model Quiz {
 }
 
 model QuizQuestion {
-  id                         Int          @id @default(autoincrement())
-  quiz                       Quiz         @relation(fields: [quizId], references: [id])
+  id                         Int         @id @default(autoincrement())
+  quiz                       Quiz        @relation(fields: [quizId], references: [id])
   quizId                     Int
   question                   String
   incorrectAnswerExplanation String?
@@ -87,7 +87,7 @@ model QuizQuestion {
 
 model QuizAnswer {
   id             Int          @id @default(autoincrement())
-  quizQuestion   QuizQuestion @relation(fields: [quizQuestionId], references: [id])
+  quizQuestion   QuizQuestion @relation(fields: [quizQuestionId], references: [id], onDelete: Cascade) 
   quizQuestionId Int
   answerText     String
   isCorrect      Boolean
@@ -159,19 +159,4 @@ model Block {
   content      String
   submission   UserExerciseSubmission @relation(fields: [submissionId], references: [id])
   submissionId Int
-}
-
-model CourseProblem {
-  id                        Int      @id @default(autoincrement())
-  hasPrebuiltModelBlocks    Boolean  @default(true)
-  hasDataCleaningBlocks     Boolean  @default(true)
-  hasCustomModelBlocks      Boolean  @default(true)
-  hasBasicProgrammingBlocks Boolean  @default(true)
-  hasTrainTestSplit         Boolean  @default(true)
-  Instructions              String
-  passRequirement           Int?
-  testDataset               String?
-  trainDataset              String
-  Course                    Course[]
-  Lesson                    Lesson[]
 }

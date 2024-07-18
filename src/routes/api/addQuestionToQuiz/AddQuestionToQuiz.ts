@@ -1,4 +1,5 @@
 import { APIRoute, type PropGetter, type RouteImplementation } from '$lib/abstract/APIRoute';
+import { AuthProps } from '$lib/generic/AuthProps';
 import { PrismaProps } from '$lib/generic/PrismaProps';
 import { MultiProp } from '$lib/helpers/MultiProp';
 import type { PrismaClient, Quiz, QuizQuestion, User } from '@prisma/client';
@@ -59,7 +60,7 @@ export class AddQuestionToQuizProps implements PropGetter {
 	async getProps(event: RequestEvent): Promise<object> {
 		const json = await event.request.json();
 		const quizId = json?.quizId;
-		const question = json?.question;
+		const question = json?.question || "Question Text";
 		const userId = (event.locals as EventLocals).user?.id;
 
 		if (!quizId || typeof quizId !== 'number') {
@@ -68,18 +69,14 @@ export class AddQuestionToQuizProps implements PropGetter {
 		if (!question || typeof question !== 'string') {
 			throw error(400, 'Please provide a valid question');
 		}
-		if (!userId) {
-			throw error(401, 'User not authenticated');
-		}
 		return {
 			quizId,
 			question,
-			userId
 		};
 	}
 }
 
 export const route = new APIRoute(
-	MultiProp.merge([new PrismaProps(), new AddQuestionToQuizProps()]),
+	MultiProp.merge([new AuthProps(), new PrismaProps(), new AddQuestionToQuizProps()]),
 	new AddQuestionToQuiz()
 );

@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+	import AnswerEditor from './AnswerEditor.svelte';
+
+  let dispatch = createEventDispatcher()
 	export let question: {
 		question: string;
 		id: string;
@@ -48,13 +52,41 @@
 		});
 	}
 
+	async function addAnswer() {
+		await fetch('/api/addAnswerToQuestion', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				questionId: question.id
+			})
+		});
+
+    dispatch("answerAdded")
+	}
+
+  async function deleteQuestion(){
+    await fetch("/api/deleteQuestion", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        questionId: question.id
+      })
+    })
+    dispatch("answerAdded")
+  }
+
 	let questionText = question.question;
 </script>
 
 <div class="field">
+  <button class="button is-danger is-inverted is-small m-1" on:click={deleteQuestion}>Delete</button>
 	<input class="input" bind:value={questionText} on:input={debounceSave} />
 	{#each question.answers as answer}
-		<p>
+		<p class="is-flex is-flex-direction-row is-gap-1">
 			<input
 				type="radio"
 				value={answer.id}
@@ -63,7 +95,9 @@
 				class="checkbox"
 				checked={answer.id === correctAnswer.id}
 				on:change={() => updateCorrectAnswer(correctAnswer)}
-			/>{answer.answerText}
+			/>
+			<AnswerEditor answerId={Number(answer.id)} answerText={answer.answerText} on:answerDeleted={() => dispatch("answerAdded")}/>
 		</p>
 	{/each}
+	<button class="button is-small is-ghost" on:click={addAnswer}>Add Answer</button>
 </div>
