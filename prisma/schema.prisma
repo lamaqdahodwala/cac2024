@@ -31,43 +31,10 @@ model Lesson {
   completedBy User[]
   quiz        Quiz?
   description String         @default("")
-  exercises   Exercise[]
   exercise    CourseProblem? @relation(fields: [exerciseId], references: [id])
   exerciseId  Int?
 }
 
-model Exercise {
-  id               Int                      @id @default(autoincrement())
-  content          String
-  lesson           Lesson                   @relation(fields: [lessonId], references: [id])
-  lessonId         Int
-  instructions     Instruction[]
-  dataset          Dataset?
-  passRequirements PassRequirement[]
-  submissions      UserExerciseSubmission[]
-}
-
-model Instruction {
-  id         Int      @id @default(autoincrement())
-  content    String
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
-  exerciseId Int      @unique
-}
-
-model Dataset {
-  id         Int      @id @default(autoincrement())
-  name       String
-  path       String
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
-  exerciseId Int      @unique
-}
-
-model PassRequirement {
-  id         Int      @id @default(autoincrement())
-  criteria   String
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
-  exerciseId Int      @unique
-}
 
 model Quiz {
   id        Int            @id @default(autoincrement())
@@ -147,20 +114,6 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model UserExerciseSubmission {
-  id         Int      @id @default(autoincrement())
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
-  exerciseId Int
-  blocks     Block[]
-}
-
-model Block {
-  id           Int                    @id @default(autoincrement())
-  content      String
-  submission   UserExerciseSubmission @relation(fields: [submissionId], references: [id])
-  submissionId Int
-}
-
 model CourseProblem {
   id                        Int      @id @default(autoincrement())
   hasPrebuiltModelBlocks    Boolean  @default(true)
@@ -168,7 +121,7 @@ model CourseProblem {
   hasCustomModelBlocks      Boolean  @default(true)
   hasBasicProgrammingBlocks Boolean  @default(true)
   hasTrainTestSplit         Boolean  @default(true)
-  Instructions              String
+  instructions              String
   passRequirement           Int?
   testDataset               String?
   trainDataset              String
