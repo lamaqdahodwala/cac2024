@@ -9,5 +9,8 @@ export const load: PageLoad = async ({ fetch, params }) => {
 	let res2 = await fetch(`/api/getCourseInfo?courseId=${courseId}`);
 	let json2 = await res2.json();
 
-	return { lessons: json, courseInfo: json2.course };
+  let res3 = await fetch(`/api/getNextLessonInCourse?courseId=${courseId}`)
+  let json3 = await res3.json()
+
+	return { lessons: json, courseInfo: json2.course, nextLesson: json3.lesson };
 };

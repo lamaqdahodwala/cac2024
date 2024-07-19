@@ -11,6 +11,13 @@
 
 	<p>{data.courseInfo.description}</p>
 	<hr />
+	<h1 class="title is-4 has-text-centered">
+		<a
+			href="/course/{data.courseInfo.id}/lesson/{data.nextLesson.id}"
+			class="button is-large is-primary is-inverted is-fullwidth"
+			>Next up for you: {data.nextLesson.title}</a
+		>
+	</h1>
 	<div class="fixed-grid has-4-cols gap-5">
 		<div class="grid">
 			{#each data.lessons as lesson}

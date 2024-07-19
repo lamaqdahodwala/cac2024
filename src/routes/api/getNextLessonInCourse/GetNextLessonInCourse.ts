@@ -43,18 +43,6 @@ export class GetNextLessonInCourse implements RouteImplementation {
 	}
 }
 
-export class GetNextLessonInCourseProps implements PropGetter {
-	async getProps(event: RequestEvent): Promise<object> {
-		let json = event.url.searchParams;
-		let courseId = json.get('courseId');
-
-		if (!courseId) throw error(400, 'Provide a course ID');
-
-		return {
-			courseId
-		};
-	}
-}
 
 export const GetNextLessonProps = searchParamProps(
 	(params) => ({
@@ -64,6 +52,6 @@ export const GetNextLessonProps = searchParamProps(
 );
 
 export const route = new APIRoute(
-	MultiProp.merge([new PrismaProps(), new AuthProps(), new GetNextLessonInCourseProps()]),
+	MultiProp.merge([new PrismaProps(), new AuthProps(), new GetNextLessonProps()]),
 	new GetNextLessonInCourse()
 );
