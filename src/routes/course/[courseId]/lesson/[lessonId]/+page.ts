@@ -18,7 +18,11 @@ export const load: PageLoad = async (event) => {
 
 	let json = await res.json();
 
+  let res2 = await event.fetch(`/api/getSubsequentLesson?lessonId=${lessonId}`)
+
+  let json2 = await res2.json()
+
 	return {
-		lesson: { ...json, id: lessonId }
+		lesson: { ...json, id: lessonId, next: json2 }
 	};
 };
