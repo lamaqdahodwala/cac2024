@@ -7,17 +7,18 @@ class ExampleBlock implements CustomBlock {
       type: "example",
       tooltip: "",
       message0: "Hello world",
-      colour: 100
+      colour: 100,
+      previousStatement: null, 
+      nextStatement: null,
     }
   }
 
   getCodeForGenerator(block: Block, generator: CodeGenerator) {
-      return "console.log('hello world')"
+      return "console.log('hello world');"
   }
 }
 
-
-const ExampleCategory = CreateCategory([
+export const ExampleCategory = CreateCategory([
   ExampleBlock
 ])
 

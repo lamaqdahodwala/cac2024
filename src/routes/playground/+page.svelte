@@ -3,36 +3,16 @@
 	import { javascriptGenerator } from 'blockly/javascript';
   let workspace: Blockly.Workspace | Blockly.WorkspaceSvg | undefined
 	import { onMount } from 'svelte';
+  import {ToolboxCreator} from '$lib/abstract/BlocklyInterface'
+  import {ExampleCategory} from '$lib/blocks/Example'
+
+  let toolbox = new ToolboxCreator([
+    ExampleCategory
+  ])
+
+
 	onMount(() => {
-		const toolbox = {
-			// There are two kinds of toolboxes. The simpler one is a flyout toolbox.
-			kind: 'flyoutToolbox',
-			// The contents is the blocks and other items that exist in your toolbox.
-			contents: [
-				{
-					kind: 'block',
-					type: 'controls_if'
-				},
-				{
-					kind: 'block',
-					type: 'controls_whileUntil'
-				}, {
-          kind: "block", 
-          type: "controls_for"
-        },
-        {
-          kind: "block",
-          type: "logic_boolean"
-        }
-			]
-		};
-
-    Blockly.defineBlocksWithJsonArray([ {
-      "message0": "Alert user with message %1",
-    } ])
-
-		// The toolbox gets passed to the configuration struct during injection.
-		workspace = Blockly.inject('test', { toolbox: toolbox });
+		workspace = Blockly.inject('test', { toolbox: toolbox.getToolboxObject(javascriptGenerator) });
 	});
 
   function compileCode(){
@@ -42,4 +22,4 @@
 </script>
 
 <div id="test" style="height: 400px; width: 800px;"></div>
-<button>Run code</button>
+<button on:click={compileCode}>Run code</button>

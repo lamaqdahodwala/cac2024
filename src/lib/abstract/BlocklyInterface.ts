@@ -7,7 +7,7 @@ export interface CustomBlock {
 
 export interface CustomCategory {
 	getBlocks(): CustomBlock[];
-	compileForToolbox(): { kind: string; type: string }[];
+	compileForToolbox(generator: Blockly.Generator): { kind: string; type: string }[];
 }
 
 interface Toolbox {
@@ -42,25 +42,32 @@ export function CreateCategory(blocks: (new () => CustomBlock)[]) {
 			return this.blocks;
 		}
 
-		compileForToolbox() {
+		compileForToolbox(generator: Blockly.Generator) {
 			Blockly.defineBlocksWithJsonArray(this.blocks.map((block) => block.getJSON()));
+      this.addCodeToGenerator(generator)
 			return this.blocks.map((value) => ({
 				kind: 'block',
 				type: value.getJSON().type
 			}));
 		}
+
+    addCodeToGenerator(generator: Blockly.Generator){
+      this.blocks.forEach((value) => {
+        generator.forBlock[value.getJSON().type] = value.getCodeForGenerator
+      })
+    }
 	}
 
 	return new Temp(blocks.map((value) => new value()));
 }
 
 export class ToolboxCreator {
-	constructor(private categories: CustomCategory[]) {}
+	constructor(private categories: CustomCategory[], private generator: Blockly.Generator) {}
 
-	getToolboxObject(): Toolbox {
+	getToolboxObject(generator: Blockly.Generator): Toolbox {
     let toolBoxContents: {kind: string, type: string}[] = []
     this.categories.forEach((value) => {
-      let blocks = value.compileForToolbox()
+      let blocks = value.compileForToolbox(generator)
       toolBoxContents = [...toolBoxContents, ...blocks]
     })
 		return {
