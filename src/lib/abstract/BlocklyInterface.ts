@@ -34,7 +34,7 @@ export interface BlocklyJson {
 	colour: number;
 }
 
-export function CreateCategory(blocks: (new () => CustomBlock)[]) {
+export function CreateCategory(blocks: ( (new () => CustomBlock) | CustomBlock )[]) {
 	class Temp implements CustomCategory {
 		constructor(private blocks: CustomBlock[]) {}
 
@@ -58,7 +58,10 @@ export function CreateCategory(blocks: (new () => CustomBlock)[]) {
     }
 	}
 
-	return new Temp(blocks.map((value) => new value()));
+	return new Temp(blocks.map((value) => {
+    if (typeof value === 'function') return new value()
+    return value
+  }));
 }
 
 export class ToolboxCreator {
