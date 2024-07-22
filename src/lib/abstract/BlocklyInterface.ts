@@ -70,3 +70,16 @@ export class ToolboxCreator {
 	}
 }
 
+
+export function createCustomBlock(json: BlocklyJson, callback: (block: Blockly.Block, generator: Blockly.Generator) => string){
+  class Temp implements CustomBlock {
+    getJSON(): BlocklyJson {
+        return json
+    }
+    getCodeForGenerator(block: Blockly.Block, generator: Blockly.Generator): string {
+        return callback(block, generator)
+    }
+  }
+  return new Temp()
+}
+
