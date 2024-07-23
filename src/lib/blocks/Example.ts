@@ -41,12 +41,12 @@ const AlertBlock = createCustomBlock(
 			}
 		],
 		colour: 225,
-    previousStatement: null, 
-    nextStatement: null
+		previousStatement: null,
+		nextStatement: null
 	},
 	(block, generator) => {
-    let value = block.getField("NAME")
-    value = value?.getValue()
+		let value = block.getField('NAME');
+		value = value?.getValue();
 		return `alert(${JSON.stringify(value)});`;
 	}
 );

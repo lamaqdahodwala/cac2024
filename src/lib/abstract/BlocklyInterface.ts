@@ -28,6 +28,7 @@ export interface BlocklyJson {
 		name: string;
 		check?: string | string[];
 		align?: string;
+    text?: string;
 	}[];
 	previousStatement?: string | null;
 	nextStatement?: string | null;
@@ -65,7 +66,7 @@ export function CreateCategory(blocks: ( (new () => CustomBlock) | CustomBlock )
 }
 
 export class ToolboxCreator {
-	constructor(private categories: CustomCategory[], private generator: Blockly.Generator) {}
+	constructor(private categories: CustomCategory[]) {}
 
 	getToolboxObject(generator: Blockly.Generator): Toolbox {
     let toolBoxContents: {kind: string, type: string}[] = []
