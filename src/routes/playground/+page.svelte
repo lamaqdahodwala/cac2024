@@ -5,9 +5,10 @@
 	import { onMount } from 'svelte';
 	import { ToolboxCreator } from '$lib/abstract/BlocklyInterface';
 	import { ExampleCategory } from '$lib/blocks/Example';
+	import { LoadingDataCategory } from '$lib/blocks/LoadingData';
 	import { blocks } from 'blockly/blocks';
 
-	let toolbox = new ToolboxCreator([ExampleCategory]);
+	let toolbox = new ToolboxCreator([LoadingDataCategory]);
 
 	onMount(() => {
 		workspace = Blockly.inject('test', {
@@ -21,5 +22,5 @@
 	}
 </script>
 
-<div id="test" style="height: 400px; width: 800px;"></div>
+<div id="test" style="height: 800px; width: 800px;"></div>
 <button on:click={compileCode}>Run code</button>

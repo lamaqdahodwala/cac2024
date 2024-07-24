@@ -212,6 +212,7 @@
 		document.querySelectorAll('.team-member').forEach((member) => {
 			observer.observe(member);
 		});
+		
 
 		// Initialize fun meter
 		updateFunMeter();
