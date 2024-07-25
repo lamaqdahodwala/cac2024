@@ -10,7 +10,7 @@ export interface CustomCategory {
 	compileForToolbox(generator: Blockly.Generator): { kind: string; type: string }[];
 }
 
-interface Toolbox {
+export interface Toolbox {
 	kind: string;
 	contents: {
 		kind: string;
@@ -59,6 +59,7 @@ export function CreateCategory(blocks: ( (new () => CustomBlock) | CustomBlock )
       })
     }
 	}
+
 
 	return new Temp(blocks.map((value) => {
     if (typeof value === 'function') return new value()

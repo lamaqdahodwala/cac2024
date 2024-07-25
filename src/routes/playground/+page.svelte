@@ -7,12 +7,13 @@
 	import { ExampleCategory } from '$lib/blocks/Example';
 	import { LoadingDataCategory } from '$lib/blocks/LoadingData';
 	import { blocks } from 'blockly/blocks';
+	import { addPrebuiltBlocks } from '$lib/blocks/PrebuiltBlocks';
 
 	let toolbox = new ToolboxCreator([LoadingDataCategory]);
 
 	onMount(() => {
 		workspace = Blockly.inject('test', {
-			toolbox: toolbox.getToolboxObject(javascriptGenerator)
+			toolbox: addPrebuiltBlocks(toolbox.getToolboxObject(javascriptGenerator))
 		});
 	});
 
