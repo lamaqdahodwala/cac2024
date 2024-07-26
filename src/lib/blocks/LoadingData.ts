@@ -60,7 +60,7 @@ class LoadExcelBlock implements CustomBlock {
             const path = require("path");
             let localExcelPath = path.join(process.cwd(), ${JSON.stringify(excelPath)});
             dfd.readExcel(localExcelPath).then(df => df.toJSON());`;
-
+            
     }
 }
 

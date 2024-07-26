@@ -6,10 +6,11 @@
 	import { ToolboxCreator } from '$lib/abstract/BlocklyInterface';
 	import { ExampleCategory } from '$lib/blocks/Example';
 	import { LoadingDataCategory } from '$lib/blocks/LoadingData';
+	import { DataManipulationCategory } from '$lib/blocks/DataManipulation';
 	import { blocks } from 'blockly/blocks';
 	import { addPrebuiltBlocks } from '$lib/blocks/PrebuiltBlocks';
 
-	let toolbox = new ToolboxCreator([LoadingDataCategory]);
+	let toolbox = new ToolboxCreator([DataManipulationCategory]);
 
 	onMount(() => {
 		workspace = Blockly.inject('test', {
