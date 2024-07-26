@@ -193,4 +193,4 @@ class DropDuplicatesBlock implements CustomBlock {
     }
 }
 
-export const DataManipulationCategory = CreateCategory([FilterDataByBooleanBlock, FilterDataByRowsBlock, FilterDataByColumnsBlock, FilterDataByValuesBlock, RemoveNullValuesBlock,FillNullValuesBlock, DropDuplicatesBlock]);
+export const DataCleaningCategory = CreateCategory([FilterDataByBooleanBlock, FilterDataByRowsBlock, FilterDataByColumnsBlock, FilterDataByValuesBlock, RemoveNullValuesBlock,FillNullValuesBlock, DropDuplicatesBlock]);
