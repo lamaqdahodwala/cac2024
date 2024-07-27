@@ -8,6 +8,7 @@ export interface CustomBlock {
 export interface CustomCategory {
 	getBlocks(): CustomBlock[];
 	compileForToolbox(generator: Blockly.Generator): { kind: string; type: string }[];
+	getDisplayName(): string;
 }
 
 export interface Toolbox {
@@ -28,7 +29,7 @@ export interface BlocklyJson {
 		name: string;
 		check?: string | string[];
 		align?: string;
-    text?: string;
+		text?: string;
 	}[];
 	previousStatement?: string | null;
 	nextStatement?: string | null;
@@ -36,7 +37,21 @@ export interface BlocklyJson {
 	colour: number;
 }
 
-export function CreateCategory(blocks: ( (new () => CustomBlock) | CustomBlock )[]) {
+export interface Category {
+	kind: 'category';
+	name: string;
+	contents: { kind: string; type: string }[];
+}
+
+export interface CategoryToolbox {
+	kind: 'categoryToolbox';
+	contents: Category[];
+}
+
+export function CreateCategory(
+	blocks: ((new () => CustomBlock) | CustomBlock)[],
+	displayName: string
+) {
 	class Temp implements CustomCategory {
 		constructor(private blocks: CustomBlock[]) {}
 
@@ -46,53 +61,61 @@ export function CreateCategory(blocks: ( (new () => CustomBlock) | CustomBlock )
 
 		compileForToolbox(generator: Blockly.Generator) {
 			Blockly.defineBlocksWithJsonArray(this.blocks.map((block) => block.getJSON()));
-      this.addCodeToGenerator(generator)
+			this.addCodeToGenerator(generator);
 			return this.blocks.map((value) => ({
 				kind: 'block',
 				type: value.getJSON().type
 			}));
 		}
 
-    addCodeToGenerator(generator: Blockly.Generator){
-      this.blocks.forEach((value) => {
-        generator.forBlock[value.getJSON().type] = value.getCodeForGenerator
-      })
+		addCodeToGenerator(generator: Blockly.Generator) {
+			this.blocks.forEach((value) => {
+				generator.forBlock[value.getJSON().type] = value.getCodeForGenerator;
+			});
+		}
+
+    getDisplayName(): string {
+        return displayName
     }
 	}
 
-
-	return new Temp(blocks.map((value) => {
-    if (typeof value === 'function') return new value()
-    return value
-  }));
+	return new Temp(
+		blocks.map((value) => {
+			if (typeof value === 'function') return new value();
+			return value;
+		})
+	);
 }
 
 export class ToolboxCreator {
 	constructor(private categories: CustomCategory[]) {}
 
 	getToolboxObject(generator: Blockly.Generator): Toolbox {
-    let toolBoxContents: {kind: string, type: string}[] = []
-    this.categories.forEach((value) => {
-      let blocks = value.compileForToolbox(generator)
-      toolBoxContents = [...toolBoxContents, ...blocks]
-    })
+		let toolBoxContents: { kind: string; type: string }[] = [];
+		this.categories.forEach((value) => {
+			let blocks = value.compileForToolbox(generator);
+			toolBoxContents = [...toolBoxContents, ...blocks];
+		});
 		return {
 			kind: 'flyoutToolbox',
 			contents: toolBoxContents
 		};
 	}
+
+	getCategoryToolboxObject(generator: Blockly.CodeGenerator): CategoryToolbox {}
 }
 
-
-export function createCustomBlock(json: BlocklyJson, callback: (block: Blockly.Block, generator: Blockly.Generator) => string){
-  class Temp implements CustomBlock {
-    getJSON(): BlocklyJson {
-        return json
-    }
-    getCodeForGenerator(block: Blockly.Block, generator: Blockly.Generator): string {
-        return callback(block, generator)
-    }
-  }
-  return new Temp()
+export function createCustomBlock(
+	json: BlocklyJson,
+	callback: (block: Blockly.Block, generator: Blockly.Generator) => string
+) {
+	class Temp implements CustomBlock {
+		getJSON(): BlocklyJson {
+			return json;
+		}
+		getCodeForGenerator(block: Blockly.Block, generator: Blockly.Generator): string {
+			return callback(block, generator);
+		}
+	}
+	return new Temp();
 }
-
