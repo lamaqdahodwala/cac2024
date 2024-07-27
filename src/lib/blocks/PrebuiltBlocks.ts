@@ -1,8 +1,8 @@
 import * as Blockly from 'blockly';
-import type { Toolbox } from '$lib/abstract/BlocklyInterface';
+import type { Category, CategoryToolbox, Toolbox } from '$lib/abstract/BlocklyInterface';
 import { toolboxString } from './prebuilt_toolbox';
 
-export function addPrebuiltBlocks(toolbox: Toolbox): Toolbox {
+export function addPrebuiltBlocks(toolbox: CategoryToolbox): CategoryToolbox {
 	let previousContents = toolbox.contents;
 
 	let parser = new DOMParser();
@@ -11,7 +11,7 @@ export function addPrebuiltBlocks(toolbox: Toolbox): Toolbox {
 	let categories = parsedDoc.getElementsByTagName('category');
 	console.log(categories);
 
-	let newToolbox: Toolbox = {
+	let newToolbox: CategoryToolbox = {
 		kind: 'categoryToolbox',
 		contents: []
 	};
@@ -22,7 +22,7 @@ export function addPrebuiltBlocks(toolbox: Toolbox): Toolbox {
 
 		if (!categoryName) throw new Error();
 
-		let toolboxEntry: { kind: string; type: string; contents: any[] } = {
+		let toolboxEntry: Category = {
 			kind: 'category',
       name: categoryName,
 			contents: []
@@ -42,10 +42,7 @@ export function addPrebuiltBlocks(toolbox: Toolbox): Toolbox {
 			});
 
 		}
-
-    Blockly.registry.register("category", categoryName.toLowerCase(), toolboxEntry)
-
-    newToolbox.contents.push(toolboxEntry)
+    newToolbox.contents = [...newToolbox.contents, toolboxEntry]
 	}
 
   console.log(toolbox)
@@ -54,11 +51,7 @@ export function addPrebuiltBlocks(toolbox: Toolbox): Toolbox {
     kind: "categoryToolbox", 
     contents: [
       ...newToolbox.contents, 
-      {
-        kind: "category", 
-        name: "AI",
-        contents: toolbox.contents
-      }
+      ...toolbox.contents
     ]
   };
 }

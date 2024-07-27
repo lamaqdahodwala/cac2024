@@ -103,7 +103,6 @@ export class ToolboxCreator {
 	}
 
 	getCategoryToolboxObject(generator: Blockly.CodeGenerator): CategoryToolbox {
-    let displayName = this.categories[0].getDisplayName()
     let toolbox: CategoryToolbox = {contents: [], kind: "categoryToolbox"}
     let toolboxContents = toolbox.contents
 
