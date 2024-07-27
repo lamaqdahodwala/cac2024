@@ -15,19 +15,22 @@ export class UpdateAnswerContent implements RouteImplementation {
 			where: {
 				id: props.answerId
 			},
-      data: {
-        answerText: props.newAnswerContent
-      }
+			data: {
+				answerText: props.newAnswerContent
+			}
 		});
 	}
 }
 
-export const UpdateAnswerContentProps = jsonProps((json) => ({
-  answerId: Number(json.answerId),
-  newAnswerContent: json.newAnswerContent
-}), {checkForNull: true})
+export const UpdateAnswerContentProps = jsonProps(
+	(json) => ({
+		answerId: Number(json.answerId),
+		newAnswerContent: json.newAnswerContent
+	}),
+	{ checkForNull: true }
+);
 
 export const route = new APIRoute(
-  MultiProp.mergeProps([AuthProps, PrismaProps, UpdateAnswerContentProps]),
-  UpdateAnswerContent
-)
+	MultiProp.mergeProps([AuthProps, PrismaProps, UpdateAnswerContentProps]),
+	UpdateAnswerContent
+);

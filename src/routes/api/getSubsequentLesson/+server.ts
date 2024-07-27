@@ -1,3 +1,3 @@
-import { route } from "./GetSubsequentLesson";
+import { route } from './GetSubsequentLesson';
 
-export const GET = route.createAPIRoute()
+export const GET = route.createAPIRoute();

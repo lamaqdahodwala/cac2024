@@ -1,3 +1,3 @@
-import { route } from "./DeleteAnswer";
+import { route } from './DeleteAnswer';
 
-export const POST = route.createAPIRoute()
+export const POST = route.createAPIRoute();

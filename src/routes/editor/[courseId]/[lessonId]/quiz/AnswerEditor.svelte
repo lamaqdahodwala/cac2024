@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { createEventDispatcher } from "svelte";
+	import { createEventDispatcher } from 'svelte';
 
 	export let answerId: number;
 	export let answerText: string;
 	let editing = false;
-  let dispatch = createEventDispatcher()
+	let dispatch = createEventDispatcher();
 
 	function focus(el: HTMLInputElement) {
 		el.focus();
@@ -29,18 +29,18 @@
 		timer = setTimeout(() => save(), 500);
 	};
 
-  async function deleteAnswerChoice(){
-    await fetch("/api/deleteAnswer", {
-      method: "POST",
-      headers: {
-        'Content-Type': "application/json"
-      },
-      body: JSON.stringify({
-        answerId: answerId
-      })
-    })
-    dispatch("answerDeleted")
-  }
+	async function deleteAnswerChoice() {
+		await fetch('/api/deleteAnswer', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				answerId: answerId
+			})
+		});
+		dispatch('answerDeleted');
+	}
 </script>
 
 <div>
@@ -62,7 +62,7 @@
 			<div class="dropdown-menu">
 				<div class="dropdown-content">
 					<div class="columns">
-						<button class="button is-small column" on:click={() => editing = true}>Edit</button>
+						<button class="button is-small column" on:click={() => (editing = true)}>Edit</button>
 						<button class="button is-small column p-3" on:click={deleteAnswerChoice}>Delete</button>
 					</div>
 				</div>

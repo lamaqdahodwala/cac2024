@@ -12,7 +12,7 @@
 	let userHasAnswered = false;
 	let isCorrect: boolean;
 	let incorrectAnswerExplanation: string;
-  let correctChoice: string
+	let correctChoice: string;
 
 	async function submitAnswerChoice(answerId: string) {
 		userHasAnswered = true;
@@ -30,7 +30,7 @@
 
 		isCorrect = json.isUserCorrect;
 		incorrectAnswerExplanation = json.incorrectAnswerExplanation;
-    correctChoice = json.correctAnswerChoice
+		correctChoice = json.correctAnswerChoice;
 	}
 
 	function shuffleList(array: any[]) {
@@ -81,14 +81,12 @@
 			{/if}
 		</div>
 
-			<div class="message-body">
-        <p>The correct answer was "{correctChoice}".</p>
-        <br>
-        {#if incorrectAnswerExplanation}
-				  <p>{incorrectAnswerExplanation}</p>
-        {/if}
-
-
-			</div>
+		<div class="message-body">
+			<p>The correct answer was "{correctChoice}".</p>
+			<br />
+			{#if incorrectAnswerExplanation}
+				<p>{incorrectAnswerExplanation}</p>
+			{/if}
+		</div>
 	</div>
 {/if}

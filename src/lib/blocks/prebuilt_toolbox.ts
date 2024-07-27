@@ -316,4 +316,4 @@ export const toolboxString = `
     </block>
   </category>
 </xml>
-`
+`;

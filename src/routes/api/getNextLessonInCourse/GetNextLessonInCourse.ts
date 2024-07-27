@@ -43,7 +43,6 @@ export class GetNextLessonInCourse implements RouteImplementation {
 	}
 }
 
-
 export const GetNextLessonProps = searchParamProps(
 	(params) => ({
 		courseId: params.get('courseId')

@@ -1,3 +1,3 @@
-import { route } from "./AddAnswerToQuiz";
+import { route } from './AddAnswerToQuiz';
 
-export const POST = route.createAPIRoute()
+export const POST = route.createAPIRoute();

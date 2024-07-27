@@ -24,7 +24,7 @@ export function addPrebuiltBlocks(toolbox: CategoryToolbox): CategoryToolbox {
 
 		let toolboxEntry: Category = {
 			kind: 'category',
-      name: categoryName,
+			name: categoryName,
 			contents: []
 		};
 
@@ -40,18 +40,14 @@ export function addPrebuiltBlocks(toolbox: CategoryToolbox): CategoryToolbox {
 				type: blockType,
 				kind: 'block'
 			});
-
 		}
-    newToolbox.contents = [...newToolbox.contents, toolboxEntry]
+		newToolbox.contents = [...newToolbox.contents, toolboxEntry];
 	}
 
-  console.log(toolbox)
+	console.log(toolbox);
 
 	return {
-    kind: "categoryToolbox", 
-    contents: [
-      ...newToolbox.contents, 
-      ...previousContents
-    ]
-  };
+		kind: 'categoryToolbox',
+		contents: [...newToolbox.contents, ...previousContents]
+	};
 }

@@ -10,18 +10,21 @@ export class AddAnswerToQuiz implements RouteImplementation {
 		return await props.prisma.quizAnswer.create({
 			data: {
 				isCorrect: false,
-        answerText: "Answer Choice",
-        quizQuestionId: props.questionId
+				answerText: 'Answer Choice',
+				quizQuestionId: props.questionId
 			}
 		});
 	}
 }
 
-export const AddAnswerToQuizProps = jsonProps(json => ({
-  questionId: Number( json.questionId )
-}), {checkForNull: true}) 
+export const AddAnswerToQuizProps = jsonProps(
+	(json) => ({
+		questionId: Number(json.questionId)
+	}),
+	{ checkForNull: true }
+);
 
 export const route = new APIRoute(
-  MultiProp.mergeProps([AuthProps, PrismaProps, AddAnswerToQuizProps]),
-  AddAnswerToQuiz
-)
+	MultiProp.mergeProps([AuthProps, PrismaProps, AddAnswerToQuizProps]),
+	AddAnswerToQuiz
+);

@@ -212,7 +212,6 @@
 		document.querySelectorAll('.team-member').forEach((member) => {
 			observer.observe(member);
 		});
-		
 
 		// Initialize fun meter
 		updateFunMeter();
@@ -478,43 +477,58 @@
 {/if}
 
 <style>
-  
+	:global(body) {
+		font-family:
+			'BlinkMacSystemFont',
+			-apple-system,
+			'Segoe UI',
+			'Roboto',
+			'Oxygen',
+			'Ubuntu',
+			'Cantarell',
+			'Fira Sans',
+			'Droid Sans',
+			'Helvetica Neue',
+			sans-serif;
+		margin: 0;
+		padding: 0;
+		background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+		background-attachment: fixed;
+		min-height: 100vh;
+		position: relative;
+		overflow-x: hidden;
+	}
 
-  :global(body) {
-    font-family: "BlinkMacSystemFont", -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    background-attachment: fixed;
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-}
+	* {
+		font-family:
+			'BlinkMacSystemFont',
+			-apple-system,
+			'Segoe UI',
+			'Roboto',
+			'Oxygen',
+			'Ubuntu',
+			'Cantarell',
+			'Fira Sans',
+			'Droid Sans',
+			'Helvetica Neue',
+			sans-serif;
+	}
 
-  * {
-    font-family: "BlinkMacSystemFont", -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  }
+	.page-container {
+		background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+		color: var(--text-color);
+	}
 
-  .page-container {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  color: var(--text-color);
-}
-
-.navbar-placeholder {
-    height: 307.5px;
-    background: linear-gradient(135deg, #4f9a94 0%, #57b6ad 50%, #60c1b8 100%);
-    border-radius: 0 0 50px 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-
-
-
-	
+	.navbar-placeholder {
+		height: 307.5px;
+		background: linear-gradient(135deg, #4f9a94 0%, #57b6ad 50%, #60c1b8 100%);
+		border-radius: 0 0 50px 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 2rem;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+	}
 
 	.intro-text {
 		text-align: center;
@@ -635,19 +649,19 @@
 	}
 
 	.fun-meter {
-    background-color: var(--card-background);
-    border-radius: 20px;
-    padding: 2rem;
-    margin-bottom: 3rem;
-    text-align: center;
-    box-shadow: 0 15px 30px var(--shadow-color);
-    position: relative; /* Added for pseudo-element use */
-    overflow: hidden; /* Added for pseudo-element use */
-    background: linear-gradient(135deg, rgba(224, 245, 211, 0.8), rgba(208, 240, 253, 0.8)), url('https://www.transparenttextures.com/patterns/cubes.png');
-    background-size: cover;
-    background-blend-mode: overlay;
-}
-
+		background-color: var(--card-background);
+		border-radius: 20px;
+		padding: 2rem;
+		margin-bottom: 3rem;
+		text-align: center;
+		box-shadow: 0 15px 30px var(--shadow-color);
+		position: relative; /* Added for pseudo-element use */
+		overflow: hidden; /* Added for pseudo-element use */
+		background: linear-gradient(135deg, rgba(224, 245, 211, 0.8), rgba(208, 240, 253, 0.8)),
+			url('https://www.transparenttextures.com/patterns/cubes.png');
+		background-size: cover;
+		background-blend-mode: overlay;
+	}
 
 	.fun-meter h3 {
 		color: #363636;
@@ -743,15 +757,17 @@
 		gap: 2rem;
 	}
 
-  .team-member {
-    background-color: var(--card-background);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 15px 30px var(--shadow-color);
-    transition: all 0.3s ease;
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+	.team-member {
+		background-color: var(--card-background);
+		border-radius: 20px;
+		overflow: hidden;
+		box-shadow: 0 15px 30px var(--shadow-color);
+		transition: all 0.3s ease;
+		position: relative;
+		transition:
+			transform 0.3s ease,
+			box-shadow 0.3s ease;
+	}
 
 	.team-member::before {
 		content: '';
@@ -1377,18 +1393,16 @@
 		font-weight: 1000;
 	}
 
-/* Team member card styles */
-.team-member {
-  background-color: #F6F8FB;
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-
+	/* Team member card styles */
+	.team-member {
+		background-color: #f6f8fb;
+		backdrop-filter: blur(10px);
+		border-radius: 20px;
+		overflow: hidden;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+		transition: all 0.3s ease;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+	}
 
 	.team-member::before {
 		content: '';
@@ -2190,12 +2204,12 @@
 	}
 
 	/* Navbar styles */
-.navbar {
-  background-color: #FFFFFF !important;
-  font-weight: 1000;
-}
+	.navbar {
+		background-color: #ffffff !important;
+		font-weight: 1000;
+	}
 
-.team-member:hover {
+	.team-member:hover {
 		transform: translateY(-10px) !important;
 		box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2) !important;
 	}
@@ -2206,31 +2220,30 @@
 			box-shadow 0.3s ease !important;
 	}
 	.achievement {
-		background-color: #48C78E;
+		background-color: #48c78e;
 		color: white;
 		padding: 0.75rem 1.5rem;
 		border-radius: 10px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		height: 100%; 
-		min-height: 50px; 
+		height: 100%;
+		min-height: 50px;
 		text-align: center;
-		}
+	}
 
-		.achievement p {
+	.achievement p {
 		margin: 0;
-		}
+	}
 
-			.sort-controls button {
-    /* Existing styles */
-    transition: all 0.3s ease;
-}
+	.sort-controls button {
+		/* Existing styles */
+		transition: all 0.3s ease;
+	}
 
-.sort-controls button:hover {
-    background-color: #5ad8a4; /* Lighter shade of the accent color */
-    transform: scale(1.05);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
+	.sort-controls button:hover {
+		background-color: #5ad8a4; /* Lighter shade of the accent color */
+		transform: scale(1.05);
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	}
 </style>

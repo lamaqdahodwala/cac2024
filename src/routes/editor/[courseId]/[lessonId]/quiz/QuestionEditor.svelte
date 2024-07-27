@@ -2,7 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import AnswerEditor from './AnswerEditor.svelte';
 
-  let dispatch = createEventDispatcher()
+	let dispatch = createEventDispatcher();
 	export let question: {
 		question: string;
 		id: string;
@@ -63,27 +63,28 @@
 			})
 		});
 
-    dispatch("answerAdded")
+		dispatch('answerAdded');
 	}
 
-  async function deleteQuestion(){
-    await fetch("/api/deleteQuestion", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        questionId: question.id
-      })
-    })
-    dispatch("answerAdded")
-  }
+	async function deleteQuestion() {
+		await fetch('/api/deleteQuestion', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				questionId: question.id
+			})
+		});
+		dispatch('answerAdded');
+	}
 
 	let questionText = question.question;
 </script>
 
 <div class="field">
-  <button class="button is-danger is-inverted is-small m-1" on:click={deleteQuestion}>Delete</button>
+	<button class="button is-danger is-inverted is-small m-1" on:click={deleteQuestion}>Delete</button
+	>
 	<input class="input" bind:value={questionText} on:input={debounceSave} />
 	{#each question.answers as answer}
 		<p class="is-flex is-flex-direction-row is-gap-1">
@@ -96,7 +97,11 @@
 				checked={answer.id === correctAnswer.id}
 				on:change={() => updateCorrectAnswer(correctAnswer)}
 			/>
-			<AnswerEditor answerId={Number(answer.id)} answerText={answer.answerText} on:answerDeleted={() => dispatch("answerAdded")}/>
+			<AnswerEditor
+				answerId={Number(answer.id)}
+				answerText={answer.answerText}
+				on:answerDeleted={() => dispatch('answerAdded')}
+			/>
 		</p>
 	{/each}
 	<button class="button is-small is-ghost" on:click={addAnswer}>Add Answer</button>

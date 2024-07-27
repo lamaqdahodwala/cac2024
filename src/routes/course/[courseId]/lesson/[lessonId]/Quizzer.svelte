@@ -45,10 +45,10 @@
 				</header>
 
 				<div class="modal-card-body">
-          {#each data.quiz.questions as question}
-            <Question {question}></Question>
-            <hr>
-          {/each}
+					{#each data.quiz.questions as question}
+						<Question {question}></Question>
+						<hr />
+					{/each}
 				</div>
 
 				<!-- <div class="modal-card-foot"> -->

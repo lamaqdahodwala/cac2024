@@ -75,9 +75,9 @@ export function CreateCategory(
 			});
 		}
 
-    getDisplayName(): string {
-        return displayName
-    }
+		getDisplayName(): string {
+			return displayName;
+		}
 	}
 
 	return new Temp(
@@ -104,19 +104,19 @@ export class ToolboxCreator {
 	}
 
 	getCategoryToolboxObject(generator: JavascriptGenerator): CategoryToolbox {
-    let toolbox: CategoryToolbox = {contents: [], kind: "categoryToolbox"}
-    let toolboxContents = toolbox.contents
+		let toolbox: CategoryToolbox = { contents: [], kind: 'categoryToolbox' };
+		let toolboxContents = toolbox.contents;
 
-    this.categories.forEach((value) => {
-      toolboxContents.push({
-        kind: "category",
-        name: value.getDisplayName(),
-        contents: value.compileForToolbox(generator)
-      })
-    })
+		this.categories.forEach((value) => {
+			toolboxContents.push({
+				kind: 'category',
+				name: value.getDisplayName(),
+				contents: value.compileForToolbox(generator)
+			});
+		});
 
-    return toolbox
-  }
+		return toolbox;
+	}
 }
 
 export function createCustomBlock(

@@ -60,7 +60,7 @@ export class AddQuestionToQuizProps implements PropGetter {
 	async getProps(event: RequestEvent): Promise<object> {
 		const json = await event.request.json();
 		const quizId = json?.quizId;
-		const question = json?.question || "Question Text";
+		const question = json?.question || 'Question Text';
 		const userId = (event.locals as EventLocals).user?.id;
 
 		if (!quizId || typeof quizId !== 'number') {
@@ -71,7 +71,7 @@ export class AddQuestionToQuizProps implements PropGetter {
 		}
 		return {
 			quizId,
-			question,
+			question
 		};
 	}
 }

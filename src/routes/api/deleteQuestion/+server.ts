@@ -1,3 +1,3 @@
-import { route } from "./DeleteQuestion";
+import { route } from './DeleteQuestion';
 
-export const POST = route.createAPIRoute()
+export const POST = route.createAPIRoute();
