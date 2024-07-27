@@ -1,5 +1,6 @@
 import { CreateCategory, type BlocklyJson, type CustomBlock } from '../abstract/BlocklyInterface';
-import type { Block, CodeGenerator } from 'blockly';
+import type { Block,  } from 'blockly';
+import { JavascriptGenerator } from 'blockly/javascript';
 
 class LoadCSVBlock implements CustomBlock {
 	getJSON(): BlocklyJson {
@@ -23,7 +24,7 @@ class LoadCSVBlock implements CustomBlock {
 			colour: 225
 		};
 	}
-	getCodeForGenerator(block: Block, generator: CodeGenerator): string {
+	getCodeForGenerator(block: Block, generator: JavascriptGenerator): string {
 		const csvPath = block.getFieldValue('CSV_PATH');
 		return `
             const dfd = require("danfojs-node");
@@ -53,7 +54,7 @@ class LoadExcelBlock implements CustomBlock {
 			colour: 225
 		};
 	}
-	getCodeForGenerator(block: Block, generator: CodeGenerator): string {
+	getCodeForGenerator(block: Block, generator: JavascriptGenerator): string {
 		const excelPath = block.getFieldValue('EXCEL_PATH');
 		return `
             const dfd = require("danfojs-node");
@@ -85,7 +86,7 @@ class LoadJSONBlock implements CustomBlock {
 			colour: 225
 		};
 	}
-	getCodeForGenerator(block: Block, generator: CodeGenerator): string {
+	getCodeForGenerator(block: Block, generator: JavascriptGenerator): string {
 		const jsonPath = block.getFieldValue('JSON_PATH');
 		return `
             const dfd = require("danfojs-node");
@@ -93,4 +94,4 @@ class LoadJSONBlock implements CustomBlock {
 	}
 }
 
-export const LoadingDataCategory = CreateCategory([LoadCSVBlock, LoadExcelBlock, LoadJSONBlock]);
+export const LoadingDataCategory = CreateCategory([LoadCSVBlock, LoadExcelBlock, LoadJSONBlock], "Load Data");

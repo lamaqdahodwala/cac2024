@@ -11,7 +11,7 @@
 	import { addPrebuiltBlocks } from '$lib/blocks/PrebuiltBlocks';
 	import FileSystem from './FileSystem.svelte';
 
-	let toolbox = new ToolboxCreator([DataCleaningCategory]);
+	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory]);
 
 	onMount(() => {
 		workspace = Blockly.inject('test', {
