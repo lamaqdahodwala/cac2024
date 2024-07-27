@@ -1,13 +1,14 @@
 import * as Blockly from 'blockly';
+import { JavascriptGenerator } from 'blockly/javascript';
 
 export interface CustomBlock {
-	getCodeForGenerator(block: Blockly.Block, generator: Blockly.Generator): string;
+	getCodeForGenerator(block: Blockly.Block, generator: JavascriptGenerator): string;
 	getJSON(): BlocklyJson;
 }
 
 export interface CustomCategory {
 	getBlocks(): CustomBlock[];
-	compileForToolbox(generator: Blockly.Generator): { kind: string; type: string }[];
+	compileForToolbox(generator: JavascriptGenerator): { kind: string; type: string }[];
 	getDisplayName(): string;
 }
 
@@ -59,7 +60,7 @@ export function CreateCategory(
 			return this.blocks;
 		}
 
-		compileForToolbox(generator: Blockly.Generator) {
+		compileForToolbox(generator: JavascriptGenerator) {
 			Blockly.defineBlocksWithJsonArray(this.blocks.map((block) => block.getJSON()));
 			this.addCodeToGenerator(generator);
 			return this.blocks.map((value) => ({
@@ -68,7 +69,7 @@ export function CreateCategory(
 			}));
 		}
 
-		addCodeToGenerator(generator: Blockly.Generator) {
+		addCodeToGenerator(generator: JavascriptGenerator) {
 			this.blocks.forEach((value) => {
 				generator.forBlock[value.getJSON().type] = value.getCodeForGenerator;
 			});
@@ -90,7 +91,7 @@ export function CreateCategory(
 export class ToolboxCreator {
 	constructor(private categories: CustomCategory[]) {}
 
-	getToolboxObject(generator: Blockly.Generator): Toolbox {
+	getToolboxObject(generator: JavascriptGenerator): Toolbox {
 		let toolBoxContents: { kind: string; type: string }[] = [];
 		this.categories.forEach((value) => {
 			let blocks = value.compileForToolbox(generator);
@@ -102,7 +103,7 @@ export class ToolboxCreator {
 		};
 	}
 
-	getCategoryToolboxObject(generator: Blockly.CodeGenerator): CategoryToolbox {
+	getCategoryToolboxObject(generator: JavascriptGenerator): CategoryToolbox {
     let toolbox: CategoryToolbox = {contents: [], kind: "categoryToolbox"}
     let toolboxContents = toolbox.contents
 
@@ -120,13 +121,13 @@ export class ToolboxCreator {
 
 export function createCustomBlock(
 	json: BlocklyJson,
-	callback: (block: Blockly.Block, generator: Blockly.Generator) => string
+	callback: (block: Blockly.Block, generator: JavascriptGenerator) => string
 ) {
 	class Temp implements CustomBlock {
 		getJSON(): BlocklyJson {
 			return json;
 		}
-		getCodeForGenerator(block: Blockly.Block, generator: Blockly.Generator): string {
+		getCodeForGenerator(block: Blockly.Block, generator: JavascriptGenerator): string {
 			return callback(block, generator);
 		}
 	}

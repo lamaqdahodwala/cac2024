@@ -14,7 +14,7 @@
 
 	onMount(() => {
 		workspace = Blockly.inject('test', {
-			toolbox: addPrebuiltBlocks(toolbox.getToolboxObject(javascriptGenerator))
+			toolbox: addPrebuiltBlocks(toolbox.getCategoryToolboxObject(javascriptGenerator))
 		});
 	});
 
