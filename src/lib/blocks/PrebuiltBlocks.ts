@@ -51,7 +51,7 @@ export function addPrebuiltBlocks(toolbox: CategoryToolbox): CategoryToolbox {
     kind: "categoryToolbox", 
     contents: [
       ...newToolbox.contents, 
-      ...toolbox.contents
+      ...previousContents
     ]
   };
 }
