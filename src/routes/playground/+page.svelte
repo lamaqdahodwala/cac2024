@@ -9,6 +9,7 @@
 	import { DataCleaningCategory } from '$lib/blocks/DataCleaning';
 	import { blocks } from 'blockly/blocks';
 	import { addPrebuiltBlocks } from '$lib/blocks/PrebuiltBlocks';
+	import FileSystem from './FileSystem.svelte';
 
 	let toolbox = new ToolboxCreator([DataCleaningCategory]);
 
@@ -18,11 +19,15 @@
 		});
 	});
 
-	function compileCode() {
+	async function compileCode() {
 		let code = javascriptGenerator.workspaceToCode(workspace);
 		eval(code);
 	}
+
+  let getFileByName: (fileName: string) => File | null
 </script>
 
 <div id="test" style="height: 800px; width: 800px;"></div>
 <button on:click={compileCode}>Run code</button>
+
+<FileSystem bind:getFileByName={getFileByName}/>

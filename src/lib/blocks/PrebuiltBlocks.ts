@@ -9,7 +9,6 @@ export function addPrebuiltBlocks(toolbox: CategoryToolbox): CategoryToolbox {
 	let parsedDoc = parser.parseFromString(toolboxString, 'text/xml');
 
 	let categories = parsedDoc.getElementsByTagName('category');
-	console.log(categories);
 
 	let newToolbox: CategoryToolbox = {
 		kind: 'categoryToolbox',
@@ -29,7 +28,6 @@ export function addPrebuiltBlocks(toolbox: CategoryToolbox): CategoryToolbox {
 		};
 
 		let children = element.children;
-		console.log(children);
 
 		for (let index = 0; index < children.length; index++) {
 			const element = children[index];
@@ -44,7 +42,6 @@ export function addPrebuiltBlocks(toolbox: CategoryToolbox): CategoryToolbox {
 		newToolbox.contents = [...newToolbox.contents, toolboxEntry];
 	}
 
-	console.log(toolbox);
 
 	return {
 		kind: 'categoryToolbox',
