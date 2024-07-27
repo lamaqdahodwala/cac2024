@@ -102,7 +102,21 @@ export class ToolboxCreator {
 		};
 	}
 
-	getCategoryToolboxObject(generator: Blockly.CodeGenerator): CategoryToolbox {}
+	getCategoryToolboxObject(generator: Blockly.CodeGenerator): CategoryToolbox {
+    let displayName = this.categories[0].getDisplayName()
+    let toolbox: CategoryToolbox = {contents: [], kind: "categoryToolbox"}
+    let toolboxContents = toolbox.contents
+
+    this.categories.forEach((value) => {
+      toolboxContents.push({
+        kind: "category",
+        name: value.getDisplayName(),
+        contents: value.compileForToolbox(generator)
+      })
+    })
+
+    return toolbox
+  }
 }
 
 export function createCustomBlock(
