@@ -39,12 +39,82 @@ export function addPrebuiltBlocks(toolbox: CategoryToolbox): CategoryToolbox {
 				kind: 'block'
 			});
 		}
+
+		if (categoryName.toLowerCase() === 'variables') {
+            toolboxEntry.contents.unshift(
+                {
+                    type: 'variables_get',
+                    kind: 'block'
+                },
+                {
+                    type: 'variables_set',
+                    kind: 'block'
+                },
+                {
+                    type: 'button',
+                    kind: 'button',
+                    text: 'Create Variable...',
+                    callbackKey: 'CREATE_VARIABLE'
+                }
+            );
+        }
+
+        Blockly.registry.register('category', categoryName.toLowerCase(), toolboxEntry);
+
 		newToolbox.contents = [...newToolbox.contents, toolboxEntry];
 	}
 
+	Blockly.Extensions.register('create_variable_callback', function(workspace) {
+        workspace.registerButtonCallback('CREATE_VARIABLE', function(button) {
+            Blockly.Variables.createVariableButtonHandler(button.getTargetWorkspace(), null, '');
+        });
+    });
 
 	return {
-		kind: 'categoryToolbox',
-		contents: [...newToolbox.contents, ...previousContents]
-	};
+        kind: "categoryToolbox",
+        contents: [
+            ...newToolbox.contents,
+            {
+                kind: "category",
+                name: "AI",
+                contents: toolbox.contents
+            }
+        ]
+    };
 }
+
+Blockly.defineBlocksWithJsonArray([
+    {
+        "type": "variables_get",
+        "message0": "%1",
+        "args0": [
+            {
+                "type": "field_variable",
+                "name": "VAR",
+                "variable": "%{BKY_VARIABLES_DEFAULT_NAME}"
+            }
+        ],
+        "output": null,
+        "colour": 330,
+        "helpUrl": "get var"
+    },
+    {
+        "type": "variables_set",
+        "message0": "%{BKY_VARIABLES_SET}",
+        "args0": [
+            {
+                "type": "field_variable",
+                "name": "VAR",
+                "variable": "%{BKY_VARIABLES_DEFAULT_NAME}"
+            },
+            {
+                "type": "input_value",
+                "name": "VALUE"
+            }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": 330,
+        "helpUrl": "set var"
+    }
+]);
