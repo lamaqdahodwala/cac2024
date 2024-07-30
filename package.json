@@ -46,6 +46,7 @@
 		"danfojs": "^1.1.2",
 		"dotenv": "^16.4.5",
 		"insane": "^2.6.2",
+		"js-interpreter": "^5.1.2",
 		"marked": "^13.0.2",
 		"prisma": "^5.16.0",
 		"svelte-add": "^2.3.3",

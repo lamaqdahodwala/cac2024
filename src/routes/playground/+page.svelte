@@ -10,6 +10,7 @@
 	import { blocks } from 'blockly/blocks';
 	import { addPrebuiltBlocks } from '$lib/blocks/PrebuiltBlocks';
 	import FileSystem from './FileSystem.svelte';
+	import { CodeEvaluator } from './Evaluator';
 
 	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory]);
 
@@ -21,7 +22,22 @@
 
 	async function compileCode() {
 		let code = javascriptGenerator.workspaceToCode(workspace);
-		eval(code);
+    let evaluator = new CodeEvaluator()
+
+    evaluator.addCode(code)
+    evaluator.addExternalAPI(
+      (interpreter, globalObject) => {
+        let alertWrapper = function alert(text: any) {
+          return window.alert(text)
+        }
+
+        interpreter.setProperty(globalObject, 'alert', interpreter.createNativeFunction(alertWrapper))
+      }
+    )
+
+
+    evaluator.run()
+    eval(code)
 	}
 
   let getFileByName: (fileName: string) => File | null
