@@ -35,9 +35,15 @@
       }
     )
 
+    evaluator.addExternalAPI(
+      (interpreter, globalObject) => {
+        let getFileWrapper = interpreter.createNativeFunction(getFileByName)
+        interpreter.setProperty(globalObject, 'getFileByName', getFileWrapper)
+      }
+    )
+
 
     evaluator.run()
-    eval(code)
 	}
 
   let getFileByName: (fileName: string) => File | null
