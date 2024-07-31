@@ -39,6 +39,7 @@
 	"dependencies": {
 		"@auth/prisma-adapter": "^2.4.1",
 		"@auth/sveltekit": "^1.4.1",
+		"@babel/standalone": "^7.25.3",
 		"@prisma/client": "5.16.1",
 		"@types/insane": "^1.0.0",
 		"aos": "^2.3.4",
