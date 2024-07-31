@@ -1,4 +1,6 @@
 import Interpreter from 'js-interpreter'
+import * as Babel from '@babel/standalone'
+
 
 export class CodeEvaluator {
 	private code: string = '';
@@ -25,7 +27,10 @@ export class CodeEvaluator {
 			});
 		};
 
-		let interpreter = new Interpreter(this.code, initFunc);
+    let transpiledCode = Babel.transform(this.code, {presets: ['es2015']}).code
+
+		let interpreter = new Interpreter(transpiledCode, initFunc);
+
 		interpreter.run();
 	}
 }

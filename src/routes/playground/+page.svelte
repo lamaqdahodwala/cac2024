@@ -26,7 +26,6 @@
 		let code = javascriptGenerator.workspaceToCode(workspace);
     let evaluator = new CodeEvaluator()
 
-    evaluator.addCode(code)
     evaluator.addExternalAPI(
       (interpreter, globalObject) => {
         let alertWrapper = function alert(text: any) {
@@ -45,13 +44,16 @@
     )
 
     evaluator.addExternalAPI(
-      (interpreter, globalObject) => [
-        interpreter.setProperty(globalObject, 'dfd', dfd)
-      ]
+      
+      (interpreter, globalObject) => {
+        const danfoPackageRetriever = () => dfd
+        interpreter.setProperty(globalObject, 'danfoFunc', interpreter.createNativeFunction(danfoPackageRetriever))
+      }
     )
 
-    console.log(code)
+    // evaluator.addCode('const dfd = JSON.parse(dfdAsJson); \n')
 
+    evaluator.addCode(code)
 
     evaluator.run()
 	}
