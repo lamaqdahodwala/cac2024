@@ -1,6 +1,6 @@
-import { CreateCategory, type BlocklyJson, type CustomBlock } from '../abstract/BlocklyInterface';
+import { CreateCategory, type BlocklyJson, type BlockReturningValue, type CustomBlock } from '../abstract/BlocklyInterface';
 import type { Block } from 'blockly';
-import { JavascriptGenerator } from 'blockly/javascript';
+import { JavascriptGenerator, Order } from 'blockly/javascript';
 
 class FilterDataByBooleanBlock implements CustomBlock {
 	getJSON(): BlocklyJson {
@@ -24,11 +24,11 @@ class FilterDataByBooleanBlock implements CustomBlock {
 			colour: 300
 		};
 	}
-	getCodeForGenerator(block: Block, generator: JavascriptGenerator): string {
+	getCodeForGenerator(block: Block, generator: JavascriptGenerator): string{
 		const cond = block.getFieldValue('CONDITION');
-		return `
-            const dfd = require("danfojs-node");
-            df.filter(${JSON.stringify(cond)}).then(df => df.toJSON());`;
+    return `
+const dfd = require("danfojs-node");
+df.filter(${JSON.stringify(cond)}).then(df => df.toJSON());`;
 	}
 }
 
@@ -194,4 +194,15 @@ class DropDuplicatesBlock implements CustomBlock {
 	}
 }
 
-export const DataCleaningCategory = CreateCategory([FilterDataByBooleanBlock, FilterDataByRowsBlock, FilterDataByColumnsBlock, FilterDataByValuesBlock, RemoveNullValuesBlock,FillNullValuesBlock, DropDuplicatesBlock], "Data Cleaning");
+export const DataCleaningCategory = CreateCategory(
+	[
+		FilterDataByBooleanBlock,
+		FilterDataByRowsBlock,
+		FilterDataByColumnsBlock,
+		FilterDataByValuesBlock,
+		RemoveNullValuesBlock,
+		FillNullValuesBlock,
+		DropDuplicatesBlock
+	],
+	'Data Cleaning'
+);

@@ -1,6 +1,6 @@
-import { CreateCategory, type BlocklyJson, type CustomBlock } from '../abstract/BlocklyInterface';
+import { CreateCategory, type BlocklyJson, type BlockReturningValue, type CustomBlock } from '../abstract/BlocklyInterface';
 import type { Block } from 'blockly';
-import type { JavascriptGenerator } from 'blockly/javascript';
+import { Order, type JavascriptGenerator } from 'blockly/javascript';
 
 class LoadCSVBlock implements CustomBlock {
     getJSON(): BlocklyJson {
@@ -24,11 +24,9 @@ class LoadCSVBlock implements CustomBlock {
             colour: 225
         };
     }
-    getCodeForGenerator(block: Block, generator: JavascriptGenerator): string {
+    getCodeForGenerator(block: Block, generator: JavascriptGenerator): BlockReturningValue {
         const csvPath = block.getFieldValue('CSV_PATH');
-        return `
-            const dfd = require("danfojs-node");
-            dfd.readCSV(${JSON.stringify(csvPath)}).then(df => df.toJSON());`;
+        return [ `dfd.readCSV(getFileByName(${JSON.stringify(csvPath)})).then(df => df.toJSON())`, Order.AWAIT ];
     }
 }
 
@@ -54,13 +52,9 @@ class LoadExcelBlock implements CustomBlock {
             colour: 225
         };
     }
-    getCodeForGenerator(block: Block, generator: JavascriptGenerator): string {
+    getCodeForGenerator(block: Block, generator: JavascriptGenerator): BlockReturningValue {
         const excelPath = block.getFieldValue('EXCEL_PATH');
-        return `
-            const dfd = require("danfojs-node");
-            const path = require("path");
-            let localExcelPath = path.join(process.cwd(), ${JSON.stringify(excelPath)});
-            dfd.readExcel(localExcelPath).then(df => df.toJSON());`;
+        return [ `dfd.readExcel(getFileByName(${ excelPath })).then(df => df.toJSON())`, Order.NONE];
     }
 }
 
@@ -86,11 +80,9 @@ class LoadJSONBlock implements CustomBlock {
             colour: 225
         };
     }
-    getCodeForGenerator(block: Block, generator: JavascriptGenerator): string {
+    getCodeForGenerator(block: Block, generator: JavascriptGenerator): BlockReturningValue {
         const jsonPath = block.getFieldValue('JSON_PATH');
-        return `
-            const dfd = require("danfojs-node");
-            dfd.readJSON(${JSON.stringify(jsonPath)}).then(df => df.toJSON());`;
+        return [ `dfd.readJSON(getFileByName (${JSON.stringify(jsonPath)}) ).then(df => df.toJSON())` , Order.NONE];
     }
 }
 

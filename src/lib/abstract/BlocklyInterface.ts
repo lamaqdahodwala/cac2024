@@ -2,7 +2,7 @@ import * as Blockly from 'blockly';
 import { JavascriptGenerator } from 'blockly/javascript';
 
 export interface CustomBlock {
-	getCodeForGenerator(block: Blockly.Block, generator: JavascriptGenerator): string;
+	getCodeForGenerator(block: Blockly.Block, generator: JavascriptGenerator): string | BlockReturningValue ;
 	getJSON(): BlocklyJson;
 }
 
@@ -127,9 +127,11 @@ export function createCustomBlock(
 		getJSON(): BlocklyJson {
 			return json;
 		}
-		getCodeForGenerator(block: Blockly.Block, generator: JavascriptGenerator): string {
+		getCodeForGenerator(block: Blockly.Block, generator: JavascriptGenerator): string | BlockReturningValue {
 			return callback(block, generator);
 		}
 	}
 	return new Temp();
 }
+
+export type BlockReturningValue = [code: string, order: number] 

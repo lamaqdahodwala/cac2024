@@ -11,6 +11,8 @@
 	import { addPrebuiltBlocks } from '$lib/blocks/PrebuiltBlocks';
 	import FileSystem from './FileSystem.svelte';
 	import { CodeEvaluator } from './Evaluator';
+  import * as dfd from 'danfojs/dist/danfojs-browser/src'
+
 
 	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory]);
 
@@ -42,6 +44,14 @@
       }
     )
 
+    evaluator.addExternalAPI(
+      (interpreter, globalObject) => [
+        interpreter.setProperty(globalObject, 'dfd', dfd)
+      ]
+    )
+
+    console.log(code)
+
 
     evaluator.run()
 	}
@@ -53,3 +63,4 @@
 <button on:click={compileCode}>Run code</button>
 
 <FileSystem bind:getFileByName={getFileByName}/>
+
