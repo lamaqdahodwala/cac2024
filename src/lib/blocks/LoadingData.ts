@@ -26,7 +26,7 @@ class LoadCSVBlock implements CustomBlock {
     }
     getCodeForGenerator(block: Block, generator: JavascriptGenerator): BlockReturningValue {
         const csvPath = block.getFieldValue('CSV_PATH');
-        return [ `danfoFunc().readCSV(getFileByName(${JSON.stringify(csvPath)}))`, Order.NONE ];
+        return [ `dfd.readCSV(getFileByName(${JSON.stringify(csvPath)}))`, Order.AWAIT ];
     }
 }
 

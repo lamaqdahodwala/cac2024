@@ -4,14 +4,13 @@
 	let workspace: Blockly.Workspace | Blockly.WorkspaceSvg | undefined;
 	import { onMount } from 'svelte';
 	import { ToolboxCreator } from '$lib/abstract/BlocklyInterface';
-	import { ExampleCategory } from '$lib/blocks/Example';
 	import { LoadingDataCategory } from '$lib/blocks/LoadingData';
 	import { DataCleaningCategory } from '$lib/blocks/DataCleaning';
-	import { blocks } from 'blockly/blocks';
 	import { addPrebuiltBlocks } from '$lib/blocks/PrebuiltBlocks';
 	import FileSystem from './FileSystem.svelte';
-	import { CodeEvaluator } from './Evaluator';
 	import * as dfd from 'danfojs/dist/danfojs-browser/src';
+  import {CodeEvaluationBuilder, FunctionConstructorStrategy} from './CodeEval'
+	import Log from './Log.svelte';
 
 	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory]);
 
@@ -28,45 +27,31 @@
 
 	async function compileCode() {
 		let code = javascriptGenerator.workspaceToCode(workspace);
-		let evaluator = new CodeEvaluator();
 
-		evaluator.addExternalAPI((interpreter, globalObject) => {
-			let alertWrapper = function alert(text: any) {
-				return window.alert(text);
-			};
+    let evaluator = new CodeEvaluationBuilder()
+    evaluator.withCode(code)
+    evaluator.withContext({
+      dfd,
+      getFileByName,
+      appendToLog, 
+      clearLog
+    })
+    evaluator.wrapCodeAsync()
+    evaluator.withExecStrategy(FunctionConstructorStrategy)
 
-			interpreter.setProperty(
-				globalObject,
-				'alert',
-				interpreter.createNativeFunction(alertWrapper)
-			);
-		});
 
-		evaluator.addExternalAPI((interpreter, globalObject) => {
-			let getFileWrapper = interpreter.createNativeFunction(getFileByName);
-			interpreter.setProperty(globalObject, 'getFileByName', getFileWrapper);
-		});
-
-		evaluator.addExternalAPI((interpreter, globalObject) => {
-			const danfoPackageRetriever = () => dfd;
-			interpreter.setProperty(
-				globalObject,
-				'danfoFunc',
-				interpreter.createNativeFunction(danfoPackageRetriever)
-			);
-		});
-
-		// evaluator.addCode('const dfd = JSON.parse(dfdAsJson); \n')
-
-		evaluator.addCode(code);
-
-		evaluator.run();
+    evaluator.run()
 	}
 
+
 	let getFileByName: (fileName: string) => File | null;
+  let appendToLog: (text: string) => void
+  let clearLog: () => void
+
 </script>
 
 <div id="test" style="height: 800px; width: 800px;"></div>
 <button on:click={compileCode}>Run code</button>
 
 <FileSystem bind:getFileByName />
+<Log bind:appendToLog bind:clearLog/>
