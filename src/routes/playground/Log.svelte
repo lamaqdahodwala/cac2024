@@ -2,7 +2,7 @@
 <script lang="ts">
   let text = ""
   export function appendToLog(text: string){
-    text += `${addLog}\n`
+    text += `${text}\n`
   }
 
   export function clearLog() {
