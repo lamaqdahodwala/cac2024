@@ -5,14 +5,15 @@
 	import { onMount } from 'svelte';
 	import { ToolboxCreator } from '$lib/abstract/BlocklyInterface';
 	import { LoadingDataCategory } from '$lib/blocks/LoadingData';
+	import { DataTransformationCategory } from '$lib/blocks/DataTransformation';
 	import { DataCleaningCategory } from '$lib/blocks/DataCleaning';
 	import { addPrebuiltBlocks } from '$lib/blocks/PrebuiltBlocks';
 	import FileSystem from './FileSystem.svelte';
-	import * as dfd from 'danfojs/dist/danfojs-browser/src';
+	// import * as dfd from 'danfojs/dist/danfojs-browser/src';
 	import { CodeEvaluationBuilder, FunctionConstructorStrategy } from './CodeEval';
 	import Log from './Log.svelte';
 
-	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory]);
+	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory]);
 
 	onMount(() => {
 		workspace = Blockly.inject('test', {
