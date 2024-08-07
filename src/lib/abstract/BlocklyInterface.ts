@@ -71,7 +71,17 @@ export function CreateCategory(
 
 		addCodeToGenerator(generator: JavascriptGenerator) {
 			this.blocks.forEach((value) => {
-				generator.forBlock[value.getJSON().type] = (block, generator) => { return value.getCodeForGenerator(block, generator) + "\n" };
+				generator.forBlock[value.getJSON().type] = ( block, generator ) => {
+          let code =  value.getCodeForGenerator(block, generator)
+
+          if (typeof code === "string"){
+            code += "\n"
+          } else {
+            code[0] += "\n"
+          }
+
+          return code
+        }
 			});
 		}
 
