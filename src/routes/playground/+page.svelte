@@ -9,7 +9,7 @@
 	import { DataCleaningCategory } from '$lib/blocks/DataCleaning';
 	import { addPrebuiltBlocks } from '$lib/blocks/PrebuiltBlocks';
 	import FileSystem from './FileSystem.svelte';
-	// import * as dfd from 'danfojs/dist/danfojs-browser/src';
+	import * as dfd from 'danfojs/dist/danfojs-browser/src';
 	import { CodeEvaluationBuilder, FunctionConstructorStrategy } from './CodeEval';
 	import Log from './Log.svelte';
 
@@ -52,14 +52,11 @@
 <button on:click={compileCode}>Run code</button>
 <div class="columns">
 	<div id="test" style="height: 800px; width: 800px;"></div>
-	<div class="is-flex is-flex-direction-column is-justify-content-space-between" id="devToolsContainer">
+	<div class="" id="devToolsContainer">
 		<FileSystem bind:getFileByName />
 		<Log bind:appendToLog bind:clearLog />
 	</div>
 </div>
 
 <style>
- #devToolsContainer {
-   width: 100%;
- }
 </style>
