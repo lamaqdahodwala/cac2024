@@ -133,7 +133,7 @@ export class ToolboxCreator {
 
 export function createCustomBlock(
 	json: BlocklyJson,
-	callback: (block: Blockly.Block, generator: JavascriptGenerator) => string
+	callback: (block: Blockly.Block, generator: JavascriptGenerator) => string | BlockReturningValue
 ) {
 	class Temp implements CustomBlock {
 		getJSON(): BlocklyJson {
