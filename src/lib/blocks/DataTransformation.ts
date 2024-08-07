@@ -31,11 +31,11 @@ class RenameColumnBlock implements CustomBlock {
             colour: 165,
         };
     }
-    getCodeForGenerator(block: Block, generator: JavascriptGenerator): BlockReturningValue {
+    getCodeForGenerator(block: Block, generator: JavascriptGenerator): string {
         const dataframe = block.getFieldValue('DATAFRAME');
         const oldName = block.getFieldValue('OLD_NAME');
         const newName = block.getFieldValue('NEW_NAME');
-        return [`${dataframe}.rename({ "${oldName}": "${newName}" }, { inplace: true })`, Order.AWAIT];
+        return `${dataframe}.rename({ "${oldName}": "${newName}" }, { inplace: true })`;
     }
 }
 
