@@ -30,7 +30,6 @@
 		{/each}
 	</div>
 </div>
-<button on:click={() => appendToLog('hello world')}>Add to log</button>
 
 <style>
 	textarea {
@@ -44,7 +43,8 @@
 
 	#logContainer {
 		position: relative;
-		height: 100%;
+		height: 95%;
+    width: 48rem;
 		overflow-y: auto;
 	}
 </style>
