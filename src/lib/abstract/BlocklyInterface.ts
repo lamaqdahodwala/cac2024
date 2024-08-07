@@ -31,10 +31,12 @@ export interface BlocklyJson {
 		check?: string | string[];
 		align?: string;
 		text?: string;
+    value?: number | string;
+    options?: [displayString: string, fieldName: string][]
 	}[];
 	previousStatement?: string | null;
 	nextStatement?: string | null;
-	output?: string | string[];
+	output?: string | string[] | null;
 	colour: number;
 }
 
