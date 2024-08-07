@@ -79,7 +79,7 @@ export function addPrebuiltBlocks(toolbox: CategoryToolbox): CategoryToolbox {
             ...newToolbox.contents,
             {
                 kind: "category",
-                name: "AI",
+                name: "Data",
                 contents: previousContents
             }
         ]
