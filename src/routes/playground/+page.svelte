@@ -7,13 +7,14 @@
 	import { LoadingDataCategory } from '$lib/blocks/LoadingData';
 	import { DataTransformationCategory } from '$lib/blocks/DataTransformation';
 	import { DataCleaningCategory } from '$lib/blocks/DataCleaning';
+  import {OutputCategory} from '$lib/blocks/Output'
 	import { addPrebuiltBlocks } from '$lib/blocks/PrebuiltBlocks';
 	import FileSystem from './FileSystem.svelte';
 	import * as dfd from 'danfojs/dist/danfojs-browser/src';
 	import { CodeEvaluationBuilder, FunctionConstructorStrategy } from './CodeEval';
 	import Log from './Log.svelte';
 
-	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory]);
+	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory, OutputCategory]);
 
 	onMount(() => {
 		workspace = Blockly.inject('test', {

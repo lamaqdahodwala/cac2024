@@ -298,13 +298,6 @@ export const toolboxString = `
         </shadow>
       </value>
     </block>
-    <block type="text_print">
-      <value name="TEXT">
-        <shadow type="text">
-          <field name="TEXT">abc</field>
-        </shadow>
-      </value>
-    </block>
     <block type="text_prompt_ext">
       <mutation type="TEXT"></mutation>
       <field name="TYPE">TEXT</field>
