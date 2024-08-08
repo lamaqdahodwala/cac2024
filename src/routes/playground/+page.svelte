@@ -42,7 +42,7 @@
 		});
 		evaluator.wrapCodeAsync();
 		evaluator.withExecStrategy(FunctionConstructorStrategy);
-
+    evaluator.overrideConsoleLog('appendToLog')
 		evaluator.run();
 
 	}

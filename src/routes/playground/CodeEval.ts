@@ -30,6 +30,10 @@ export class CodeEvaluationBuilder {
     }
   }
 
+  overrideConsoleLog(newFunction: string){
+    this.config.code = `console.log = ${newFunction} \n` + this.config.code
+  }
+
   wrapCodeAsync() {
     this.config.code = `async function run() {${this.config.code}}; run()`
   }

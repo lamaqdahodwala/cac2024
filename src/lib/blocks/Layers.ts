@@ -1,4 +1,4 @@
-import * as tf from '@tensorflow/tfjs'
+import * as tf from '@tensorflow/tfjs';
 
 import {
 	CreateCategory,
@@ -133,9 +133,32 @@ let ModelSummary = createCustomBlock(
 	(block, generator) => {
 		const variable_model = generator.getVariableName(block.getFieldValue('model'));
 
-		const code = `appendToLog(${variable_model}.summary())`
+		const code = `appendToLog(${variable_model}.summary())`;
 		return code;
 	}
 );
 
-export const LayersCategory = CreateCategory([NewModel, AddLayerToModel, DenseLayer, ModelSummary], 'Layers');
+const FlattenLayer = createCustomBlock(
+	{
+		type: 'flattenLayer',
+		tooltip: '',
+		helpUrl: '',
+		message0: 'Flatten Layer %1',
+		args0: [
+			{
+				type: 'input_dummy',
+				name: 'NAME'
+			}
+		],
+		output: null,
+		colour: 120
+	},
+	(block, generator): BlockReturningValue => {
+		return ['tf.layers.flatten({inputShape: [28, 28, 3]})', Order.ATOMIC];
+	}
+);
+
+export const LayersCategory = CreateCategory(
+	[NewModel, AddLayerToModel, DenseLayer, FlattenLayer, ModelSummary],
+	'Layers'
+);
