@@ -220,7 +220,7 @@ export const toolboxString = `
     </block>
   </category>
   <category name="Variables" colour="#a55b80" custom="VARIABLE"></category>
-  <category name="Functions" colour="#995ba5" custom="PROCEDURE"></category>
+
   <category name="Text" colour="#5ba58c">
     <block type="text">
       <field name="TEXT"></field>
