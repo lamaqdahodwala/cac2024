@@ -42,6 +42,7 @@
 		"@babel/standalone": "^7.25.3",
 		"@blockly/block-shareable-procedures": "^5.0.6",
 		"@prisma/client": "5.16.1",
+		"@tensorflow/tfjs": "^4.20.0",
 		"@types/babel__standalone": "^7.1.7",
 		"@types/insane": "^1.0.0",
 		"aos": "^2.3.4",

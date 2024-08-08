@@ -31,10 +31,13 @@ export interface BlocklyJson {
 		check?: string | string[];
 		align?: string;
 		text?: string;
+    value?: number | string;
+    options?: [displayString: string, fieldName: string][],
+    variable?: string
 	}[];
 	previousStatement?: string | null;
 	nextStatement?: string | null;
-	output?: string | string[];
+	output?: string | string[] | null;
 	colour: number;
 }
 
@@ -131,7 +134,7 @@ export class ToolboxCreator {
 
 export function createCustomBlock(
 	json: BlocklyJson,
-	callback: (block: Blockly.Block, generator: JavascriptGenerator) => string
+	callback: (block: Blockly.Block, generator: JavascriptGenerator) => string | BlockReturningValue
 ) {
 	class Temp implements CustomBlock {
 		getJSON(): BlocklyJson {

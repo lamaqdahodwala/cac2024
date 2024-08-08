@@ -25,7 +25,7 @@
 <div id="logContainer" bind:this={container}>
 	<div id="messages">
 		{#each messages as i}
-			<p>{i}</p>
+			<p class="is-family-monospace">{i}</p>
       <hr/>
 		{/each}
 	</div>
