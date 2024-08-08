@@ -1,3 +1,5 @@
+import * as tf from '@tensorflow/tfjs'
+
 import {
 	CreateCategory,
 	createCustomBlock,
@@ -47,7 +49,7 @@ let DenseLayer = createCustomBlock(
 		const dropdown_optimizerchoice = block.getFieldValue('optimizerChoice');
 
 		// TODO: Assemble javascript into the code variable.
-		const code = `tf.layers.Dense(${number_name}, '${dropdown_optimizerchoice}')`;
+		const code = `tf.layers.dense({units: ${number_name}, activation: "${dropdown_optimizerchoice}"})`;
 		// TODO: Change Order.NONE to the correct operator precedence strength
 		return [code, Order.ATOMIC];
 	}
@@ -103,8 +105,37 @@ let NewModel = createCustomBlock(
 		colour: 180
 	},
 	(block, generator) => {
-    return ['tf.sequential()', Order.ATOMIC]
-  }
+		return ['tf.sequential()', Order.ATOMIC];
+	}
 );
 
-export const LayersCategory = CreateCategory([NewModel, AddLayerToModel, DenseLayer], 'Layers');
+let ModelSummary = createCustomBlock(
+	{
+		type: 'summary',
+		tooltip: 'Add a layer to a model variable',
+		helpUrl: '',
+		message0: 'Show layers of model %1 %2',
+		args0: [
+			{
+				type: 'field_variable',
+				name: 'model',
+				variable: 'model'
+			},
+			{
+				type: 'input_dummy',
+				name: 'layer'
+			}
+		],
+		previousStatement: null,
+		nextStatement: null,
+		colour: 180
+	},
+	(block, generator) => {
+		const variable_model = generator.getVariableName(block.getFieldValue('model'));
+
+		const code = `appendToLog(${variable_model}.summary())`
+		return code;
+	}
+);
+
+export const LayersCategory = CreateCategory([NewModel, AddLayerToModel, DenseLayer, ModelSummary], 'Layers');
