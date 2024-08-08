@@ -32,7 +32,8 @@ export interface BlocklyJson {
 		align?: string;
 		text?: string;
     value?: number | string;
-    options?: [displayString: string, fieldName: string][]
+    options?: [displayString: string, fieldName: string][],
+    variable?: string
 	}[];
 	previousStatement?: string | null;
 	nextStatement?: string | null;
