@@ -1,20 +1,22 @@
 <script lang="ts">
 	import * as Blockly from 'blockly';
 	import { javascriptGenerator } from 'blockly/javascript';
-	let workspace: Blockly.Workspace | Blockly.WorkspaceSvg | undefined;
+	let workspace: Blockly.Workspace 
 	import { onMount } from 'svelte';
 	import { ToolboxCreator } from '$lib/abstract/BlocklyInterface';
 	import { LoadingDataCategory } from '$lib/blocks/LoadingData';
 	import { DataTransformationCategory } from '$lib/blocks/DataTransformation';
 	import { DataCleaningCategory } from '$lib/blocks/DataCleaning';
   import {OutputCategory} from '$lib/blocks/Output'
+  import {LayersCategory} from '$lib/blocks/Layers'
 	import { addPrebuiltBlocks } from '$lib/blocks/PrebuiltBlocks';
 	import FileSystem from './FileSystem.svelte';
 	import * as dfd from 'danfojs/dist/danfojs-browser/src';
 	import { CodeEvaluationBuilder, FunctionConstructorStrategy } from './CodeEval';
 	import Log from './Log.svelte';
+  import * as tf from '@tensorflow/tfjs'
 
-	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory, OutputCategory]);
+	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory, OutputCategory, LayersCategory]);
 
 	onMount(() => {
 		workspace = Blockly.inject('test', {
@@ -35,7 +37,8 @@
 			dfd,
 			getFileByName,
 			appendToLog,
-			clearLog
+			clearLog,
+      tf
 		});
 		evaluator.wrapCodeAsync();
 		evaluator.withExecStrategy(FunctionConstructorStrategy);

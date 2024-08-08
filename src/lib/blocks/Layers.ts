@@ -47,7 +47,7 @@ let DenseLayer = createCustomBlock(
 		const dropdown_optimizerchoice = block.getFieldValue('optimizerChoice');
 
 		// TODO: Assemble javascript into the code variable.
-		const code = `tf.keras.layers.Dense(${number_name}, '${dropdown_optimizerchoice}')`;
+		const code = `tf.layers.Dense(${number_name}, '${dropdown_optimizerchoice}')`;
 		// TODO: Change Order.NONE to the correct operator precedence strength
 		return [code, Order.ATOMIC];
 	}
@@ -82,9 +82,29 @@ let AddLayerToModel = createCustomBlock(
 		const value_layer = generator.valueToCode(block, 'layer', Order.ATOMIC);
 		const variable_name = generator.getVariableName(block.getFieldValue('modelVar'));
 
-		const code = `${variable_name}.add(${value_layer})`
+		const code = `${variable_name}.add(${value_layer})`;
 		return code;
 	}
 );
 
-export const LayersCategory = CreateCategory([AddLayerToModel, DenseLayer], 'Layers');
+let NewModel = createCustomBlock(
+	{
+		type: 'createModel',
+		tooltip: 'Add a layer to a model variable',
+		helpUrl: '',
+		message0: 'Create a new empty ML model %1',
+		args0: [
+			{
+				type: 'input_dummy',
+				name: 'layer'
+			}
+		],
+		output: null,
+		colour: 180
+	},
+	(block, generator) => {
+    return ['tf.sequential()', Order.ATOMIC]
+  }
+);
+
+export const LayersCategory = CreateCategory([NewModel, AddLayerToModel, DenseLayer], 'Layers');
