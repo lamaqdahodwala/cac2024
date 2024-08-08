@@ -8,7 +8,7 @@ class FilterDataByBooleanBlock implements CustomBlock {
             type: 'Filter_Data_By_Boolean_Block',
             tooltip: 'Filter data by a boolean condition',
             helpUrl: '',
-            message0: 'In dataframe %1 filter by column %2 where value is %3 than %4',
+            message0: 'In dataframe %1 filter by column %2 where value is %3 than/to %4',
             args0: [
                 {
                     type: 'field_input',
@@ -23,7 +23,7 @@ class FilterDataByBooleanBlock implements CustomBlock {
                 {
                     type: 'field_dropdown',
                     name: 'CONDITION',
-                    "options": [
+                    options: [
                         ['greater', 'gt'],
                         ['less', 'lt'],
                         ['equal', 'eq']
@@ -40,50 +40,14 @@ class FilterDataByBooleanBlock implements CustomBlock {
             colour: 300,
         };
     }
-    getCodeForGenerator(block: Block, generator: JavascriptGenerator): BlockReturningValue {
+
+    getCodeForGenerator(block: Block, generator: JavascriptGenerator) {
         const dataframe = block.getFieldValue('DATAFRAME');
         const column = block.getFieldValue('COLUMN');
         const condition = block.getFieldValue('CONDITION');
         const value = block.getFieldValue('VALUE');
-        const operators: { [key: string]: string } = { gt: '>', lt: '<', eq: '==' };
-        return [`${dataframe}.filter(${dataframe}["${column}"] ${operators[condition]} ${value})`, Order.AWAIT];
-    }
-}
-
-class FilterDataByRowsBlock implements CustomBlock {
-    getJSON(): BlocklyJson {
-        return {
-            type: 'Filter_Data_By_Rows_Block',
-            tooltip: 'Filter data by rows',
-            helpUrl: '',
-            message0: 'In dataframe %1 filter rows from %2 to %3',
-            args0: [
-                {
-                    type: 'field_input',
-                    name: 'DATAFRAME',
-                    text: 'df'
-                },
-                {
-                    type: 'field_input',
-                    name: 'START_ROW',
-                    text: '0'
-                },
-                {
-                    type: 'field_input',
-                    name: 'END_ROW',
-                    text: '10'
-                }
-            ],
-            previousStatement: null,
-            nextStatement: null,
-            colour: 300,
-        };
-    }
-    getCodeForGenerator(block: Block, generator: JavascriptGenerator): BlockReturningValue {
-        const dataframe = block.getFieldValue('DATAFRAME');
-        const startRow = block.getFieldValue('START_ROW');
-        const endRow = block.getFieldValue('END_ROW');
-        return [`${dataframe}.iloc(${startRow}:${endRow})`, Order.AWAIT];
+        const operators: { [key: string]: string } = { gt: 'gt', lt: 'lt', eq: 'eq' };
+        return `${dataframe} = await ${dataframe}.loc({ rows: ${dataframe}["${column}"].${operators[condition]}(${value}) })`;
     }
 }
 
@@ -111,12 +75,14 @@ class FilterDataByColumnsBlock implements CustomBlock {
             colour: 300,
         };
     }
-    getCodeForGenerator(block: Block, generator: JavascriptGenerator): BlockReturningValue {
+
+    getCodeForGenerator(block: Block, generator: JavascriptGenerator) {
         const dataframe = block.getFieldValue('DATAFRAME');
         const columnNames = block.getFieldValue('COLUMN_NAMES').split(',').map((col: string) => col.trim());
-        return [`${dataframe}.loc(null, [${columnNames.map((col: string) => `"${col}"`).join(', ')}])`, Order.AWAIT];
+        return `${dataframe} = await ${dataframe}.loc(null, [${columnNames.map((col: string) => `"${col}"`).join(', ')}])`;
     }
 }
+
 
 class FilterDataByValuesBlock implements CustomBlock {
     getJSON(): BlocklyJson {
@@ -236,4 +202,4 @@ class DropDuplicatesBlock implements CustomBlock {
     }
 }
 
-export const DataCleaningCategory = CreateCategory([FilterDataByBooleanBlock, FilterDataByRowsBlock, FilterDataByColumnsBlock, FilterDataByValuesBlock, RemoveNullValuesBlock, FillNullValuesBlock, DropDuplicatesBlock ], 'Data Cleaning');
+export const DataCleaningCategory = CreateCategory([FilterDataByBooleanBlock, FilterDataByColumnsBlock, FilterDataByValuesBlock, RemoveNullValuesBlock, FillNullValuesBlock, DropDuplicatesBlock ], 'Data Cleaning');
