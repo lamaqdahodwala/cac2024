@@ -8,7 +8,7 @@ class FilterDataByBooleanBlock implements CustomBlock {
             type: 'Filter_Data_By_Boolean_Block',
             tooltip: 'Filter data by a boolean condition',
             helpUrl: '',
-            message0: 'In dataframe %1 filter by column %2 where value is %3 than/to %4',
+            message0: 'In dataframe %1 filter by column %2 where value is %3 than %4',
             args0: [
                 {
                     type: 'field_input',
@@ -25,8 +25,7 @@ class FilterDataByBooleanBlock implements CustomBlock {
                     name: 'CONDITION',
                     options: [
                         ['greater', 'gt'],
-                        ['less', 'lt'],
-                        ['equal', 'eq']
+                        ['less', 'lt']
                     ]
                 },
                 {
@@ -46,7 +45,7 @@ class FilterDataByBooleanBlock implements CustomBlock {
         const column = block.getFieldValue('COLUMN');
         const condition = block.getFieldValue('CONDITION');
         const value = block.getFieldValue('VALUE');
-        const operators: { [key: string]: string } = { gt: 'gt', lt: 'lt', eq: 'eq' };
+        const operators: { [key: string]: string } = { gt: 'gt', lt: 'lt' };
         return `${dataframe} = await ${dataframe}.loc({ rows: ${dataframe}["${column}"].${operators[condition]}(${value}) })`;
     }
 }
@@ -78,11 +77,10 @@ class FilterDataByColumnsBlock implements CustomBlock {
 
     getCodeForGenerator(block: Block, generator: JavascriptGenerator) {
         const dataframe = block.getFieldValue('DATAFRAME');
-        const columnNames = block.getFieldValue('COLUMN_NAMES').split(',').map((col: string) => col.trim());
-        return `${dataframe} = await ${dataframe}.loc(null, [${columnNames.map((col: string) => `"${col}"`).join(', ')}])`;
+        const columnNames = block.getFieldValue('COLUMN_NAMES').split(',').map((col: string) => `"${col.trim()}"`);
+        return `${dataframe} = await ${dataframe}.loc({ columns: [${columnNames.join(', ')}] });`;
     }
 }
-
 
 class FilterDataByValuesBlock implements CustomBlock {
     getJSON(): BlocklyJson {
@@ -113,13 +111,15 @@ class FilterDataByValuesBlock implements CustomBlock {
             colour: 300,
         };
     }
-    getCodeForGenerator(block: Block, generator: JavascriptGenerator): BlockReturningValue {
+
+    getCodeForGenerator(block: Block, generator: JavascriptGenerator) {
         const dataframe = block.getFieldValue('DATAFRAME');
         const column = block.getFieldValue('COLUMN');
         const value = block.getFieldValue('VALUE');
-        return [`${dataframe}.loc(${dataframe}[${JSON.stringify(column)}].eq(${JSON.stringify(value)})).then(df => df.toJSON())`, Order.AWAIT];
+        return `${dataframe} = await ${dataframe}.loc({ rows: ${dataframe}["${column}"].eq(${value}) })`;
     }
 }
+
 
 class RemoveNullValuesBlock implements CustomBlock {
     getJSON(): BlocklyJson {
