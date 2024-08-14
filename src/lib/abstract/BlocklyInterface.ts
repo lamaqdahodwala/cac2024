@@ -153,12 +153,26 @@ export function createCustomBlock(
 	return new Temp();
 }
 
-interface MutatedBlock {
-	getJSON(): MutatedBlocklyJson;
-	getCodeForGenerator(
+abstract class MutatedBlock {
+	abstract getJSON(): MutatedBlocklyJson;
+	abstract getCodeForGenerator(
 		block: Blockly.Block,
 		generator: JavascriptGenerator
 	): string | BlockReturningValue;
+
+	getBlockList(): string[] {
+		return [];
+	}
+	helperFunction() {}
+
+	configure() {
+		Blockly.Extensions.registerMutator(
+			this.getJSON().mutator.type,
+			this.getJSON().mutator.methods,
+			this.helperFunction,
+			this.getBlockList()
+		);
+	}
 }
 
 interface MutatedBlocklyJson extends BlocklyJson {
@@ -166,10 +180,10 @@ interface MutatedBlocklyJson extends BlocklyJson {
 }
 
 type MutatorMethods = <T>() => {
-    saveExtraState: () => T;
-    loadExtraState: (state: T) => {};
-    decompose: (workspace: Blockly.Workspace) => Blockly.Block;
-    compose: (block: Blockly.Block) => void;
+	saveExtraState: () => T;
+	loadExtraState: (state: T) => {};
+	decompose: (workspace: Blockly.Workspace) => Blockly.Block;
+	compose: (block: Blockly.Block) => void;
 };
 
 interface Mutator {
@@ -179,20 +193,30 @@ interface Mutator {
 
 export type BlockReturningValue = [code: string, order: number];
 
-
 export function createMutatedBlock(
-  json: MutatedBlocklyJson,
+	json: MutatedBlocklyJson,
 	callback: (block: Blockly.Block, generator: JavascriptGenerator) => string | BlockReturningValue,
-  methods: MutatorMethods
+  blockList: string[] = [],
+  helperFunction?: Function
 ) {
-  class Temp implements MutatedBlock {
-    getJSON(): MutatedBlocklyJson {
-        return json
-    }
-    getCodeForGenerator(block: Blockly.Block, generator: JavascriptGenerator): string | BlockReturningValue {
-        return callback(block, generator)
-    }
-  }
+	class Temp extends MutatedBlock {
+		getJSON(): MutatedBlocklyJson {
+			return json;
+		}
+		getCodeForGenerator(
+			block: Blockly.Block,
+			generator: JavascriptGenerator
+		): string | BlockReturningValue {
+			return callback(block, generator);
+		}
 
-  return new Temp()
+    getBlockList(): string[] {
+        return blockList
+    }
+
+    helperFunction(): void {
+        helperFunction ? helperFunction() : null
+    }
+	}
+	return new Temp();
 }
