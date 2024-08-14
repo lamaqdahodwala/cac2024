@@ -1,5 +1,6 @@
 import * as Blockly from 'blockly';
 import { JavascriptGenerator } from 'blockly/javascript';
+import { getCompilationStrategyForBlock } from './BlockCompilationStrategy';
 
 export interface CustomBlock {
 	getCodeForGenerator(
@@ -67,7 +68,10 @@ export function CreateCategory(
 		}
 
 		compileForToolbox(generator: JavascriptGenerator) {
-			Blockly.defineBlocksWithJsonArray(this.blocks.map((block) => block.getJSON()));
+      this.blocks.forEach((block) => {
+        let strategy = getCompilationStrategyForBlock(block)
+        strategy.compile()
+      })
 			this.addCodeToGenerator(generator);
 			return this.blocks.map((value) => ({
 				kind: 'block',
@@ -153,7 +157,7 @@ export function createCustomBlock(
 	return new Temp();
 }
 
-abstract class MutatedBlock {
+export abstract class MutatedBlock {
 	abstract getJSON(): MutatedBlocklyJson;
 	abstract getCodeForGenerator(
 		block: Blockly.Block,

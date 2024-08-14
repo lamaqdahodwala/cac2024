@@ -2,7 +2,7 @@ import * as Blockly from 'blockly';
 import { MutatedBlock, type BlocklyJson, type CustomBlock } from './BlocklyInterface';
 
 export abstract class BlockCompilationStrategy {
-	abstract compile(block: CustomBlock): { kind: string; type: string };
+	abstract compile(): { kind: string; type: string };
 }
 
 export class CustomBlockCompilationStrategy extends BlockCompilationStrategy {
