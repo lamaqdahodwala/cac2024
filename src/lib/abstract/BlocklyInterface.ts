@@ -179,13 +179,13 @@ export abstract class MutatedBlock {
 	}
 }
 
-interface MutatedBlocklyJson extends BlocklyJson {
+export interface MutatedBlocklyJson extends BlocklyJson {
 	mutator: Mutator;
 }
 
-type MutatorMethods = <T>() => {
-	saveExtraState: () => T;
-	loadExtraState: (state: T) => {};
+type MutatorMethods =  {
+	saveExtraState: () => object;
+	loadExtraState: (state: object) => void;
 	decompose: (workspace: Blockly.Workspace) => Blockly.Block;
 	compose: (block: Blockly.Block) => void;
 };
