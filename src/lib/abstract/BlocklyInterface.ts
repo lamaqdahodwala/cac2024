@@ -2,7 +2,10 @@ import * as Blockly from 'blockly';
 import { JavascriptGenerator } from 'blockly/javascript';
 
 export interface CustomBlock {
-	getCodeForGenerator(block: Blockly.Block, generator: JavascriptGenerator): string | BlockReturningValue ;
+	getCodeForGenerator(
+		block: Blockly.Block,
+		generator: JavascriptGenerator
+	): string | BlockReturningValue;
 	getJSON(): BlocklyJson;
 }
 
@@ -31,9 +34,9 @@ export interface BlocklyJson {
 		check?: string | string[];
 		align?: string;
 		text?: string;
-    value?: number | string;
-    options?: [displayString: string, fieldName: string][],
-    variable?: string
+		value?: number | string;
+		options?: [displayString: string, fieldName: string][];
+		variable?: string;
 	}[];
 	previousStatement?: string | null;
 	nextStatement?: string | null;
@@ -74,17 +77,17 @@ export function CreateCategory(
 
 		addCodeToGenerator(generator: JavascriptGenerator) {
 			this.blocks.forEach((value) => {
-				generator.forBlock[value.getJSON().type] = ( block, generator ) => {
-          let code =  value.getCodeForGenerator(block, generator)
+				generator.forBlock[value.getJSON().type] = (block, generator) => {
+					let code = value.getCodeForGenerator(block, generator);
 
-          if (typeof code === "string"){
-            code += "\n"
-          } else {
-            code[0] += "\n"
-          }
+					if (typeof code === 'string') {
+						code += '\n';
+					} else {
+						code[0] += '\n';
+					}
 
-          return code
-        }
+					return code;
+				};
 			});
 		}
 
@@ -140,11 +143,56 @@ export function createCustomBlock(
 		getJSON(): BlocklyJson {
 			return json;
 		}
-		getCodeForGenerator(block: Blockly.Block, generator: JavascriptGenerator): string | BlockReturningValue {
+		getCodeForGenerator(
+			block: Blockly.Block,
+			generator: JavascriptGenerator
+		): string | BlockReturningValue {
 			return callback(block, generator);
 		}
 	}
 	return new Temp();
 }
 
-export type BlockReturningValue = [code: string, order: number] 
+interface MutatedBlock {
+	getJSON(): MutatedBlocklyJson;
+	getCodeForGenerator(
+		block: Blockly.Block,
+		generator: JavascriptGenerator
+	): string | BlockReturningValue;
+}
+
+interface MutatedBlocklyJson extends BlocklyJson {
+	mutator: Mutator;
+}
+
+type MutatorMethods = <T>() => {
+    saveExtraState: () => T;
+    loadExtraState: (state: T) => {};
+    decompose: (workspace: Blockly.Workspace) => Blockly.Block;
+    compose: (block: Blockly.Block) => void;
+};
+
+interface Mutator {
+	type: string;
+	methods: MutatorMethods;
+}
+
+export type BlockReturningValue = [code: string, order: number];
+
+
+export function createMutatedBlock(
+  json: MutatedBlocklyJson,
+	callback: (block: Blockly.Block, generator: JavascriptGenerator) => string | BlockReturningValue,
+  methods: MutatorMethods
+) {
+  class Temp implements MutatedBlock {
+    getJSON(): MutatedBlocklyJson {
+        return json
+    }
+    getCodeForGenerator(block: Blockly.Block, generator: JavascriptGenerator): string | BlockReturningValue {
+        return callback(block, generator)
+    }
+  }
+
+  return new Temp()
+}
