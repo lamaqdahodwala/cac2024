@@ -41,7 +41,6 @@ export class CodeEvaluationBuilder {
 
 
 	run() {
-    console.log(this.config.code)
 		return new this.config.strategy().run(this.config.code, this.config.context);
 	}
 }

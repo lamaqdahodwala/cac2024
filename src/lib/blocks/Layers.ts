@@ -162,38 +162,6 @@ const FlattenLayer = createCustomBlock(
 );
 
 
-createMutatedBlock(
-	{
-		type: 'my_block',
-		tooltip: '',
-		helpUrl: '',
-		message0: 'Test %1',
-		args0: [
-			{
-				type: 'input_value',
-				name: 'NAME'
-			}
-		],
-		colour: 225,
-		mutator: {
-      methods: {
-        saveExtraState: function(){
-          return {
-            "count": this.itemCount_
-          }
-        }, 
-        loadExtraState: (state) => {
-          this.itemCount_ = state.count
-        },
-        compose: (block) => {
-          block.getInputTargetBlock("STACK")
-        }
-      }
-    }
-	},
-	(block, generator) => ''
-);
-
 export const LayersCategory = CreateCategory(
 	[NewModel, AddLayerToModel, DenseLayer, FlattenLayer, ModelSummary],
 	'Layers'
