@@ -15,9 +15,10 @@
 	import * as dfd from 'danfojs/dist/danfojs-browser/src';
 	import { CodeEvaluationBuilder, FunctionConstructorStrategy } from './CodeEval';
 	import Log from './Log.svelte';
+  import {MutatedCategory} from '$lib/blocks/Mutated'
   import * as tf from '@tensorflow/tfjs'
 
-	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory, OutputCategory, LayersCategory, ModelTraningCategory]);
+	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory, OutputCategory, LayersCategory, ModelTraningCategory, MutatedCategory]);
 
 	onMount(() => {
 		workspace = Blockly.inject('test', {
