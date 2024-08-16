@@ -87,7 +87,7 @@ button:hover {
   display: flex;
   margin-top: 20px;
   justify-content: space-between;
-  gap: 20px; /* Adds space between the two sections */
+  gap: 20px;
 }
 #test, 
 #devToolsContainer {
