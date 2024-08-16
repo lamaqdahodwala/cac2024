@@ -183,14 +183,14 @@ export interface MutatedBlocklyJson extends BlocklyJson {
 	mutator: Mutator;
 }
 
-type MutatorMethods =  {
-	saveExtraState: () => object;
-	loadExtraState: (state: object) => void;
-	decompose: (workspace: Blockly.Workspace) => Blockly.Block;
-	compose: (block: Blockly.Block) => void;
+export interface MutatorMethods  {
+	saveExtraState(): object;
+	loadExtraState (state: object): void;
+	decompose(workspace: Blockly.Workspace): Blockly.Block;
+	compose(block: Blockly.Block): void;
 };
 
-interface Mutator {
+export interface Mutator {
 	type: string;
 	methods: MutatorMethods;
 }

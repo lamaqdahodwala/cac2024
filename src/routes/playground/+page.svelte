@@ -16,6 +16,7 @@
 	import { CodeEvaluationBuilder, FunctionConstructorStrategy } from './CodeEval';
 	import Log from './Log.svelte';
   import * as tf from '@tensorflow/tfjs'
+	import { MutatedCategory } from '$lib/blocks/Mutations';
 
 	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory, OutputCategory, LayersCategory, ModelTraningCategory]);
 
