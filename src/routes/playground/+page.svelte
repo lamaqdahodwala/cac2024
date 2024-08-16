@@ -7,6 +7,7 @@
 	import { LoadingDataCategory } from '$lib/blocks/LoadingData';
 	import { DataTransformationCategory } from '$lib/blocks/DataTransformation';
 	import { DataCleaningCategory } from '$lib/blocks/DataCleaning';
+	import { ModelTraningCategory } from '$lib/blocks/ModelTraining';
   import {OutputCategory} from '$lib/blocks/Output'
   import {LayersCategory} from '$lib/blocks/Layers'
 	import { addPrebuiltBlocks } from '$lib/blocks/PrebuiltBlocks';
@@ -16,7 +17,7 @@
 	import Log from './Log.svelte';
   import * as tf from '@tensorflow/tfjs'
 
-	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory, OutputCategory, LayersCategory]);
+	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory, OutputCategory, LayersCategory, ModelTraningCategory]);
 
 	onMount(() => {
 		workspace = Blockly.inject('test', {
@@ -55,7 +56,7 @@
 <br />
 <button on:click={compileCode}>Run code</button>
 <div class="columns">
-	<div id="test" style="height: 800px; width: 800px;"></div>
+	<div id="test" style="height: 750px; width: 800px;"></div>
 	<div class="" id="devToolsContainer">
 		<FileSystem bind:getFileByName />
 		<Log bind:appendToLog bind:clearLog />
@@ -63,6 +64,42 @@
 </div>
 
 <style>
-  #devToolsContainer {
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-left: 20px;
+}
+button:hover {
+  background-color: #0056b3;
+}
+.columns {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+  gap: 20px; /* Adds space between the two sections */
+}
+#test, 
+#devToolsContainer {
+  flex: 1;
+  height: 750px;
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-left: 20px;
+  margin-right: 20px;
+}
 </style>
