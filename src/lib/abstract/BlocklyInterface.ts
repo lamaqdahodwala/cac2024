@@ -68,10 +68,10 @@ export function CreateCategory(
 		}
 
 		compileForToolbox(generator: JavascriptGenerator) {
-      this.blocks.forEach((block) => {
-        let strategy = getCompilationStrategyForBlock(block)
-        strategy.compile()
-      })
+			this.blocks.forEach((block) => {
+				let strategy = getCompilationStrategyForBlock(block);
+				strategy.compile();
+			});
 			this.addCodeToGenerator(generator);
 			return this.blocks.map((value) => ({
 				kind: 'block',
@@ -183,25 +183,141 @@ export interface MutatedBlocklyJson extends BlocklyJson {
 	mutator: Mutator;
 }
 
-export interface MutatorMethods  {
+export interface MutatorMethods {
 	saveExtraState(): object;
-	loadExtraState (state: object): void;
+	loadExtraState(state: object): void;
 	decompose(workspace: Blockly.Workspace): Blockly.Block;
 	compose(block: Blockly.Block): void;
-};
+}
+
+export type InputMapType = {
+    blockNameInMutatorUi: string;
+    config: {
+        fields: {
+            fieldName: string;
+            opts: {
+                type: 'number' | 'text' | 'dropdown';
+                value?: number | string;
+                dropdownOptions?: {
+                    internalName: string;
+                    userText: string;
+                }[];
+            };
+            fieldLabel: string;
+        }[];
+        amount: number;
+    };
+}[];
+
+export interface InputMapMutator {
+	saveExtraState(): object;
+	loadExtraState(state: object): void;
+	inputMap(): InputMapType;
+	topBlockInMutatorUI: string;
+}
 
 export interface Mutator {
 	type: string;
 	methods: MutatorMethods;
 }
 
+export function useInputMap(
+	value: new () => InputMapMutator,
+	context: ClassDecoratorContext
+)
+	let instance = new value();
+	let inputMap = instance.inputMap();
+
+  return class extends value implements MutatorMethods {
+		loadExtraState(state: object): void {
+			return instance.loadExtraState(state);
+		}
+
+		saveExtraState(): object {
+			return instance.saveExtraState();
+		}
+
+		compose(this: Blockly.Block, topBlock: Blockly.Block): void {
+			let connection = topBlock.nextConnection!;
+			this.inputList.forEach((input) => input.dispose());
+			let nextBlock = connection.targetBlock();
+
+			while (nextBlock) {
+				if (nextBlock.isInsertionMarker()) {
+					nextBlock = nextBlock.getNextBlock();
+					continue;
+				}
+
+				let blockName = nextBlock.type;
+				function findBlockNameInInputMap(blockName: string) {
+					for (let index = 0; index < inputMap.length; index++) {
+						const element = inputMap[index];
+
+						if (element.blockNameInMutatorUi === blockName) {
+							return element;
+						}
+					}
+					return null;
+				}
+
+				let fieldDetails = findBlockNameInInputMap(blockName);
+
+        if (!fieldDetails) continue
+
+        let fieldConfig = fieldDetails.config
+
+        if (fieldConfig.amount > 1) {
+
+        }
+
+        let input = this.appendDummyInput()
+        fieldConfig.fields.forEach((fieldConf) => {
+          let field
+          switch (fieldConf.opts.type) {
+            case "dropdown": 
+              let menu: Blockly.MenuGenerator = []
+              let dropdownOptions = fieldConf.opts.dropdownOptions!
+              dropdownOptions.forEach((value) => menu.push([value.userText, value.internalName]))
+              field = new Blockly.FieldDropdown(menu)
+            case "number": 
+              field = new Blockly.FieldNumber()
+              field.setValue(fieldConf.opts.value || 0)
+            case "text": 
+              field = new Blockly.FieldTextInput()
+              field.setValue(fieldConf.opts.value || "")
+          }
+
+          input.appendField(field)
+        })
+			}
+		}
+
+		decompose(workspace: Blockly.Workspace): Blockly.Block {
+			const topBlock = workspace.newBlock(instance.topBlockInMutatorUI);
+			let connection = topBlock.nextConnection!;
+
+			topBlock.initSvg();
+			inputMap.forEach((value) => {
+				let keys = Object.keys(value);
+				let subBlockName = keys[0];
+				let subBlock = workspace.newBlock(subBlockName);
+
+				connection.connect(subBlock.previousConnection!);
+			});
+
+			return topBlock;
+		}
+	}
+
+	return Temp;
+}
 export type BlockReturningValue = [code: string, order: number];
 
 export function createMutatedBlock(
 	json: MutatedBlocklyJson,
 	callback: (block: Blockly.Block, generator: JavascriptGenerator) => string | BlockReturningValue,
-  blockList: string[] = [],
-  helperFunction?: Function
+	blockList: string[] = [],
+	helperFunction?: Function
 ) {
 	class Temp extends MutatedBlock {
 		getJSON(): MutatedBlocklyJson {
@@ -214,14 +330,13 @@ export function createMutatedBlock(
 			return callback(block, generator);
 		}
 
-    getBlockList(): string[] {
-        return blockList
-    }
+		getBlockList(): string[] {
+			return blockList;
+		}
 
-    helperFunction(): void {
-        helperFunction ? helperFunction() : null
-    }
+		helperFunction(): void {
+			helperFunction ? helperFunction() : null;
+		}
 	}
 	return new Temp();
 }
-
