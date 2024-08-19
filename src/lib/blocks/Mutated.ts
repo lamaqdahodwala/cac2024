@@ -24,28 +24,28 @@ class TestMutation implements InputMapMutator {
 		this.state = state;
 	}
 
-  inputMap(): InputMapType {
-    return [
-      {
-        blockTypeInMutatorUi: "controls_if_elseif",
-        inputName: "if",
-        config: {
-          fields: [
-            {
-              fieldLabel: "Test", 
-              fieldName: "testField", 
-              opts: {
-                type: "number",
-                value: this.state.count 
-              }
-            }
-          ]
-        }
-      }
-    ]
-  }
+	inputMap(): InputMapType {
+		return [
+			{
+				blockTypeInMutatorUi: 'controls_if_elseif',
+				inputName: 'if',
+				config: {
+					fields: [
+						{
+							fieldLabel: 'Test',
+							fieldName: 'testField',
+							opts: {
+								type: 'number',
+								value: this.state.count
+							}
+						}
+					]
+				}
+			}
+		];
+	}
 
-  topBlockInMutatorUI = "controls_if_if";
+	topBlockInMutatorUI = 'controls_if_if';
 }
 
 let mutatedBlock = createMutatedBlock(
@@ -60,8 +60,13 @@ let mutatedBlock = createMutatedBlock(
 			methods: useInputMap(TestMutation)
 		}
 	},
-	() => "console.log('hello world')", ['controls_if_elseif']
-  
+	(block, generator) => {
+
+    let fieldValue = block.getField("testField")
+    console.log(fieldValue)
+		return `console.log(${fieldValue})`;
+	},
+	['controls_if_elseif']
 );
 
-export const MutatedCategory = CreateCategory([mutatedBlock], "Mutated")
+export const MutatedCategory = CreateCategory([mutatedBlock], 'Mutated');

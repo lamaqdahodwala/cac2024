@@ -225,6 +225,8 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 	let instance = new value();
 	let inputMap = instance.inputMap();
 
+  let hasSetEventHandler = false
+
 	return {
 		loadExtraState(state: object): void {
 			return instance.loadExtraState(state);
