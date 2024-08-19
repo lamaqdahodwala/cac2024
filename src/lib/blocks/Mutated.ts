@@ -30,7 +30,6 @@ class TestMutation implements InputMapMutator {
         blockTypeInMutatorUi: "controls_if_elseif",
         inputName: "if",
         config: {
-          amount: 1, 
           fields: [
             {
               fieldLabel: "Test", 

@@ -206,7 +206,6 @@ export type InputMapType = {
 			};
 			fieldLabel: string;
 		}[];
-		amount: number;
 	};
 }[];
 
@@ -240,7 +239,19 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 			let nextBlock = connection.targetBlock();
 			nextBlock = topBlock.getNextBlock();
 
+			console.log(this.inputList);
+
 			function findBlockNameInInputMap(blockName: string) {
+				for (let index = 0; index < inputMap.length; index++) {
+					const element = inputMap[index];
+
+					if (element.inputName === blockName) {
+						return element;
+					}
+				}
+				return null;
+			}
+			function findBlockTypeInInputMap(blockName: string) {
 				for (let index = 0; index < inputMap.length; index++) {
 					const element = inputMap[index];
 
@@ -250,9 +261,13 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 				}
 				return null;
 			}
+			this.inputList.forEach((input) => {
+        if (findBlockNameInInputMap(input.name)){
+          this.removeInput(input.name)
+        }
+			});
 
 			while (nextBlock) {
-				console.log(nextBlock.type);
 				if (nextBlock.isInsertionMarker()) {
 					nextBlock = nextBlock.getNextBlock();
 					continue;
@@ -260,30 +275,19 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 
 				let blockName = nextBlock.type;
 
-
-        nextBlock.inputList.forEach((input) => {
-          console.log(input)
-          inputMap.map((value) => {
-            if (input.type.toString() === value.blockTypeInMutatorUi){
-              this.removeInput(input.name)
-            }
-          })
-        })
-				let fieldDetails = findBlockNameInInputMap(blockName);
-
+				let fieldDetails = findBlockTypeInInputMap(blockName);
 
 				if (!fieldDetails) {
-          nextBlock = nextBlock.getNextBlock()
-          continue
-        };
+					nextBlock = nextBlock.getNextBlock();
+					continue;
+				}
 
 				let fieldConfig = fieldDetails.config;
 
-
-        let i = findBlockNameInInputMap(nextBlock.type)
+				let i = findBlockTypeInInputMap(nextBlock.type);
 				let input = this.appendDummyInput(i.inputName);
 				fieldConfig.fields.forEach((fieldConf) => {
-          input.appendField(fieldConf.fieldLabel)
+					input.appendField(fieldConf.fieldLabel);
 					let field;
 					switch (fieldConf.opts.type) {
 						case 'dropdown':
@@ -301,7 +305,7 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 							field.name = fieldConf.fieldName;
 					}
 
-          if (nextBlock === null) throw new Error()
+					if (nextBlock === null) throw new Error();
 
 					input.appendField(field);
 				});
@@ -323,7 +327,7 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 
 				connection.connect(subBlock.previousConnection!);
 
-        connection = subBlock.nextConnection!
+				connection = subBlock.nextConnection!;
 			});
 
 			return topBlock;
