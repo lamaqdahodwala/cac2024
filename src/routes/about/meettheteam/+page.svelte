@@ -258,45 +258,6 @@
 				</p>
 			</div>
 
-			<div class="team-member-of-the-month">
-				<h2 class="title is-2">Team Member of the Month</h2>
-				<div class="member-spotlight">
-					<img src={teamMemberOfTheMonth.image} alt={teamMemberOfTheMonth.name} />
-					<div class="member-info">
-						<h3>Lamaq Dahodwala</h3>
-						<p>Co-Founder and CTO</p>
-						<div class="achievement">
-							<p>Achievement: {teamMemberOfTheMonth.achievements[1].title}</p>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="fun-meter">
-				<h3>Team Fun Meter</h3>
-				<div class="fun-meter-bar">
-					<div class="fun-meter-progress" style="width: {$funMeterProgress}%"></div>
-				</div>
-				<p class="fun-meter-label">Current Fun Level: {$funMeterProgress}%</p>
-			</div>
-
-			<div class="controls" in:fly={{ y: 20, duration: 300, easing: backOut }}>
-				<input
-					type="search"
-					bind:value={searchQuery}
-					placeholder="Search for a team member..."
-					class="search-input"
-				/>
-				<div class="sort-controls">
-					<button on:click={() => handleSort('name')} class:active={sortBy === 'name'}>
-						Sort by Name {sortBy === 'name' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
-					</button>
-					<button on:click={() => handleSort('title')} class:active={sortBy === 'title'}>
-						Sort by Title {sortBy === 'title' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
-					</button>
-				</div>
-			</div>
-
 			<div class="team-grid">
 				{#each filteredMembers as member (member.id)}
 					<div
@@ -594,42 +555,11 @@
 		box-shadow: 0 15px 30px var(--shadow-color);
 	}
 
-	.team-member-of-the-month h2 {
-		color: #363636;
-		font-size: 2.5rem;
-		margin-bottom: 1.5rem;
-		text-align: center;
-	}
-
 	.member-spotlight {
 		display: flex;
 		align-items: center;
 		gap: 2rem;
 	}
-
-	.member-spotlight img {
-		width: 200px;
-		height: 200px;
-		border-radius: 50%;
-		object-fit: cover;
-		border: 5px solid #3e8ed0;
-		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-	}
-
-	.member-info h3 {
-		font-size: 2rem;
-		color: #363636;
-		margin-bottom: 0.5rem;
-		font-weight: 450;
-	}
-
-	.member-info p {
-		font-size: 1.2rem;
-		color: var(--text-color);
-		margin-bottom: 1rem;
-		font-weight: 500;
-	}
-
 	.achievement {
 		background-color: var(--accent-color);
 		color: white;
@@ -663,49 +593,6 @@
 		background-blend-mode: overlay;
 	}
 
-	.fun-meter h3 {
-		color: #363636;
-		font-size: 2rem;
-		margin-bottom: 1.5rem;
-		font-weight: 600;
-	}
-
-	.fun-meter-bar {
-		height: 30px;
-		background-color: #e0e0e0;
-		border-radius: 15px;
-		overflow: hidden;
-		margin-bottom: 1rem;
-		box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
-	}
-
-	.fun-meter-progress {
-		height: 100%;
-		background: linear-gradient(90deg, #00d1b2, #4caf50);
-		transition: width 0.5s ease-out;
-		box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
-		position: relative; /* Added for pseudo-element use */
-		z-index: 1; /* Added for pseudo-element use */
-	}
-
-	/* Pseudo-element for the gradient effect */
-	.fun-meter-progress::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: linear-gradient(90deg, #00d1b2, #4caf50);
-		opacity: 0.5; /* Adjust opacity for the gradient overlay effect */
-		z-index: -1;
-	}
-
-	.fun-meter-label {
-		font-size: 1.2rem;
-		color: var(--text-color);
-	}
-
 	.controls {
 		display: flex;
 		justify-content: space-between;
@@ -731,24 +618,6 @@
 		outline: none;
 		box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
 		width: 320px;
-	}
-
-	.sort-controls button {
-		background-color: #48c78e;
-		border: none;
-		padding: 0.75rem 1rem;
-		margin-left: 0.5rem;
-		border-radius: 25px;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		color: white;
-		font-weight: 600;
-		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-	}
-
-	.sort-controls button.active {
-		background-color: #3e8ed0;
-		transform: scale(1.05);
 	}
 
 	.team-grid {
@@ -820,11 +689,6 @@
 
 	.member-content {
 		padding: 1.5rem;
-	}
-
-	.team-member-of-the-month h2.title {
-		font-style: normal;
-		font-weight: 600;
 	}
 
 	.team-member h3 {
@@ -1241,10 +1105,6 @@
 			justify-content: center;
 		}
 
-		.sort-controls button {
-			margin: 0.5rem;
-		}
-
 		.modal-body {
 			grid-template-columns: 1fr;
 		}
@@ -1256,15 +1116,6 @@
 
 		.modal-header img {
 			margin-right: 0;
-			margin-bottom: 1rem;
-		}
-
-		.team-member-of-the-month .member-spotlight {
-			flex-direction: column;
-			text-align: center;
-		}
-
-		.team-member-of-the-month .member-spotlight img {
 			margin-bottom: 1rem;
 		}
 	}
@@ -1805,10 +1656,6 @@
 			justify-content: center;
 		}
 
-		.sort-controls button {
-			margin: 0.5rem;
-		}
-
 		.modal-body {
 			grid-template-columns: 1fr;
 		}
@@ -1820,15 +1667,6 @@
 
 		.modal-header img {
 			margin-right: 0;
-			margin-bottom: 1rem;
-		}
-
-		.team-member-of-the-month .member-spotlight {
-			flex-direction: column;
-			text-align: center;
-		}
-
-		.team-member-of-the-month .member-spotlight img {
 			margin-bottom: 1rem;
 		}
 	}
@@ -2230,20 +2068,5 @@
 		height: 100%;
 		min-height: 50px;
 		text-align: center;
-	}
-
-	.achievement p {
-		margin: 0;
-	}
-
-	.sort-controls button {
-		/* Existing styles */
-		transition: all 0.3s ease;
-	}
-
-	.sort-controls button:hover {
-		background-color: #5ad8a4; /* Lighter shade of the accent color */
-		transform: scale(1.05);
-		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	}
 </style>
