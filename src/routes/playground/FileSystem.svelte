@@ -35,7 +35,7 @@
   <label for="fileInput" class="button-style">Choose File</label>
   <span>{choseFile}</span>
 </div>
-<input id="fileInput" type="file" on:change={showFile} style="display: none;" />
+<input id="fileInput" bind:this={inputFile} type="file" on:change={showFile} style="display: none;" />
 
 <style>
   .button-style {
