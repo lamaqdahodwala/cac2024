@@ -31,7 +31,7 @@ export class CodeEvaluationBuilder {
   }
 
   overrideConsoleLog(newFunction: string){
-    // this.config.code = `let tempLog = console.log \n console.log = ${newFunction} \n` + this.config.code
+    this.config.code = `let tempLog = console.log \n console.log = ${newFunction} \n` + this.config.code
   }
 
   wrapCodeAsync() {
