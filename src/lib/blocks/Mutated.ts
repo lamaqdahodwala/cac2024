@@ -11,7 +11,6 @@ import {
 import type { Workspace, Block } from 'blockly';
 import { CreateCategory } from '../abstract/BlocklyInterface';
 
-@useInputMap
 class TestMutation implements InputMapMutator {
 	private state = {
 		count: 0
@@ -27,6 +26,23 @@ class TestMutation implements InputMapMutator {
 
   inputMap(): InputMapType {
     return [
+      {
+        blockTypeInMutatorUi: "controls_if_elseif",
+        inputName: "if",
+        config: {
+          amount: 1, 
+          fields: [
+            {
+              fieldLabel: "Test", 
+              fieldName: "testField", 
+              opts: {
+                type: "number",
+                value: this.state.count 
+              }
+            }
+          ]
+        }
+      }
     ]
   }
 
@@ -38,21 +54,15 @@ let mutatedBlock = createMutatedBlock(
 		type: 'mutatedBlock',
 		tooltip: '',
 		helpUrl: '',
-		message0: 'Mutate Me %1',
-		args0: [
-			{
-				type: 'input_value',
-				name: 'NAME'
-			}
-		],
+		message0: 'Mutate Me',
 		colour: 225,
 		mutator: {
 			type: 'blockMutator',
-      // @ts-ignore
-			methods: new TestMutation()
+			methods: useInputMap(TestMutation)
 		}
 	},
-	() => "console.log('hello world')"
+	() => "console.log('hello world')", ['controls_if_elseif']
+  
 );
 
 export const MutatedCategory = CreateCategory([mutatedBlock], "Mutated")

@@ -191,22 +191,23 @@ export interface MutatorMethods {
 }
 
 export type InputMapType = {
-    blockNameInMutatorUi: string;
-    config: {
-        fields: {
-            fieldName: string;
-            opts: {
-                type: 'number' | 'text' | 'dropdown';
-                value?: number | string;
-                dropdownOptions?: {
-                    internalName: string;
-                    userText: string;
-                }[];
-            };
-            fieldLabel: string;
-        }[];
-        amount: number;
-    };
+	blockTypeInMutatorUi: string;
+	inputName: string;
+	config: {
+		fields: {
+			fieldName: string;
+			opts: {
+				type: 'number' | 'text' | 'dropdown';
+				value?: number | string;
+				dropdownOptions?: {
+					internalName: string;
+					userText: string;
+				}[];
+			};
+			fieldLabel: string;
+		}[];
+		amount: number;
+	};
 }[];
 
 export interface InputMapMutator {
@@ -221,95 +222,113 @@ export interface Mutator {
 	methods: MutatorMethods;
 }
 
-export function useInputMap(
-	value: new () => InputMapMutator,
-	context: ClassDecoratorContext
-)
+export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 	let instance = new value();
 	let inputMap = instance.inputMap();
 
-  return class extends value implements MutatorMethods {
+	return {
 		loadExtraState(state: object): void {
 			return instance.loadExtraState(state);
-		}
+		},
 
 		saveExtraState(): object {
 			return instance.saveExtraState();
-		}
+		},
 
 		compose(this: Blockly.Block, topBlock: Blockly.Block): void {
 			let connection = topBlock.nextConnection!;
-			this.inputList.forEach((input) => input.dispose());
 			let nextBlock = connection.targetBlock();
+			nextBlock = topBlock.getNextBlock();
+
+			function findBlockNameInInputMap(blockName: string) {
+				for (let index = 0; index < inputMap.length; index++) {
+					const element = inputMap[index];
+
+					if (element.blockTypeInMutatorUi === blockName) {
+						return element;
+					}
+				}
+				return null;
+			}
 
 			while (nextBlock) {
+				console.log(nextBlock.type);
 				if (nextBlock.isInsertionMarker()) {
 					nextBlock = nextBlock.getNextBlock();
 					continue;
 				}
 
 				let blockName = nextBlock.type;
-				function findBlockNameInInputMap(blockName: string) {
-					for (let index = 0; index < inputMap.length; index++) {
-						const element = inputMap[index];
 
-						if (element.blockNameInMutatorUi === blockName) {
-							return element;
-						}
-					}
-					return null;
-				}
 
+        nextBlock.inputList.forEach((input) => {
+          console.log(input)
+          inputMap.map((value) => {
+            if (input.type.toString() === value.blockTypeInMutatorUi){
+              this.removeInput(input.name)
+            }
+          })
+        })
 				let fieldDetails = findBlockNameInInputMap(blockName);
 
-        if (!fieldDetails) continue
 
-        let fieldConfig = fieldDetails.config
+				if (!fieldDetails) {
+          nextBlock = nextBlock.getNextBlock()
+          continue
+        };
 
-        if (fieldConfig.amount > 1) {
+				let fieldConfig = fieldDetails.config;
 
-        }
 
-        let input = this.appendDummyInput()
-        fieldConfig.fields.forEach((fieldConf) => {
-          let field
-          switch (fieldConf.opts.type) {
-            case "dropdown": 
-              let menu: Blockly.MenuGenerator = []
-              let dropdownOptions = fieldConf.opts.dropdownOptions!
-              dropdownOptions.forEach((value) => menu.push([value.userText, value.internalName]))
-              field = new Blockly.FieldDropdown(menu)
-            case "number": 
-              field = new Blockly.FieldNumber()
-              field.setValue(fieldConf.opts.value || 0)
-            case "text": 
-              field = new Blockly.FieldTextInput()
-              field.setValue(fieldConf.opts.value || "")
-          }
+        let i = findBlockNameInInputMap(nextBlock.type)
+				let input = this.appendDummyInput(i.inputName);
+				fieldConfig.fields.forEach((fieldConf) => {
+          input.appendField(fieldConf.fieldLabel)
+					let field;
+					switch (fieldConf.opts.type) {
+						case 'dropdown':
+							let menu: Blockly.MenuGenerator = [];
+							let dropdownOptions = fieldConf.opts.dropdownOptions!;
+							dropdownOptions.forEach((value) => menu.push([value.userText, value.internalName]));
+							field = new Blockly.FieldDropdown(menu);
+							field.name = fieldConf.fieldName;
+						case 'number':
+							field = new Blockly.FieldNumber(fieldConf.opts.value);
+							field.name = fieldConf.fieldName;
+							break;
+						case 'text':
+							field = new Blockly.FieldTextInput(String(fieldConf.opts.value));
+							field.name = fieldConf.fieldName;
+					}
 
-          input.appendField(field)
-        })
+          if (nextBlock === null) throw new Error()
+
+					input.appendField(field);
+				});
+
+				nextBlock = nextBlock.getNextBlock();
 			}
-		}
+		},
 
 		decompose(workspace: Blockly.Workspace): Blockly.Block {
 			const topBlock = workspace.newBlock(instance.topBlockInMutatorUI);
 			let connection = topBlock.nextConnection!;
 
-			topBlock.initSvg();
+			(topBlock as Blockly.BlockSvg).initSvg();
 			inputMap.forEach((value) => {
-				let keys = Object.keys(value);
-				let subBlockName = keys[0];
+				let subBlockName = value.blockTypeInMutatorUi;
 				let subBlock = workspace.newBlock(subBlockName);
 
+				(subBlock as Blockly.BlockSvg).initSvg();
+
 				connection.connect(subBlock.previousConnection!);
+
+        connection = subBlock.nextConnection!
 			});
 
 			return topBlock;
 		}
-	}
-
-	return Temp;
+	} satisfies MutatorMethods;
 }
 export type BlockReturningValue = [code: string, order: number];
 
