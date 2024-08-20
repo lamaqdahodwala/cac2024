@@ -35,7 +35,7 @@ export class CodeEvaluationBuilder {
   }
 
   wrapCodeAsync() {
-    // this.config.code = `async function run() {${this.config.code}}; run()`
+    this.config.code = `async function run() {${this.config.code}}; run()`
   }
 
 
