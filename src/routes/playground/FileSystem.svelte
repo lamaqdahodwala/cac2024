@@ -1,11 +1,11 @@
 <script lang="ts">
   export function getFiles(){
-
+    return inputFile.files ? Array.from(inputFile.files) : [];
   }
 
   let file: File
   let inputFile: HTMLInputElement
-  let choseFile: string = "No file chosen";
+  let choseFiles: string[] = [];
 
   export function getFileByName(fileName: string){
     let files = inputFile.files
@@ -23,19 +23,27 @@
 
   function showFile() {
     if (inputFile.files && inputFile.files.length > 0) {
-      choseFile = inputFile.files[0].name;
+      choseFiles = Array.from(inputFile.files).map(file => file.name);
     } else {
-      choseFile = "No file chosen";
+      choseFiles = ["No file chosen"];
+    }
+  }
+
+  export async function handleMultipleFiles() {
+    const files = getFiles();
+    if (files.length === 0) {
+      console.error("No files selected.");
+      return;
     }
   }
 
 </script>
 
 <div>
-  <label for="fileInput" class="button-style">Choose File</label>
-  <span>{choseFile}</span>
+  <label for="fileInput" class="button-style">Choose Files</label>
+  <span>{choseFiles.join(", ")}</span>
 </div>
-<input id="fileInput" bind:this={inputFile} type="file" on:change={showFile} style="display: none;" />
+<input id="fileInput" bind:this={inputFile} type="file" on:change={showFile} multiple style="display: none;" />
 
 <style>
   .button-style {
