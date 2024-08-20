@@ -309,7 +309,7 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 
 					if (nextBlock === null) throw new Error();
 
-					input.appendField(field);
+					input.appendField(field, fieldConf.fieldName);
 				});
 
 				nextBlock = nextBlock.getNextBlock();
