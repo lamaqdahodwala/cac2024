@@ -62,7 +62,7 @@ let mutatedBlock = createMutatedBlock(
 	},
 	(block, generator) => {
 
-    let fieldValue = block.getField("testField")
+    let fieldValue = block.getFieldValue("testField")
     console.log(fieldValue)
 		return `console.log(${fieldValue})`;
 	},

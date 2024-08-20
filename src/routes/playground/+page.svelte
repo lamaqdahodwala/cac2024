@@ -10,6 +10,7 @@
 	import { ModelTraningCategory } from '$lib/blocks/ModelTraining';
   import {OutputCategory} from '$lib/blocks/Output'
   import {LayersCategory} from '$lib/blocks/Layers'
+  import {EventsCategory} from '$lib/blocks/Events'
 	import { addPrebuiltBlocks } from '$lib/blocks/PrebuiltBlocks';
 	import FileSystem from './FileSystem.svelte';
 	import * as dfd from 'danfojs/dist/danfojs-browser/src';
@@ -18,7 +19,7 @@
   import {MutatedCategory} from '$lib/blocks/Mutated'
   import * as tf from '@tensorflow/tfjs'
 
-	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory, OutputCategory, LayersCategory, ModelTraningCategory, MutatedCategory]);
+	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory, OutputCategory, LayersCategory, ModelTraningCategory, MutatedCategory, EventsCategory]);
 
 	onMount(() => {
 		workspace = Blockly.inject('test', {
