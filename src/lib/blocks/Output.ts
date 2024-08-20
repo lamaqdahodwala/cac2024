@@ -43,7 +43,7 @@ const printFirstRowsBlock = createCustomBlock(
 		  type: 'field_number',
 		  name: 'rows',
 		  value: 5,
-		  min: 1,  
+		  min: 1,
 		  max: 10
 		}
 	  ],
