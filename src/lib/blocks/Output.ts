@@ -37,7 +37,7 @@ const printFirstRowsBlock = createCustomBlock(
 		{
 		  type: 'field_input',
 		  name: 'dataframe',
-		  text: 'df' // Default dataframe name
+		  text: 'df'
 		},
 		{
 		  type: 'field_number',
@@ -53,8 +53,11 @@ const printFirstRowsBlock = createCustomBlock(
 	(block, generator) => {
 	  const dataframe = block.getFieldValue('dataframe');
 	  const rows = block.getFieldValue('rows');
-	  const code = `${dataframe}.head(${rows}).print()`;
-	  return code;
+	  const code = `
+	  const firstRows = ${dataframe}.head(${rows});
+      appendToLog(firstRows.toString());
+	  `;
+      return code;
 	}
   );
   
@@ -85,8 +88,11 @@ const printFirstRowsBlock = createCustomBlock(
 	(block, generator) => {
 	  const dataframe = block.getFieldValue('dataframe');
 	  const rows = block.getFieldValue('rows');
-	  const code = `${dataframe}.tail(${rows}).print()`;
-	  return code;
+	  const code = `
+	  const lastRows = ${dataframe}.tail(${rows});
+      appendToLog(lastRows.toString());
+	  `;
+      return code;
 	}
   );
 
