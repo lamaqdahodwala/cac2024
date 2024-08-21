@@ -195,6 +195,9 @@ export interface MutatorMethods {
 export type InputMapType = {
 	blockTypeInMutatorUi: string;
 	inputName: string;
+  autoCreate: {
+    textToDisplay: string
+  }
 	config: {
 		fields: {
 			fieldName: string;
@@ -215,7 +218,10 @@ export interface InputMapMutator {
 	saveExtraState(): object;
 	loadExtraState(state: object): void;
 	inputMap(): InputMapType;
-	topBlockInMutatorUI: string;
+	topBlockInMutatorUI: {
+    blockType: string;
+    textToDisplay: string
+  };
 }
 
 export interface Mutator {
