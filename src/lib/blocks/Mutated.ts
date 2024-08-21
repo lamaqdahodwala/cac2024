@@ -48,7 +48,7 @@ class TestMutation implements InputMapMutator {
 		];
 	}
 
-  topBlockInMutatorUI: { blockType: string; textToDisplay: string; } = {
+  topBlockInMutatorUI = {
     textToDisplay: "Test top block",
     blockType: "test_topblock_container",
   };
@@ -72,7 +72,7 @@ let mutatedBlock = createMutatedBlock(
     console.log(fieldValue)
 		return `console.log(${fieldValue})`;
 	},
-	['controls_if_elseif']
+	['test_topblock_item']
 );
 
 export const MutatedCategory = CreateCategory([mutatedBlock], 'Mutated');

@@ -352,7 +352,7 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 		},
 
 		decompose(workspace: Blockly.Workspace): Blockly.Block {
-			const topBlock = workspace.newBlock(instance.topBlockInMutatorUI);
+			const topBlock = workspace.newBlock(instance.topBlockInMutatorUI.blockType);
 			let connection = topBlock.nextConnection!;
 
 			(topBlock as Blockly.BlockSvg).initSvg();
