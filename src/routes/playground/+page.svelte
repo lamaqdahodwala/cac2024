@@ -7,7 +7,7 @@
 	import { LoadingDataCategory } from '$lib/blocks/LoadingData';
 	import { DataTransformationCategory } from '$lib/blocks/DataTransformation';
 	import { DataCleaningCategory } from '$lib/blocks/DataCleaning';
-	import { ModelTraningCategory } from '$lib/blocks/ModelTraining';
+	import { ModelTrainingCategory } from '$lib/blocks/ModelTraining';
   import {OutputCategory} from '$lib/blocks/Output'
   import {LayersCategory} from '$lib/blocks/Layers'
   import {EventsCategory} from '$lib/blocks/Events'
@@ -19,7 +19,7 @@
   import {MutatedCategory} from '$lib/blocks/Mutated'
   import * as tf from '@tensorflow/tfjs'
 
-	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory, OutputCategory, LayersCategory, ModelTraningCategory, MutatedCategory, EventsCategory]);
+	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory, OutputCategory, LayersCategory, ModelTrainingCategory, MutatedCategory, EventsCategory]);
 
 	onMount(() => {
 		workspace = Blockly.inject('test', {
