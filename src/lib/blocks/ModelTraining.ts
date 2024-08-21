@@ -2,13 +2,13 @@ import { CreateCategory, type BlocklyJson, type BlockReturningValue, type Custom
 import type { Block } from 'blockly';
 import { Order, type JavascriptGenerator } from 'blockly/javascript';
 
-class BeginModelTrainingBlock implements CustomBlock {
+class TrainModelBlock implements CustomBlock {
     getJSON(): BlocklyJson {
         return {
-            type: 'Begin_Model_Training_Block',
-            tooltip: 'Begin training a model with a specified dataset and training loop',
+            type: 'Train_Model_Block',
+            tooltip: 'Train a model with the specified dataset and training loop',
             helpUrl: '',
-            message0: 'Begin training model %1 with data %2 and training loop %3',
+            message0: 'Train model %1 with data %2 and training loop %3',
             args0: [
                 {
                     type: 'field_input',
@@ -30,20 +30,27 @@ class BeginModelTrainingBlock implements CustomBlock {
             colour: 230,
         };
     }
+
     getCodeForGenerator(block: Block, generator: JavascriptGenerator) {
         const modelName = block.getFieldValue('MODEL_NAME');
-        const dataset = block.getFieldValue('DATASET');
+        const datasetName = block.getFieldValue('DATASET');
         const trainingLoop = generator.statementToCode(block, 'TRAINING_LOOP');
+
+        return `const ${modelName} = tf.sequential();
+            const ${datasetName} = await loadDataset('${datasetName}');
+            ${trainingLoop}
+            const trainModel = async () => {await ${modelName}.compile({optimizer: 'adam',loss: 'categoricalCrossentropy',metrics: ['accuracy'],});await ${modelName}.fit(${datasetName}.xTrain, ${datasetName}.yTrain, trainingLoop);};
+            trainModel();`;
     }
 }
 
-class CustomTrainingLoopBlock implements CustomBlock {
+class TrainingLoopBlock implements CustomBlock {
     getJSON(): BlocklyJson {
         return {
-            type: 'Custom_Training_Loop_Block',
+            type: 'Training_Loop_Block',
             tooltip: 'Define a custom training loop for the model',
             helpUrl: '',
-            message0: 'Epochs: %1 Batch Size: %2 Callbacks: %3',
+            message0: 'Epochs: %1 Batch Size: %2 Validation Split: %3 Callbacks: %4',
             args0: [
                 {
                     type: 'field_number',
@@ -54,6 +61,11 @@ class CustomTrainingLoopBlock implements CustomBlock {
                     type: 'field_number',
                     name: 'BATCH_SIZE',
                     value: 32
+                },
+                {
+                    type: 'field_number',
+                    name: 'VALIDATION_SPLIT',
+                    value: 0.2
                 },
                 {
                     type: 'field_input',
@@ -70,10 +82,10 @@ class CustomTrainingLoopBlock implements CustomBlock {
     getCodeForGenerator(block: Block, generator: JavascriptGenerator) {
         const epochs = block.getFieldValue('EPOCHS');
         const batchSize = block.getFieldValue('BATCH_SIZE');
+        const validationSplit = block.getFieldValue('VALIDATION_SPLIT');
         const callbacks = block.getFieldValue('CALLBACKS');
-
-        return `code = await const trainingLoop = {epochs: ${epochs}, batchSize: ${batchSize}, callbacks: ${callbacks}};`;
+        return `const trainingLoop = {epochs: ${epochs},batchSize: ${batchSize},validationSplit: ${validationSplit},callbacks: ${callbacks}};`;
     }
 }
 
-export const ModelTraningCategory = CreateCategory([BeginModelTrainingBlock, CustomTrainingLoopBlock], "Model Training");
+export const ModelTrainingCategory = CreateCategory([TrainModelBlock, TrainingLoopBlock], "Model Training");
