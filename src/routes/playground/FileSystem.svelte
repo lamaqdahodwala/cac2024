@@ -1,17 +1,13 @@
 <script lang="ts">
-  export function getFiles(){
+  let inputFile: HTMLInputElement;
+  let choseFiles: File[] = [];
+
+  export function getFiles() {
     return choseFiles;
   }
 
-  let file: File
-  let inputFile: HTMLInputElement
-  let choseFiles: File[] = [];
-
   export function getFileByName(fileName: string): File | null {
-    for (let file of choseFiles) {
-      if (file.name === fileName) return file;
-    }
-    return null;
+    return choseFiles.find((file) => file.name === fileName) || null;
   }
 
   function showFile() {
@@ -23,7 +19,9 @@
         }
       });
     }
+    inputFile.value = ''; 
   }
+
   function deleteFile(fileToDelete: File) {
     choseFiles = choseFiles.filter((file) => file !== fileToDelete);
   }
