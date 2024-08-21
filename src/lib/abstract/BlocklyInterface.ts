@@ -235,6 +235,33 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 
   let hasSetEventHandler = false
 
+  let topBlockDef = instance.topBlockInMutatorUI
+
+  let topBlockDefinition = {
+    colour: 100, 
+    type: topBlockDef.blockType,
+    message0: topBlockDef.textToDisplay,
+    nextStatement: null
+  } satisfies BlocklyJson
+
+  Blockly.defineBlocksWithJsonArray([topBlockDefinition])
+
+  instance.inputMap().forEach((value) => {
+
+    let itemType = value.blockTypeInMutatorUi
+    let itemText = value.autoCreate.textToDisplay
+
+    let definition = {
+      nextStatement: null, 
+      previousStatement: null, 
+      type: itemType,
+      message0: itemText,
+      colour: 100,
+    } satisfies BlocklyJson
+
+    Blockly.defineBlocksWithJsonArray([definition])
+  })
+
 	return {
 		loadExtraState(state: object): void {
 			return instance.loadExtraState(state);

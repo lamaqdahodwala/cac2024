@@ -27,8 +27,11 @@ class TestMutation implements InputMapMutator {
 	inputMap(): InputMapType {
 		return [
 			{
-				blockTypeInMutatorUi: 'controls_if_elseif',
+				blockTypeInMutatorUi: 'test_topblock_item',
 				inputName: 'if',
+        autoCreate: {
+          textToDisplay: "Test field"
+        },
 				config: {
 					fields: [
 						{
@@ -45,7 +48,10 @@ class TestMutation implements InputMapMutator {
 		];
 	}
 
-	topBlockInMutatorUI = 'controls_if_if';
+  topBlockInMutatorUI: { blockType: string; textToDisplay: string; } = {
+    textToDisplay: "Test top block",
+    blockType: "test_topblock_container",
+  };
 }
 
 let mutatedBlock = createMutatedBlock(
