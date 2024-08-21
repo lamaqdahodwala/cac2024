@@ -38,6 +38,8 @@ export interface BlocklyJson {
 		value?: number | string;
 		options?: [displayString: string, fieldName: string][];
 		variable?: string;
+    min?: number,
+    max?: number
 	}[];
 	previousStatement?: string | null;
 	nextStatement?: string | null;
