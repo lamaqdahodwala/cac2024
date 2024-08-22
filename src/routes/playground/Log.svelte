@@ -10,16 +10,20 @@
 
 	let messages: Message[] = [];
 
-  export function appendSystemLog(newText: string) {
+	export function appendSystemLog(newText: string) {
+		appendObjectToLog({
+			isSystemLog: true,
+			isError: false,
+			messageContent: newText
+		});
+	}
 
+	function appendObjectToLog(object: Omit<Message, 'time'>) {
 		let now = new Date();
-
 		messages = [
 			...messages,
 			{
-				isSystemLog: true,
-				isError: false,
-				messageContent: newText,
+				...object,
 				time: now.toLocaleTimeString()
 			}
 		];
@@ -30,25 +34,14 @@
 				behavior: 'smooth'
 			});
 		});
-  }
+	}
+
+	export function appendErrorToLog(error: string) {}
 	export function appendToLog(newText: string) {
-		let now = new Date();
-
-		messages = [
-			...messages,
-			{
-				isSystemLog: false,
-				isError: false,
-				messageContent: newText,
-				time: now.toLocaleTimeString()
-			}
-		];
-
-		tick().then(() => {
-			container.scroll({
-				top: container.scrollHeight,
-				behavior: 'smooth'
-			});
+		appendObjectToLog({
+			isSystemLog: false,
+			isError: false,
+			messageContent: newText,
 		});
 	}
 
