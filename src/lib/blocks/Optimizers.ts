@@ -259,7 +259,7 @@ let sgdBlock = createMutatedBlock(
 				type: 'field_number',
 				name: 'learningRate',
 				value: 0.01,
-				min: 0.0,  
+				min: 0,  
                 max: 1
 			}
 		],
@@ -288,8 +288,8 @@ let adamBlock = createMutatedBlock(
 			{
 				type: 'field_number',
 				name: 'learningRate',
-				value: 0.001,
-				min: 0
+				value: 0.001, 
+				min: 0, 
 				max: 1
 			}
 		],
@@ -342,5 +342,6 @@ let rmspropBlock = createMutatedBlock(
 	},
 	['rmsprop_rho_item', 'rmsprop_epsilon_item', 'rmsprop_momentum_item', 'rmsprop_centered_item']
 );
+
 
 export const OptimizerCategory = CreateCategory([sgdBlock,adamBlock,rmspropBlock],'Optimizers');
