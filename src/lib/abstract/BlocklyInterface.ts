@@ -198,6 +198,8 @@ export type InputMapType = {
   autoCreate: {
     textToDisplay: string
   }
+  isInputPresent: boolean;
+  allowMultiple: boolean;
 	config: {
 		fields: {
 			fieldName: string;
@@ -272,6 +274,7 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 		},
 
 		compose(this: Blockly.Block, topBlock: Blockly.Block): void {
+      let hasSeen: string | string[] = []
 			let connection = topBlock.nextConnection!;
 			let nextBlock = connection.targetBlock();
 			nextBlock = topBlock.getNextBlock();
@@ -299,8 +302,12 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 				return null;
 			}
 			this.inputList.forEach((input) => {
-        if (findBlockNameInInputMap(input.name)){
+        let block = findBlockNameInInputMap(input.name)
+
+        if (block){
           this.removeInput(input.name)
+          block.isInputPresent = false
+          
         }
 			});
 
@@ -318,6 +325,25 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 					nextBlock = nextBlock.getNextBlock();
 					continue;
 				}
+
+        if (hasSeen.includes(blockName) && !fieldDetails.allowMultiple){
+          let previousConnection = nextBlock.previousConnection!
+          let followingBlockConnection = nextBlock.nextConnection
+          let followingBlock = nextBlock.getNextBlock()
+
+
+          previousConnection?.disconnect()
+
+          if (followingBlockConnection) {
+            previousConnection?.connect(followingBlockConnection)
+          }
+
+          nextBlock = followingBlock
+          console.log(nextBlock)
+          continue
+        }
+
+        hasSeen.push(blockName)
 
 				let fieldConfig = fieldDetails.config;
 

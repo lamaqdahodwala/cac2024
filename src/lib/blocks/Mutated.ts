@@ -13,7 +13,7 @@ import { CreateCategory } from '../abstract/BlocklyInterface';
 
 class TestMutation implements InputMapMutator {
 	private state = {
-		count: 0
+    isPresent: false
 	};
 
 	saveExtraState(): object {
@@ -29,6 +29,8 @@ class TestMutation implements InputMapMutator {
 			{
 				blockTypeInMutatorUi: 'test_topblock_item',
 				inputName: 'if',
+        isInputPresent: this.state.isPresent,
+        allowMultiple: false,
         autoCreate: {
           textToDisplay: "Test field"
         },
@@ -39,7 +41,7 @@ class TestMutation implements InputMapMutator {
 							fieldName: 'testField',
 							opts: {
 								type: 'number',
-								value: this.state.count
+								value: 16
 							}
 						}
 					]

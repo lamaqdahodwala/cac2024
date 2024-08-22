@@ -5,10 +5,14 @@ import {
 	createCustomBlock,
 	createMutatedBlock,
 	MutatedBlock,
+	useInputMap,
 	type BlockReturningValue,
+	type InputMapMutator,
+	type InputMapType,
 	type MutatedBlocklyJson
 } from '$lib/abstract/BlocklyInterface';
 import { Order } from 'blockly/javascript';
+
 
 let DenseLayer = createCustomBlock(
 	{
@@ -44,7 +48,8 @@ let DenseLayer = createCustomBlock(
 			}
 		],
 		output: null,
-		colour: 120
+		colour: 120,
+    // mutator: useInputMap(DenseLayerMutation)
 	},
 	(block, generator): BlockReturningValue => {
 		const number_name = block.getFieldValue('units');
