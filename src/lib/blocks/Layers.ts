@@ -101,8 +101,12 @@ let DenseLayer = createMutatedBlock(
 
 		const dropdown_optimizerchoice = block.getFieldValue('optimizerChoice');
 
+    const inputShape: string | null = block.getFieldValue("inputShape")
+
+    let inputShapeString = `[${inputShape}]`
+
 		// TODO: Assemble javascript into the code variable.
-		const code = `tf.layers.dense({units: ${number_name}, activation: "${dropdown_optimizerchoice}"})`;
+		const code = `tf.layers.dense({units: ${number_name}, activation: "${dropdown_optimizerchoice}", inputShape: ${inputShapeString}})`;
 		// TODO: Change Order.NONE to the correct operator precedence strength
 		return [code, Order.ATOMIC];
 	},
