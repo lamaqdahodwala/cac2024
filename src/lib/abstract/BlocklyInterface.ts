@@ -339,7 +339,6 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
           }
 
           nextBlock = followingBlock
-          console.log(nextBlock)
           continue
         }
 
