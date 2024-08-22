@@ -26,7 +26,6 @@
 	<div id="messages">
 		{#each messages as i}
 			<p class="is-family-monospace">{i}</p>
-      <hr/>
 		{/each}
 	</div>
 </div>

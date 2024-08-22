@@ -32,6 +32,10 @@
 	});
 
 	async function compileCode() {
+    clearLog()
+    appendToLog("Beginning Execution...")
+
+    await new Promise((resolve) => setTimeout(resolve, 500))
 		let code = javascriptGenerator.workspaceToCode(workspace);
 
 		let evaluator = new CodeEvaluationBuilder();
