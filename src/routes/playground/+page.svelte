@@ -76,6 +76,17 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+:global(body) {
+		font-family: 'Poppins', sans-serif;
+		margin: 0;
+		padding: 0;
+		background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+		background-attachment: fixed;
+		min-height: 100vh;
+		position: relative;
+		overflow-x: hidden;
+	}
 button {
   background-color: #007bff;
   color: white;
