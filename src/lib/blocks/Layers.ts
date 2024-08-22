@@ -13,8 +13,50 @@ import {
 } from '$lib/abstract/BlocklyInterface';
 import { Order } from 'blockly/javascript';
 
+class DenseLayerMutation implements InputMapMutator {
+	private state = {
+		hasInputShapeArg: false
+	};
 
-let DenseLayer = createCustomBlock(
+	loadExtraState(state: typeof this.state): void {
+		this.state = state;
+	}
+
+	saveExtraState(): object {
+		return this.state;
+	}
+
+	inputMap(): InputMapType {
+		return [{
+      isInputPresent: this.state.hasInputShapeArg,
+      allowMultiple: false, 
+      inputName: "hasInputShape",
+      blockTypeInMutatorUi: "dense_layer_has_input_shape",
+      config: {
+        fields: [
+          {
+            fieldLabel: "with an input shape of",
+            opts: {
+              type: "text",
+              value: "28, 28, 3"
+            },
+            fieldName: "inputShape"
+          }
+        ]
+      },
+      autoCreate: {
+        textToDisplay: "Input Shape Argument"
+      }
+    }];
+	}
+
+	topBlockInMutatorUI: { blockType: string; textToDisplay: string } = {
+		blockType: 'dense_layer_container',
+		textToDisplay: 'Optional Inputs'
+	};
+}
+
+let DenseLayer = createMutatedBlock(
 	{
 		type: 'Dense_Layer',
 		tooltip: 'A densely connected layer',
@@ -49,7 +91,10 @@ let DenseLayer = createCustomBlock(
 		],
 		output: null,
 		colour: 120,
-    // mutator: useInputMap(DenseLayerMutation)
+		mutator: {
+      type: "denseLayerMutator",
+      methods: useInputMap(DenseLayerMutation)
+    }
 	},
 	(block, generator): BlockReturningValue => {
 		const number_name = block.getFieldValue('units');
@@ -60,7 +105,9 @@ let DenseLayer = createCustomBlock(
 		const code = `tf.layers.dense({units: ${number_name}, activation: "${dropdown_optimizerchoice}"})`;
 		// TODO: Change Order.NONE to the correct operator precedence strength
 		return [code, Order.ATOMIC];
-	}
+	},
+  ['dense_layer_has_input_shape']
+  
 );
 
 let AddLayerToModel = createCustomBlock(
@@ -165,7 +212,6 @@ const FlattenLayer = createCustomBlock(
 		return ['tf.layers.flatten({inputShape: [28, 28, 3]})', Order.ATOMIC];
 	}
 );
-
 
 export const LayersCategory = CreateCategory(
 	[NewModel, AddLayerToModel, DenseLayer, FlattenLayer, ModelSummary],
