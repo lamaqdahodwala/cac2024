@@ -36,7 +36,13 @@
 		});
 	}
 
-	export function appendErrorToLog(error: string) {}
+	export function appendErrorToLog(error: string) {
+    appendObjectToLog({
+      isSystemLog: false, 
+      isError: true, 
+      messageContent: error
+    })
+  }
 	export function appendToLog(newText: string) {
 		appendObjectToLog({
 			isSystemLog: false,

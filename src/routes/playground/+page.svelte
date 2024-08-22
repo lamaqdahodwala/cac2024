@@ -45,7 +45,8 @@
 			getFileByName,
 			appendToLog,
 			clearLog,
-      tf
+      tf,
+      appendErrorToLog
 		});
 		evaluator.wrapCodeAsync();
 		evaluator.withExecStrategy(FunctionConstructorStrategy);
@@ -58,6 +59,7 @@
 	let appendToLog: (text: string) => void;
 	let clearLog: () => void;
   let appendSystemLog: (text: string) => void;
+  let appendErrorToLog: (error: string) => void
 </script>
 
 <br />
@@ -66,7 +68,7 @@
 	<div id="test" style="height: 750px; width: 800px;"></div>
 	<div class="" id="devToolsContainer">
 		<FileSystem bind:getFileByName />
-		<Log bind:appendToLog bind:clearLog bind:appendSystemLog/>
+		<Log bind:appendToLog bind:clearLog bind:appendSystemLog bind:appendErrorToLog/>
 	</div>
 </div>
 
