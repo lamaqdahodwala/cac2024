@@ -1,11 +1,28 @@
 <script lang="ts">
 	import { tick } from 'svelte';
 
-	let messages: string[] = [];
-	export function appendToLog(newText: string) {
-    let now = new Date()
+	interface Message {
+		time: string;
+		messageContent: string;
+		isError: boolean;
+		isSystemLog: boolean;
+	}
 
-		messages = [...messages, `${now.toLocaleTimeString()} - ${ newText }`];
+	let messages: Message[] = [];
+
+  export function appendSystemLog(newText: string) {
+
+		let now = new Date();
+
+		messages = [
+			...messages,
+			{
+				isSystemLog: true,
+				isError: false,
+				messageContent: newText,
+				time: now.toLocaleTimeString()
+			}
+		];
 
 		tick().then(() => {
 			container.scroll({
@@ -13,6 +30,30 @@
 				behavior: 'smooth'
 			});
 		});
+  }
+	export function appendToLog(newText: string) {
+		let now = new Date();
+
+		messages = [
+			...messages,
+			{
+				isSystemLog: false,
+				isError: false,
+				messageContent: newText,
+				time: now.toLocaleTimeString()
+			}
+		];
+
+		tick().then(() => {
+			container.scroll({
+				top: container.scrollHeight,
+				behavior: 'smooth'
+			});
+		});
+	}
+
+	function renderMessageAsString(message: Message) {
+		return `${message.time} - ${message.messageContent}`;
 	}
 
 	export function clearLog() {
@@ -25,7 +66,13 @@
 <div id="logContainer" bind:this={container}>
 	<div id="messages">
 		{#each messages as i}
-			<p class="is-family-monospace">{i}</p>
+			{#if i.isError}
+				<p class="is-family-monospace has-background-danger">{renderMessageAsString(i)}</p>
+			{:else if i.isSystemLog}
+				<p class="is-family-monospace has-text-grey-light">{renderMessageAsString(i)}</p>
+			{:else}
+				<p class="is-family-monospace has-text-black">{renderMessageAsString(i)}</p>
+			{/if}
 		{/each}
 	</div>
 </div>
@@ -43,7 +90,7 @@
 	#logContainer {
 		position: relative;
 		height: 95%;
-    width: 48rem;
+		width: 48rem;
 		overflow-y: auto;
 	}
 </style>

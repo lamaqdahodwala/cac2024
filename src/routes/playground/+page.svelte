@@ -33,9 +33,9 @@
 
 	async function compileCode() {
     clearLog()
-    appendToLog("Beginning Execution...")
+    appendSystemLog("Beginning Execution...")
 
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await new Promise((resolve) => setTimeout(resolve, 100))
 		let code = javascriptGenerator.workspaceToCode(workspace);
 
 		let evaluator = new CodeEvaluationBuilder();
@@ -57,6 +57,7 @@
 	let getFileByName: (fileName: string) => File | null;
 	let appendToLog: (text: string) => void;
 	let clearLog: () => void;
+  let appendSystemLog: (text: string) => void;
 </script>
 
 <br />
@@ -65,7 +66,7 @@
 	<div id="test" style="height: 750px; width: 800px;"></div>
 	<div class="" id="devToolsContainer">
 		<FileSystem bind:getFileByName />
-		<Log bind:appendToLog bind:clearLog />
+		<Log bind:appendToLog bind:clearLog bind:appendSystemLog/>
 	</div>
 </div>
 
