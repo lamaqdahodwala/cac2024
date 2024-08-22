@@ -9,8 +9,6 @@ export class CodeEvaluationBuilder {
 		strategy: IndirectEvalStrategy
 	};
 
-
-
 	withExecStrategy(strat: new () => CodeExecutionStrategy) {
 		this.config.strategy = strat;
 	}
@@ -23,24 +21,30 @@ export class CodeEvaluationBuilder {
 		this.config.context = context;
 	}
 
-  addToContext(moreContext: object) {
-    this.config.context = {
-      ...this.config.context, 
-      ...moreContext
-    }
-  }
+	addToContext(moreContext: object) {
+		this.config.context = {
+			...this.config.context,
+			...moreContext
+		};
+	}
 
-  overrideConsoleLog(newFunction: string){
-    this.config.code = `let tempLog = console.log \n console.log = ${newFunction} \n` + this.config.code
-  }
+	overrideConsoleLog(newFunction: string) {
+		this.config.code =
+			`let tempLog = console.log \n console.log = ${newFunction} \n` + this.config.code;
+	}
 
-  wrapCodeAsync() {
-    this.config.code = `async function run() {${this.config.code}}; run()`
-  }
-
-
+	wrapCodeAsync() {
+		this.config.code = `async function run() {${this.config.code}}; run()`;
+	}
 
 	run() {
+		this.config.code = `
+try {
+  ${this.config.code}
+} catch (e) {
+  appendErrorToLog(e.message)
+}
+`;
 		return new this.config.strategy().run(this.config.code, this.config.context);
 	}
 }
@@ -51,7 +55,6 @@ interface EvaluationConfig {
 	context: object;
 }
 
-
 export class IndirectEvalStrategy implements CodeExecutionStrategy {
 	run(code: string, context: any) {
 		function evalInContext(js: string, context: any) {
@@ -61,13 +64,13 @@ export class IndirectEvalStrategy implements CodeExecutionStrategy {
 			}.call(context);
 		}
 
-    evalInContext(code, context)
+		evalInContext(code, context);
 	}
 }
 
 export class FunctionConstructorStrategy implements CodeExecutionStrategy {
-  run(code: string, context: object){
-    let executionFunc = Function.constructor([...Object.keys(context)], code)
-    executionFunc.call({}, ...Object.values(context))
-  }
+	run(code: string, context: object) {
+		let executionFunc = Function.constructor([...Object.keys(context)], code);
+		executionFunc.call({}, ...Object.values(context));
+	}
 }
