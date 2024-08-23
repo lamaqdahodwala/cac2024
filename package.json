@@ -52,6 +52,7 @@
 		"insane": "^2.6.2",
 		"js-interpreter": "^5.1.2",
 		"marked": "^13.0.2",
+		"node": "^22.7.0",
 		"plotly.js": "^2.34.0",
 		"prisma": "^5.16.0",
 		"svelte-add": "^2.3.3",
