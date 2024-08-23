@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   type FileEntry = {
     name: string;
     isFolder: boolean;
@@ -57,5 +55,67 @@
       addFileEntry(file, path.slice(0, -1));
     });
     rootEntry = { ...rootEntry };
+  }
+
+  function deleteFile(entry: FileEntry) {
+    if (entry.parent) {
+      entry.parent.children = entry.parent.children.filter(child => child !== entry);
+      rootEntry = { ...rootEntry };
+    }
+  }
+
+  function handleDrop(event: DragEvent) {
+    event.preventDefault();
+    const items = event.dataTransfer?.items;
+    if (items) {
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i].webkitGetAsEntry();
+        if (item) {
+          handleEntry(item);
+        }
+      }
+    }
+  }
+
+  function handleEntry(entry: any, path: string[] = []) {
+    if (entry.isFile) {
+      entry.file((file: File) => {
+        addFileEntry(file, path);
+        rootEntry = { ...rootEntry };
+      });
+    } else if (entry.isDirectory) {
+      const reader = entry.createReader();
+      reader.readEntries((entries: any[]) => {
+        entries.forEach((subEntry) => {
+          handleEntry(subEntry, [...path, entry.name]);
+        });
+      });
+    }
+  }
+
+  function allowDrop(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  function openFileSelector() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.multiple = true;
+    input.onchange = (e: Event) => {
+      const target = e.target as HTMLInputElement;
+      if (target.files) {
+        handleFileSelect(target.files);
+      }
+    };
+    input.click();
+  }
+
+  function toggleFolder(entry: FileEntry) {
+    entry.isOpen = !entry.isOpen;
+    rootEntry = { ...rootEntry };
+  }
+
+  function toggleFileSystem() {
+    showFileSystem = !showFileSystem;
   }
 </script>
