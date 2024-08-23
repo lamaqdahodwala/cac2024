@@ -10,7 +10,11 @@ export abstract class BlockValidator {
 	abstract getName(): string 
 }
 
-export function createValidator(validatorName: string, callback: (block: Blockly.Block) => void){
+/**
+ * Create a validator, but with more flexibility
+ * For basic applications, you should use the newValidator method
+  */
+export function customValidator(validatorName: string, callback: (block: Blockly.Block) => void){
   return new class extends BlockValidator {
     validateBlock(this: Blockly.Block): void {
         callback(this)
@@ -29,6 +33,11 @@ interface NewValidatorInput {
   validatorName: string
 
 }
+
+/**
+ * Create a basic validator, that can disable a block 
+ * For more customization, use the customValidator function
+  */
 export function newValidator(config: NewValidatorInput) {
   return new class extends BlockValidator {
     validateBlock(this: Blockly.Block): void {

@@ -12,7 +12,7 @@ import {
 	type MutatedBlocklyJson
 } from '$lib/abstract/BlocklyInterface';
 import { Order } from 'blockly/javascript';
-import { createValidator, newValidator } from '$lib/abstract/BlocklyValidator';
+import { customValidator, newValidator } from '$lib/abstract/BlocklyValidator';
 import type { Block } from 'blockly';
 
 class DenseLayerMutation implements InputMapMutator {
