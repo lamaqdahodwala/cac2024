@@ -12,6 +12,8 @@ import {
 	type MutatedBlocklyJson
 } from '$lib/abstract/BlocklyInterface';
 import { Order } from 'blockly/javascript';
+import { createValidator } from '$lib/abstract/BlocklyValidator';
+import type { Block } from 'blockly';
 
 class DenseLayerMutation implements InputMapMutator {
 	private state = {
@@ -70,7 +72,7 @@ let DenseLayer = createMutatedBlock(
 			{
 				type: 'field_number',
 				name: 'units',
-				value: 0
+				value: 16
 			},
 			{
 				type: 'input_dummy',
@@ -95,7 +97,22 @@ let DenseLayer = createMutatedBlock(
       type: "denseLayerMutator",
       methods: useInputMap(DenseLayerMutation)
     },
-	},
+    validator: createValidator(
+      "Test validator",
+      (block) => {
+        block.setOnChange(() => {
+          let units = block.getFieldValue("units")
+          if (units <= 0) {
+            block.setEnabled(false)
+            block.setWarningText("The amount of units must be greater than 0")
+            return
+          } 
+
+          block.setEnabled(true)
+        })
+      })
+  },
+
 	(block, generator): BlockReturningValue => {
 		let number_name = block.getFieldValue('units');
 
