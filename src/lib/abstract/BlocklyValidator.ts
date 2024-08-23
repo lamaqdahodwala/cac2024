@@ -10,9 +10,6 @@ export abstract class BlockValidator {
 	abstract getName(): string 
 }
 
-/**
- * @deprecated use the newValidator function instead 
- */
 export function createValidator(validatorName: string, callback: (block: Blockly.Block) => void){
   return new class extends BlockValidator {
     validateBlock(this: Blockly.Block): void {
