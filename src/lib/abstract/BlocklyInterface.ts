@@ -1,6 +1,7 @@
 import * as Blockly from 'blockly';
 import { JavascriptGenerator } from 'blockly/javascript';
 import { getCompilationStrategyForBlock } from './BlockCompilationStrategy';
+import { transformValidatorBlock, type BlockValidator } from './BlocklyValidator';
 
 export interface CustomBlock {
 	getCodeForGenerator(
@@ -45,6 +46,7 @@ export interface BlocklyJson {
 	nextStatement?: string | null;
 	output?: string | string[] | null;
 	colour: number;
+  validator?: BlockValidator
 }
 
 export interface Category {

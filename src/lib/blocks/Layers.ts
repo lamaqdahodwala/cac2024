@@ -97,7 +97,7 @@ let DenseLayer = createMutatedBlock(
     }
 	},
 	(block, generator): BlockReturningValue => {
-		const number_name = block.getFieldValue('units');
+		let number_name = block.getFieldValue('units');
 
 		const dropdown_optimizerchoice = block.getFieldValue('optimizerChoice');
 

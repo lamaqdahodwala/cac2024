@@ -38,13 +38,6 @@ export class CodeEvaluationBuilder {
 	}
 
 	run() {
-		this.config.code = `
-try {
-  ${this.config.code}
-} catch (e) {
-  appendErrorToLog(e.message)
-}
-`;
 		return new this.config.strategy().run(this.config.code, this.config.context);
 	}
 }

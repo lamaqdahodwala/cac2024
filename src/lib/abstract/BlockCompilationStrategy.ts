@@ -1,14 +1,18 @@
 import * as Blockly from 'blockly';
 import { MutatedBlock, type BlocklyJson, type CustomBlock } from './BlocklyInterface';
+import { transformValidatorBlock } from './BlocklyValidator';
 
 export abstract class BlockCompilationStrategy {
 	abstract compile(): { kind: string; type: string };
 }
 
 export class CustomBlockCompilationStrategy extends BlockCompilationStrategy {
-  constructor(private block: CustomBlock){super()}
+	constructor(private block: CustomBlock) {
+		super();
+	}
 	compile(): { kind: string; type: string } {
-		Blockly.defineBlocksWithJsonArray([this.block.getJSON()]);
+		let json = this.block.getJSON();
+		Blockly.defineBlocksWithJsonArray([transformValidatorBlock(json)]);
 		return {
 			type: this.block.getJSON().type,
 			kind: 'block'
@@ -17,7 +21,9 @@ export class CustomBlockCompilationStrategy extends BlockCompilationStrategy {
 }
 
 export class MutatedBlockCompilationStrategy extends BlockCompilationStrategy {
-  constructor(private block: MutatedBlock){super()}
+	constructor(private block: MutatedBlock) {
+		super();
+	}
 	compile(): { kind: string; type: string } {
 		let json = this.block.getJSON();
 
@@ -35,7 +41,7 @@ export class MutatedBlockCompilationStrategy extends BlockCompilationStrategy {
 			this.block.getBlockList()
 		);
 
-		Blockly.defineBlocksWithJsonArray([newObj]);
+		Blockly.defineBlocksWithJsonArray([transformValidatorBlock(newObj)]);
 
 		return {
 			kind: 'block',
@@ -44,9 +50,11 @@ export class MutatedBlockCompilationStrategy extends BlockCompilationStrategy {
 	}
 }
 
-export function getCompilationStrategyForBlock(block: CustomBlock | MutatedBlock): BlockCompilationStrategy{
-  if (block instanceof MutatedBlock){
-    return new MutatedBlockCompilationStrategy(block)
-  }
-  return new CustomBlockCompilationStrategy(block)
+export function getCompilationStrategyForBlock(
+	block: CustomBlock | MutatedBlock
+): BlockCompilationStrategy {
+	if (block instanceof MutatedBlock) {
+		return new MutatedBlockCompilationStrategy(block);
+	}
+	return new CustomBlockCompilationStrategy(block);
 }
