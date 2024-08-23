@@ -281,7 +281,6 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 			let nextBlock = connection.targetBlock();
 			nextBlock = topBlock.getNextBlock();
 
-			console.log(this.inputList);
 
 			function findBlockNameInInputMap(blockName: string) {
 				for (let index = 0; index < inputMap.length; index++) {

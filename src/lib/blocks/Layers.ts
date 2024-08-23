@@ -102,12 +102,15 @@ let DenseLayer = createMutatedBlock(
       (block) => {
         block.setOnChange(() => {
           let units = block.getFieldValue("units")
-          if (units <= 0) {
+          let invalid = units <= 0 || (!Number.isInteger(units))
+
+          if (invalid) {
             block.setEnabled(false)
-            block.setWarningText("The amount of units must be greater than 0")
+            block.setWarningText("The amount of units must be a non-decimal number greater than 0")
             return
           } 
 
+          block.setWarningText(null)
           block.setEnabled(true)
         })
       })
