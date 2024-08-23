@@ -94,7 +94,7 @@ let DenseLayer = createMutatedBlock(
 		mutator: {
       type: "denseLayerMutator",
       methods: useInputMap(DenseLayerMutation)
-    }
+    },
 	},
 	(block, generator): BlockReturningValue => {
 		let number_name = block.getFieldValue('units');
