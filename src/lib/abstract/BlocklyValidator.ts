@@ -7,19 +7,23 @@ export abstract class BlockValidator {
 		Blockly.Extensions.register(this.getName(), this.validateBlock);
 	}
 
-	getName() {
-		return this.constructor.name.toLowerCase();
-	}
+	abstract getName(): string 
 }
 
-export function createValidator(callback: (this: Blockly.Block) => void){
-  return class extends BlockValidator {
-    validateBlock = callback
+export function createValidator(validatorName: string, callback: (block: Blockly.Block) => void){
+  return new class extends BlockValidator {
+    validateBlock(this: Blockly.Block): void {
+        callback(this)
+    }
+
+    getName(): string {
+        return validatorName
+    }
   }
 }
 
 export function transformValidatorBlock(block: BlocklyJson) {
-	if (!block.validator) return;
+	if (!block.validator) return block;
 
 	block.validator.register();
 
