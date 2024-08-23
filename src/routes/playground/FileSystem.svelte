@@ -1,4 +1,5 @@
 <script lang="ts">
+
   type FileEntry = {
     name: string;
     isFolder: boolean;
@@ -119,3 +120,76 @@
     showFileSystem = !showFileSystem;
   }
 </script>
+
+<div class="file-system-container">
+  <button class="toggle-button" on:click={toggleFileSystem}>
+    {showFileSystem ? 'Hide File System' : 'Show File System'}
+  </button>
+  
+  {#if showFileSystem}
+    <div class="file-system">
+      <div class="drop-zone" on:drop={handleDrop} on:dragover={allowDrop}>
+        <label class="button-style" on:click={openFileSelector}>Upload Files</label>
+        <div class="file-tree">
+          {#if rootEntry.children.length === 0}
+            <div class="empty-message">Drop files or folders here to upload</div>
+          {:else}
+            {#each rootEntry.children as childEntry (childEntry.name)}
+              <div class="entry" class:folder={childEntry.isFolder}>
+                <div class="entry-header" on:click={() => childEntry.isFolder && toggleFolder(childEntry)}>
+                  {#if childEntry.isFolder}
+                    <span class="folder-icon">{childEntry.isOpen ? '📂' : '📁'}</span>
+                  {:else}
+                    <span class="file-icon">📄</span>
+                  {/if}
+                  <span class="entry-name">{childEntry.name}</span>
+                  {#if !childEntry.isFolder}
+                    <button class="delete-button" on:click|stopPropagation={() => deleteFile(childEntry)}>✖</button>
+                  {/if}
+                </div>
+                {#if childEntry.isFolder && childEntry.isOpen}
+                  <div class="folder-contents">
+                    {#each childEntry.children as grandChildEntry (grandChildEntry.name)}
+                      <div class="entry" class:folder={grandChildEntry.isFolder}>
+                        <div class="entry-header" on:click={() => grandChildEntry.isFolder && toggleFolder(grandChildEntry)}>
+                          {#if grandChildEntry.isFolder}
+                            <span class="folder-icon">{grandChildEntry.isOpen ? '📂' : '📁'}</span>
+                          {:else}
+                            <span class="file-icon">📄</span>
+                          {/if}
+                          <span class="entry-name">{grandChildEntry.name}</span>
+                          {#if !grandChildEntry.isFolder}
+                            <button class="delete-button" on:click|stopPropagation={() => deleteFile(grandChildEntry)}>✖</button>
+                          {/if}
+                        </div>
+                        {#if grandChildEntry.isFolder && grandChildEntry.isOpen}
+                          <div class="folder-contents">
+                            {#each grandChildEntry.children as greatGrandChildEntry (greatGrandChildEntry.name)}
+                              <div class="entry" class:folder={greatGrandChildEntry.isFolder}>
+                                <div class="entry-header" on:click={() => greatGrandChildEntry.isFolder && toggleFolder(greatGrandChildEntry)}>
+                                  {#if greatGrandChildEntry.isFolder}
+                                    <span class="folder-icon">{greatGrandChildEntry.isOpen ? '📂' : '📁'}</span>
+                                  {:else}
+                                    <span class="file-icon">📄</span>
+                                  {/if}
+                                  <span class="entry-name">{greatGrandChildEntry.name}</span>
+                                  {#if !greatGrandChildEntry.isFolder}
+                                    <button class="delete-button" on:click|stopPropagation={() => deleteFile(greatGrandChildEntry)}>✖</button>
+                                  {/if}
+                                </div>
+                              </div>
+                            {/each}
+                          </div>
+                        {/if}
+                      </div>
+                    {/each}
+                  </div>
+                {/if}
+              </div>
+            {/each}
+          {/if}
+        </div>
+      </div>
+    </div>
+  {/if}
+</div>
