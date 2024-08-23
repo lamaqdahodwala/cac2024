@@ -10,7 +10,7 @@
   };
 
   let rootEntry: FileEntry = { name: 'root', isFolder: true, children: [], isOpen: true };
-  let showFileSystem = true;
+  let showFileSystem = false;
 
   function getFiles(entry: FileEntry = rootEntry): File[] {
     if (!entry.isFolder) {
@@ -193,3 +193,93 @@
     </div>
   {/if}
 </div>
+
+<style>
+  .file-system-container {
+    position: relative;
+    margin: 10px 0;
+    width: 100%;
+  }
+  .toggle-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+  }
+  .file-system {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    border: 1px solid #ced4da;
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  .drop-zone {
+    border: 2px dashed #007bff;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+  }
+  .button-style {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    display: inline-block;
+    text-align: center;
+    margin-right: 10px;
+  }
+  .file-tree {
+    margin-top: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  .entry {
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+  }
+  .folder {
+    background-color: #e9ecef;
+  }
+  .entry-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .folder-icon, .file-icon {
+    margin-right: 5px;
+  }
+  .entry-name {
+    flex-grow: 1;
+  }
+  .folder-contents {
+    margin-left: 20px;
+  }
+  .delete-button {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .empty-message {
+    font-style: italic;
+    color: #6c757d;
+  }
+</style>
