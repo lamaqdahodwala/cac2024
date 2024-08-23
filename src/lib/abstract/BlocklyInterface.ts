@@ -206,8 +206,8 @@ export type InputMapType = {
 		fields: {
 			fieldName: string;
 			opts: {
-				type: 'number' | 'text' | 'dropdown';
-				value?: number | string;
+				type: 'number' | 'text' | 'dropdown' | "boolean";
+				value?: number | string | boolean;
 				dropdownOptions?: {
 					internalName: string;
 					userText: string;
@@ -360,12 +360,14 @@ export function useInputMap(value: new () => InputMapMutator): MutatorMethods {
 							field = new Blockly.FieldDropdown(menu);
 							field.name = fieldConf.fieldName;
 						case 'number':
-							field = new Blockly.FieldNumber(fieldConf.opts.value);
+							field = new Blockly.FieldNumber( Number(fieldConf.opts.value) );
 							field.name = fieldConf.fieldName;
 							break;
 						case 'text':
 							field = new Blockly.FieldTextInput(String(fieldConf.opts.value));
 							field.name = fieldConf.fieldName;
+            case "boolean": 
+              field = new Blockly.FieldCheckbox(!!fieldConf.opts.value)
 					}
 
 					if (nextBlock === null) throw new Error();
