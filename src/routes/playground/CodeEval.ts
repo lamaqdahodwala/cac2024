@@ -38,6 +38,12 @@ export class CodeEvaluationBuilder {
 	}
 
 	run() {
+		this.config.code = `
+function throwError(errorMessage) {
+  appendErrorToLog(errorMessage)
+} \n
+${this.config.code}
+`;
 		return new this.config.strategy().run(this.config.code, this.config.context);
 	}
 }
