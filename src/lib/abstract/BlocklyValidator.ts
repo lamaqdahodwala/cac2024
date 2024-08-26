@@ -33,6 +33,22 @@ interface NewValidatorInput {
 	validatorName: string;
 }
 
+interface SilentValidatorInput {
+	fieldName: string;
+	callback: (newValue: any) => any;
+	validatorName: string;
+}
+export function newSilentValidator(config: SilentValidatorInput) {
+	return new (class extends BlockValidator {
+		validateBlock(this: Blockly.Block): void {
+			let field = this.getField(config.fieldName);
+			field?.setValidator(config.callback);
+		}
+		getName(): string {
+			return config.validatorName;
+		}
+	})();
+}
 /**
  * Create a basic validator, that can disable a block
  * For more customization, use the customValidator function
@@ -61,12 +77,24 @@ export function newValidator(config: NewValidatorInput) {
 export function transformValidatorBlock(block: BlocklyJson) {
 	if (!block.validator) return block;
 
-	block.validator.register();
+  let validator_list = []
 
-	let { validator, ...remaining } = block;
+	if (block.validator instanceof BlockValidator) {
+    validator_list = [block.validator]
+	} else {
+    validator_list = block.validator
+  }
 
-	return {
-		...remaining,
-		extensions: [validator.getName()]
-	};
+  let extensions_list = validator_list.map((value) => {
+    value.register()
+    return value.getName()
+  })
+
+  let {validator: _, ...remaining} = block
+
+  return {
+    ...remaining,
+    extensions: extensions_list
+  }
+  
 }

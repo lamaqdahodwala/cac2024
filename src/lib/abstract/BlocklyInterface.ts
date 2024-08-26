@@ -46,7 +46,7 @@ export interface BlocklyJson {
 	nextStatement?: string | null;
 	output?: string | string[] | null;
 	colour: number;
-  validator?: BlockValidator
+  validator?: BlockValidator | BlockValidator[]
 }
 
 export interface Category {
