@@ -39,8 +39,13 @@ export class CodeEvaluationBuilder {
 
 	run() {
 		this.config.code = `
-function throwError(errorMessage) {
-  appendErrorToLog(errorMessage)
+function returnOrThrow(returnValue, errorMessage, shouldThrow) {
+  if (shouldThrow) {
+    throwError(errorMessage)
+  } else {
+    return returnValue()
+}
+  
 } \n
 ${this.config.code}
 `;

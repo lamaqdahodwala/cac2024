@@ -82,7 +82,7 @@ class LoadJSONBlock implements CustomBlock {
     }
     getCodeForGenerator(block: Block, generator: JavascriptGenerator): BlockReturningValue {
         const jsonPath = block.getFieldValue('JSON_PATH');
-        return [ `getFileByName(${JSON.stringify(jsonPath)}) ? dfd.readJSON(getFileByName (${JSON.stringify(jsonPath)}) ).then(df => df.toJSON()) : throwError("File does not exist")` , Order.NONE];
+        return [ `returnOrThrow(() => dfd.readJSON(getFileByName (${JSON.stringify(jsonPath)}) ).then(df => df.toJSON()), 'File '${jsonPath}' does not exist', getFileByName(${JSON.stringify(jsonPath)}))` , Order.NONE];
     }
 }
 
