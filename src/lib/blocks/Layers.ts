@@ -12,7 +12,7 @@ import {
 	type MutatedBlocklyJson
 } from '$lib/abstract/BlocklyInterface';
 import { Order } from 'blockly/javascript';
-import { customValidator, newValidator } from '$lib/abstract/BlocklyValidator';
+import { customValidator, newSilentValidator, newValidator } from '$lib/abstract/BlocklyValidator';
 import type { Block } from 'blockly';
 
 class DenseLayerMutation implements InputMapMutator {
@@ -97,14 +97,12 @@ let DenseLayer = createMutatedBlock(
       type: "denseLayerMutator",
       methods: useInputMap(DenseLayerMutation)
     },
-    validator: newValidator({
-      isValid: (block) => {
-        let units = block.getFieldValue("units")
-        return !( units <= 0 || !Number.isInteger(units) )
-      },
-      validatorName: "unitsIsNotInteger",
-      invalidMessage: "Units must be a non-decimal number greater than 0",
-      disableWhenInvalid: true
+    validator: newSilentValidator({
+      validatorName: "positive_units",
+      fieldName: "units",
+      callback: (newValue: number) => {
+        if (newValue <= 0) return 1
+      }
     })
   },
 
