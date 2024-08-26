@@ -66,7 +66,7 @@
 	<div id="messages">
 		{#each messages as i}
 			{#if i.isError}
-				<p class="is-family-monospace has-background-danger-dark has-text-danger">{renderMessageAsString(i)}</p>
+				<p class="is-family-monospace has-background-danger">{renderMessageAsString(i)}</p>
 			{:else if i.isSystemLog}
 				<p class="is-family-monospace has-text-grey-light">{renderMessageAsString(i)}</p>
 			{:else}
