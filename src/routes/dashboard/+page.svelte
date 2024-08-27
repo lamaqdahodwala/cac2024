@@ -239,7 +239,7 @@
 					progress: 65,
 					lastAccessed: '2023-07-03',
 					imageUrl:
-						'https://datascientest.com/en/wp-content/uploads/sites/9/2021/01/Machine-learning-def-.png'
+						'https://www.iberdrola.com/documents/20125/40921/machine_learning_746x419.jpg/15ff7571-4cfc-d9f0-5ef4-9c2e9306ad88?t=1627968463400'
 				},
 				{
 					id: 2,
