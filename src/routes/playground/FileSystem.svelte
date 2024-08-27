@@ -201,7 +201,7 @@
     width: 100%;
   }
   .toggle-button {
-    background-color: #007bff;
+    background-color: #3e8ed0;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -231,7 +231,7 @@
     transition: background-color 0.3s;
   }
   .button-style {
-    background-color: #007bff;
+    background-color: #3e8ed0;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -243,6 +243,9 @@
     text-align: center;
     margin-right: 10px;
   }
+  .toggle-button:hover, .button-style:hover {
+  background-color: #3273dc;
+}
   .file-tree {
     margin-top: 10px;
     max-height: 400px;

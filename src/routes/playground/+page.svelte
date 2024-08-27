@@ -91,7 +91,7 @@
 		overflow-x: hidden;
 	}
 button {
-  background-color: #007bff;
+  background-color: #3e8ed0;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -102,7 +102,7 @@ button {
   margin-left: 20px;
 }
 button:hover {
-  background-color: #0056b3;
+  background-color: #3273dc;
 }
 .columns {
   display: flex;
