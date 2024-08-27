@@ -4,7 +4,18 @@ import type { PrismaClient } from "@prisma/client";
 
 export class ViewCourses implements RouteImplementation {
     async call(props: { prisma: PrismaClient }): Promise<object> {
-        return await props.prisma.course.findMany()
+        return await props.prisma.course.findMany({
+      select:{
+        _count: {
+          select: {
+            lessons: true 
+          }
+        },
+        title: true, 
+        description: true,
+        id: true
+      }
+    })
     }
 }
 

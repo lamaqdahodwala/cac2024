@@ -7,10 +7,11 @@ import type { PrismaClient } from '@prisma/client';
 import { error, type RequestEvent } from '@sveltejs/kit';
 
 export class CreateCourse implements RouteImplementation {
-	async call(props: { prisma: PrismaClient; courseTitle: string, user: User }): Promise<object> {
+	async call(props: { prisma: PrismaClient; courseTitle: string, description: string, user: User }): Promise<object> {
 		return await props.prisma.course.create({
 			data: {
 				title: props.courseTitle,
+        description: props.description !== '' ? props.description : undefined,
         writer: {
           connect: {
             id: props.user.id
@@ -26,13 +27,15 @@ export class CreateCourseProps implements PropGetter {
 		let json = await event.request.json();
 
 		let title = json?.courseTitle;
+    let description = json?.description
 
 		if (!title) {
 			throw error(400, 'Please provide a title');
 		}
 
 		return {
-			courseTitle: title
+			courseTitle: title,
+      description: description
 		};
 	}
 }
