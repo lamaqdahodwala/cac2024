@@ -351,7 +351,7 @@
 					{/if}
 				</button>
 			</div>
-			<a href="/auth" class="btn btn-primary">Sign Up</a>
+			<a href="/signin" class="btn btn-primary">Sign Up</a>
 		</div>
 	</nav>
 	{#if isSearchOpen}
