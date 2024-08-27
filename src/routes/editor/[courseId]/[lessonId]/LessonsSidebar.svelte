@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, setContext } from 'svelte';
 	import { goto } from '$app/navigation';
 	import LessonAddButton from './LessonAddButton.svelte';
 
@@ -20,6 +20,8 @@
 		await goto(`/editor/${courseId}/${lessonId}`);
 		dispatch('navigate');
 	}
+
+  setContext("courseId", courseId)
 </script>
 
 <div class="menu">
