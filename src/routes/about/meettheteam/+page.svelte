@@ -310,22 +310,33 @@
 				<h2>Team Superpowers</h2>
 				<div class="stats-grid">
 					<div class="stat-item">
-						<i class="fas fa-lightbulb"></i>
+						<svg class="svg-icon lightbulb" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+							<path d="M9 21h6v2H9zm3-21C7.37 0 4 3.37 4 7.5c0 2.74 1.61 5.26 4 6.32V17a1 1 0 001 1h6a1 1 0 001-1v-3.18c2.39-1.06 4-3.58 4-6.32C20 3.37 16.63 0 12 0z"/>
+						  </svg>	  
 						<span>100+</span>
 						<p>Innovative Ideas</p>
 					</div>
 					<div class="stat-item">
-						<i class="fas fa-code"></i>
+						<svg class="svg-icon lightbulb" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+							<path d="M9.93 14.29l-2.12 2.12 1.42 1.42L12 15.41l2.76 2.76 1.41-1.41-2.83-2.83 2.83-2.83-1.41-1.41L12 10.59l-2.77-2.76-1.41 1.41 2.12 2.12zM3 21h18v2H3z"/>
+						  </svg>
+						  
 						<span>1M+</span>
 						<p>Lines of Code</p>
 					</div>
 					<div class="stat-item">
-						<i class="fas fa-coffee"></i>
+						<svg class="svg-icon coffee" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+							<path d="M19 8h-1V2H6v6H5C2.79 8 1 9.79 1 12v2c0 2.21 1.79 4 4 4h1v4h12v-4h1c2.21 0 4-1.79 4-4v-2c0-2.21-1.79-4-4-4zM6 4h10v4H6V4zm13 10c0 1.1-.9 2-2 2h-1v-4h1c1.1 0 2 .9 2 2z"/>
+						  </svg>
+						  
 						<span>5,000+</span>
 						<p>Cups of Coffee</p>
 					</div>
 					<div class="stat-item">
-						<i class="fas fa-users"></i>
+						<svg class="svg-icon users"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+							<path d="M16 13c2.67 0 8 1.34 8 4v4H8v-4c0-2.66 5.33-4 8-4zm-8.1-.6a5 5 0 111.4-6.2c-2.7.8-4.5 2.9-4.5 5.2 0 .9.2 1.8.6 2.6.1.2.1.4.1.4z"/>
+						  </svg>
+						  
 						<span>10,000+</span>
 						<p>Students Inspired</p>
 					</div>
@@ -2068,5 +2079,29 @@
 		height: 100%;
 		min-height: 50px;
 		text-align: center;
+	}
+	.svg-icon.lightbulb {
+		width: 2em; 
+    	height: 2em;
+		fill: #48c78e;
+		margin-top: 0.5em
+	}
+	.svg-icon.code {
+		width: 2em; 
+    	height: 2em;
+		fill: #48c78e;
+		margin-top: 0.5em
+	}
+	.svg-icon.coffee {
+		width: 2em;  
+    	height: 2em;
+		fill: #48c78e;
+		margin-top: 0.5em
+	}
+	.svg-icon.users {
+		width: 2em; 
+    	height: 2em;
+		fill: #48c78e;
+		margin-top: 0.5em
 	}
 </style>
