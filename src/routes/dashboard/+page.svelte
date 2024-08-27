@@ -496,7 +496,7 @@
 							aria-selected={activeTab === 'learning'}
 							role="tab"
 						>
-							<span class="icon is-small"><i class="fas fa-book" aria-hidden="true"></i></span>
+							<span class="icon is-small"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
 							<span>Learning Journey</span>
 						</button>
 					</li>
@@ -509,7 +509,7 @@
 							aria-selected={activeTab === 'discover'}
 							role="tab"
 						>
-							<span class="icon is-small"><i class="fas fa-search" aria-hidden="true"></i></span>
+							<span class="icon is-small"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
 							<span>Discover Courses</span>
 						</button>
 					</li>
@@ -527,7 +527,7 @@
 									on:click={() => (activeTab = 'discover')}
 								>
 									<span class="icon">
-										<i class="fas fa-search"></i>
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
 									</span>
 									<span>Discover New Courses</span>
 								</button>
@@ -554,7 +554,7 @@
 												on:click={() => removeActiveCourse(course.id)}
 											>
 												<span class="icon">
-													<i class="fas fa-times"></i>
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 												</span>
 											</button>
 										</header>
@@ -568,7 +568,7 @@
 											<p>Last accessed: {course.lastAccessed}</p>
 											<a href={`/course/${course.id}`} class="button is-primary is-fullwidth mt-4">
 												<span class="icon">
-													<i class="fas fa-play"></i>
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
 												</span>
 												<span>Continue Learning</span>
 											</a>
@@ -583,13 +583,13 @@
 					<div class="buttons is-centered mt-6">
 						<button class="button is-info is-large animated-button" on:click={startQuiz}>
 							<span class="icon">
-								<i class="fas fa-question-circle"></i>
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
 							</span>
 							<span>Take a Quick Quiz</span>
 						</button>
 						<button class="button is-success is-large animated-button" on:click={toggleCommunity}>
 							<span class="icon">
-								<i class="fas fa-users"></i>
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
 							</span>
 							<span>Community Hub</span>
 						</button>
@@ -607,7 +607,7 @@
 								bind:value={searchTerm}
 							/>
 							<span class="icon is-small is-left">
-								<i class="fas fa-search"></i>
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
 							</span>
 						</div>
 					</div>
@@ -637,7 +637,7 @@
 												<div class="level-item">
 													<p class="subtitle is-6">
 														<span class="icon has-text-warning mr-1">
-															<i class="fas fa-star"></i>
+															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
 														</span>
 														{course.rating.toFixed(1)}
 													</p>
@@ -653,7 +653,7 @@
 														}}
 													>
 														<span class="icon mr-1">
-															<i class="fas fa-plus"></i>
+															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 														</span>
 														<span>Add to My Courses</span>
 													</button>
@@ -796,7 +796,7 @@
 													on:click={() => likeCommunityPost(index)}
 												>
 													<span class="icon is-small">
-														<i class="fas fa-heart"></i>
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
 													</span>
 													<span>{post.likes}</span>
 												</a>
