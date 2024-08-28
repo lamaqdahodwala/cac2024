@@ -44,7 +44,7 @@ const printFirstRowsBlock = createCustomBlock(
 		  name: 'rows',
 		  value: 5,
 		  min: 1,
-		  max: 10
+		  max: 20
 		}
 	  ],
 	  previousStatement: null,

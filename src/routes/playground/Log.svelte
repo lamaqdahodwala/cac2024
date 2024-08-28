@@ -37,18 +37,42 @@
 	}
 
 	export function appendErrorToLog(error: string) {
-    appendObjectToLog({
-      isSystemLog: false, 
-      isError: true, 
-      messageContent: error
-    })
-  }
-	export function appendToLog(newText: string) {
+		appendObjectToLog({
+			isSystemLog: false, 
+			isError: true, 
+			messageContent: error
+		});
+	}
+
+	export function appendToLog(newText: string | { columns: string[], values: any[][] }) {
+		let messageContent: string;
+		if (typeof newText === 'object' && newText.columns && newText.values) {
+			messageContent = formatDataFrame(newText);
+		} else {
+			messageContent = newText as string;
+		}
 		appendObjectToLog({
 			isSystemLog: false,
 			isError: false,
-			messageContent: newText,
+			messageContent: messageContent,
 		});
+	}
+
+	function formatDataFrame(df: { columns: string[], values: any[][] }): string {
+		const headers = df.columns;
+		const rows = df.values;
+		const columnWidths = headers.map(header => header.length);
+		rows.forEach(row => {
+			row.forEach((cell, index) => {
+				const cellLength = String(cell).length;
+				if (cellLength > columnWidths[index]) {
+					columnWidths[index] = cellLength;
+				}
+			});
+		});
+		const formattedHeaders = headers.map((header, index) => header.padEnd(columnWidths[index])).join(' | ');
+		const formattedRows = rows.map(row => row.map((cell, index) => String(cell).padEnd(columnWidths[index])).join(' | ')).join('\n');
+		return `${formattedHeaders}\n${formattedRows}`;
 	}
 
 	function renderMessageAsString(message: Message) {
@@ -80,16 +104,40 @@
 	textarea {
 		width: 100%;
 	}
-
 	#messages {
 		position: absolute;
 		top: 0px;
+		width: 100%;
 	}
-
 	#logContainer {
 		position: relative;
 		height: 95%;
 		width: 48rem;
 		overflow-y: auto;
+	}
+	.is-family-monospace {
+		font-family: monospace;
+		white-space: pre;
+		overflow-x: auto;
+		max-width: 100%;
+		display: block;
+	}
+	#messages p {
+		overflow-x: auto;
+		max-width: 100%;
+		padding-bottom: 5px;
+	}
+	#messages p::-webkit-scrollbar {
+		height: 8px;
+	}
+	#messages p::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+	#messages p::-webkit-scrollbar-thumb {
+		background: #888;
+		border-radius: 4px;
+	}
+	#messages p::-webkit-scrollbar-thumb:hover {
+		background: #555;
 	}
 </style>
