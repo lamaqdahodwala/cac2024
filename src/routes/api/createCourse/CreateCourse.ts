@@ -15,7 +15,7 @@ export class CreateCourse implements RouteImplementation {
         writer: {
           connect: {
             id: props.user.id
-          }
+          
         }
 			}
 		});

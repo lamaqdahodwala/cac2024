@@ -10,7 +10,20 @@ export class GetAllLessonsInCourse implements RouteImplementation {
 		return await props.prisma.lesson.findMany({
 			where: {
 				courseId: Number(props.courseId)
-			}
+			},
+      include: {
+        quiz: {
+          select: {
+            id: true, 
+            _count: {
+              select: {
+                questions: true
+              }
+            }
+          }
+        },
+        exercise: true
+      }
 		});
 	}
 }
