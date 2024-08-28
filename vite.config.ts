@@ -8,6 +8,12 @@ export default defineConfig({
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	},
 
+  server: {
+    watch: {
+      followSymlinks: false
+    }
+  },
+
 	css: {
 		preprocessorOptions: {
 			scss: {
