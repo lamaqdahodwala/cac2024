@@ -44,10 +44,23 @@
 		});
 	}
 
-	export function appendToLog(newText: string | { columns: string[], values: any[][] }) {
+	export function appendToLog(newText: string | { columns: string[], values: any[][] } | any) {
 		let messageContent: string;
-		if (typeof newText === 'object' && newText.columns && newText.values) {
-			messageContent = formatDataFrame(newText);
+		if (typeof newText === 'object') {
+			if (newText.columns && newText.values) {
+				messageContent = formatDataFrame({
+					columns: newText.columns,
+					values: newText.values
+				});
+			} else if (newText.toJSON) {
+				const dfJSON = newText.toJSON();
+				messageContent = formatDataFrame({
+					columns: dfJSON.columns,
+					values: dfJSON.data
+				});
+			} else {
+				messageContent = JSON.stringify(newText, null, 2);
+			}
 		} else {
 			messageContent = newText as string;
 		}
