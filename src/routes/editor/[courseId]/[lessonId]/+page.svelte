@@ -1,42 +1,30 @@
 <script lang="ts">
 	import { setContext } from 'svelte';
 	import MarkdownTextInput from '../../MarkdownTextInput.svelte';
-	import type { PageData } from './$types';
 	import LessonsSidebar from './LessonsSidebar.svelte';
+	import QuizAddButton from './QuizAddButton.svelte';
+	import type { PageData } from './$types';
+	import { invalidateAll } from '$app/navigation';
 
-	export let data: { lessonId: string; courseId: string };
+	export let data: PageData;
 
-	let text = '';
-	let title = '';
-
-	async function getExistingData() {
-		let res = await fetch(`/api/getLessonContent?lessonId=${data.lessonId}`);
-		let json = await res.json();
-		text = json.textContent;
-		title = json.lessonName;
-	}
-
-	let fetcher = getExistingData();
-
-	function refetch() {
-		fetcher = getExistingData();
-	}
+	$: text = data.textContent.text;
+	$: title = data.textContent.title;
 
 	setContext('courseId', data.courseId);
 	setContext('lessonId', data.lessonId);
 </script>
 
 <br /><br />
-{#await fetcher then}
-	<div class="container">
-		<div class="columns">
-			<div class="is-2 column is-fixed">
-				<LessonsSidebar courseId={Number(data.courseId)} on:navigate={refetch} />
-			</div>
-			<div class="is-expanded is-offset-2 column">
-				<p class="title is-2">{title}</p>
-				<MarkdownTextInput bind:rawContent={text} lessonId={data.lessonId} />
-			</div>
+<div class="container">
+	<div class="columns">
+		<div class="is-2 column is-fixed">
+			<LessonsSidebar courseId={Number(data.courseId)} on:navigate={invalidateAll} />
+		</div>
+		<div class="is-expanded is-offset-2 column">
+			<p class="title is-2">{title}</p>
+			<QuizAddButton hasQuizAlready={false}></QuizAddButton>
+			<MarkdownTextInput bind:rawContent={text} lessonId={data.lessonId} />
 		</div>
 	</div>
-{/await}
+</div>
