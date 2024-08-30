@@ -30,18 +30,18 @@
 		<div>
 			{#each data as lesson}
 				<ul class="menu-list">
-					<li><button on:click={() => navigate(lesson.id)}>{lesson.title}</button></li>
+					<li><a href={`/editor/${courseId}/${lesson.id}`}>{lesson.title}</a></li>
 					<li>
 						<ul>
-              {#if data.quiz}
-							  <p><li class="button is-ghost is-small">Quiz - {data.quiz._count.questions}</li></p>
-              {/if}
+							{#if data.quiz}
+								<p><li class="button is-ghost is-small">Quiz - {data.quiz._count.questions}</li></p>
+							{/if}
 
-              {#if data.exercise}
-                <p>
-                  <li class="button is-ghost is-small">Exercise</li>
-                </p>
-              {/if}
+							{#if data.exercise}
+								<p>
+									<li class="button is-ghost is-small">Exercise</li>
+								</p>
+							{/if}
 						</ul>
 					</li>
 				</ul>

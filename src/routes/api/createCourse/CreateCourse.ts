@@ -18,7 +18,7 @@ export class CreateCourse implements RouteImplementation {
           
         }
 			}
-		});
+		}});
 	}
 }
 
