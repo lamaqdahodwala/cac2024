@@ -1,7 +1,9 @@
 import { redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ params, fetch }) => {
+export const load: PageLoad = async ({ params, fetch, parent }) => {
+  await parent()
+
 	let lessonId = params.lessonId;
 
 	let res = await fetch(`/api/getQuizQuestions?lessonId=${lessonId}`);

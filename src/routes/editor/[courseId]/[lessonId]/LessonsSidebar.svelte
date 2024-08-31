@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, setContext } from 'svelte';
 	import { goto } from '$app/navigation';
 	import LessonAddButton from './LessonAddButton.svelte';
 
@@ -20,16 +20,31 @@
 		await goto(`/editor/${courseId}/${lessonId}`);
 		dispatch('navigate');
 	}
+
+	setContext('courseId', courseId);
 </script>
 
 <div class="menu">
 	<p class="menu-label">Lessons</p>
 	{#await fetcher then data}
-		<div class="menu-list">
+		<div>
 			{#each data as lesson}
-				<p>
-					<button on:click={() => navigate(lesson.id)}>{lesson.title}</button>
-				</p>
+				<ul class="menu-list">
+					<li><button on:click={() => navigate(lesson.id)}>{lesson.title}</button></li>
+					<li>
+						<ul>
+              {#if data.quiz}
+							  <p><li class="button is-ghost is-small">Quiz - {data.quiz._count.questions}</li></p>
+              {/if}
+
+              {#if data.exercise}
+                <p>
+                  <li class="button is-ghost is-small">Exercise</li>
+                </p>
+              {/if}
+						</ul>
+					</li>
+				</ul>
 			{/each}
 		</div>
 
