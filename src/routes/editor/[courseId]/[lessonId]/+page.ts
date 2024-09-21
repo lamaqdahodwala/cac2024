@@ -13,6 +13,5 @@ export const load: PageLoad = async (event) => {
 		textContent: json
 	};
 
-  console.log(return_object)
   return return_object
 };
