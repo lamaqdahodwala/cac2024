@@ -1,5 +1,3 @@
-import * as tf from '@tensorflow/tfjs';
-
 import {
 	CreateCategory,
 	createCustomBlock,

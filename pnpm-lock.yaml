@@ -13,19 +13,25 @@ importers:
         version: 2.4.1(@prisma/client@5.16.1(prisma@5.16.0))
       '@auth/sveltekit':
         specifier: ^1.4.1
-        version: 1.4.1(@sveltejs/kit@2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)
+        version: 1.4.1(@sveltejs/kit@2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)
       '@blockly/block-shareable-procedures':
         specifier: ^5.0.6
         version: 5.0.8(blockly@11.1.1)
       '@prisma/client':
         specifier: 5.16.1
         version: 5.16.1(prisma@5.16.0)
+      '@react-oauth/google':
+        specifier: ^0.12.1
+        version: 0.12.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tensorflow/tfjs':
         specifier: ^4.20.0
         version: 4.20.0(seedrandom@3.0.5)
       '@types/babel__standalone':
         specifier: ^7.1.7
         version: 7.1.7
+      '@types/google-one-tap':
+        specifier: ^1.2.6
+        version: 1.2.6
       '@types/insane':
         specifier: ^1.0.0
         version: 1.0.0
@@ -77,13 +83,13 @@ importers:
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^3.2.2
-        version: 3.2.2(@sveltejs/kit@2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)))
+        version: 3.2.2(@sveltejs/kit@2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)))
       '@sveltejs/kit':
         specifier: ^2.0.0
-        version: 2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8))
+        version: 2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8))
       '@sveltejs/vite-plugin-svelte':
         specifier: ^3.0.0
-        version: 3.1.1(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8))
+        version: 3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8))
       '@types/eslint':
         specifier: ^8.56.7
         version: 8.56.10
@@ -130,8 +136,8 @@ importers:
         specifier: ^8.0.0-alpha.20
         version: 8.0.0-alpha.34(eslint@9.5.0)(typescript@5.5.2)
       vite:
-        specifier: 5.4.2
-        version: 5.4.2(@types/node@22.0.0)(sass@1.77.8)
+        specifier: 5.3.1
+        version: 5.3.1(@types/node@22.0.0)(sass@1.77.8)
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@22.0.0)(jsdom@23.0.0)(sass@1.77.8)
@@ -495,6 +501,12 @@ packages:
   '@prisma/get-platform@5.16.0':
     resolution: {integrity: sha512-ynp2jAYfYdd7OObX+uWaFRpvhPVmpF0nsRMhbrWdVVUj39q3Zr8dGz5WDj2g+BTUE++u1T1Am3RyM3PBQdDZXA==}
 
+  '@react-oauth/google@0.12.1':
+    resolution: {integrity: sha512-qagsy22t+7UdkYAiT5ZhfM4StXi9PPNvw0zuwNmabrWyMKddczMtBIOARflbaIj+wHiQjnMAsZmzsUYuXeyoSg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+
   '@rollup/rollup-android-arm-eabi@4.21.1':
     resolution: {integrity: sha512-2thheikVEuU7ZxFXubPDOtspKn1x0yqaYQwvALVtEcvFhMifPADBrgRPyHV0TF3b+9BgvgjgagVyvA/UqPZHmg==}
     cpu: [arm]
@@ -733,6 +745,9 @@ packages:
 
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
+
+  '@types/google-one-tap@1.2.6':
+    resolution: {integrity: sha512-REmJsXVHvKb/sgI8DF+7IesMbDbcsEokHBqxU01ENZ8d98UPWdRLhUCtxEm9bhNFFg6PJGy7PNFdvovp0hK3jA==}
 
   '@types/insane@1.0.0':
     resolution: {integrity: sha512-9FNbmwdaQezEszc5B/w4kRSpMJMOVj+gX7CKSbBCFO4WPiUqKO3HJlUNXzjtus0w5tF2BOJoKTbyps/Envlg/Q==}
@@ -1892,6 +1907,9 @@ packages:
     resolution: {integrity: sha512-UaGCF7yuCvMBfeVSnSdpXu8lTLW48HIr5b46qSMwqFBDO1tgb/Yxlx3LRuEDpN2DlLnFTcvfoBseUxVTjFA6zg==}
     hasBin: true
 
+  js-tokens@4.0.0:
+    resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
+
   js-tokens@9.0.0:
     resolution: {integrity: sha512-WriZw1luRMlmV3LGJaR6QOJjWwgLUTf89OwT2lUOyjX2dJGBwgmIkbcz+7WFZjrZM635JOIR517++e/67CP9dQ==}
 
@@ -1981,6 +1999,10 @@ packages:
 
   long@4.0.0:
     resolution: {integrity: sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==}
+
+  loose-envify@1.4.0:
+    resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
+    hasBin: true
 
   loupe@2.3.7:
     resolution: {integrity: sha512-zSMINGVYkdpYSOBmLi0D1Uo7JU9nVdQKrHxC8eYlV+9YKK9WePqAlL7lSlorG/U2Fw1w0hTBmaa/jrQ3UbPHtA==}
@@ -2375,8 +2397,17 @@ packages:
   raf@3.4.1:
     resolution: {integrity: sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==}
 
+  react-dom@18.3.1:
+    resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
+    peerDependencies:
+      react: ^18.3.1
+
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
+
+  react@18.3.1:
+    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
+    engines: {node: '>=0.10.0'}
 
   readable-stream@1.0.34:
     resolution: {integrity: sha512-ok1qVCJuRkNmvebYikljxJA/UEsKwLl2nI1OmaqAu4/UE+h0wKCHok4XkL/gvi39OacXvw59RJUOFUkDib2rHg==}
@@ -2491,6 +2522,9 @@ packages:
   saxes@6.0.0:
     resolution: {integrity: sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==}
     engines: {node: '>=v12.22.7'}
+
+  scheduler@0.23.2:
+    resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
 
   seedrandom@3.0.5:
     resolution: {integrity: sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg==}
@@ -2898,8 +2932,8 @@ packages:
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
 
-  vite@5.4.2:
-    resolution: {integrity: sha512-dDrQTRHp5C1fTFzcSaMxjk6vdpKvT+2/mIdE07Gw2ykehT49O0z/VHS3zZ8iV/Gh8BJJKHWOe5RjaNrW5xf/GA==}
+  vite@5.3.1:
+    resolution: {integrity: sha512-XBmSKRLXLxiaPYamLv3/hnP/KXDai1NDexN0FpkTaZXTfycHvkRHoenpgl/fvuK/kPbB6xAgoyiryAhQNxYmAQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -2907,7 +2941,6 @@ packages:
       less: '*'
       lightningcss: ^1.21.0
       sass: '*'
-      sass-embedded: '*'
       stylus: '*'
       sugarss: '*'
       terser: ^5.4.0
@@ -2919,8 +2952,6 @@ packages:
       lightningcss:
         optional: true
       sass:
-        optional: true
-      sass-embedded:
         optional: true
       stylus:
         optional: true
@@ -3164,10 +3195,10 @@ snapshots:
       - '@simplewebauthn/server'
       - nodemailer
 
-  '@auth/sveltekit@1.4.1(@sveltejs/kit@2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)':
+  '@auth/sveltekit@1.4.1(@sveltejs/kit@2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)':
     dependencies:
       '@auth/core': 0.34.1
-      '@sveltejs/kit': 2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8))
+      '@sveltejs/kit': 2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8))
       set-cookie-parser: 2.6.0
       svelte: 4.2.18
 
@@ -3447,6 +3478,11 @@ snapshots:
     dependencies:
       '@prisma/debug': 5.16.0
 
+  '@react-oauth/google@0.12.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   '@rollup/rollup-android-arm-eabi@4.21.1':
     optional: true
 
@@ -3510,14 +3546,14 @@ snapshots:
       '@svelte-add/ast-manipulation': 2.1.4
       '@svelte-add/ast-tooling': 2.1.3
 
-  '@sveltejs/adapter-auto@3.2.2(@sveltejs/kit@2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)))':
+  '@sveltejs/adapter-auto@3.2.2(@sveltejs/kit@2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)))':
     dependencies:
-      '@sveltejs/kit': 2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8))
+      '@sveltejs/kit': 2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8))
       import-meta-resolve: 4.1.0
 
-  '@sveltejs/kit@2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8))':
+  '@sveltejs/kit@2.5.17(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 3.1.1(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8))
+      '@sveltejs/vite-plugin-svelte': 3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8))
       '@types/cookie': 0.6.0
       cookie: 0.6.0
       devalue: 5.0.0
@@ -3531,28 +3567,28 @@ snapshots:
       sirv: 2.0.4
       svelte: 4.2.18
       tiny-glob: 0.2.9
-      vite: 5.4.2(@types/node@22.0.0)(sass@1.77.8)
+      vite: 5.3.1(@types/node@22.0.0)(sass@1.77.8)
 
-  '@sveltejs/vite-plugin-svelte-inspector@2.1.0(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8))':
+  '@sveltejs/vite-plugin-svelte-inspector@2.1.0(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 3.1.1(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8))
+      '@sveltejs/vite-plugin-svelte': 3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8))
       debug: 4.3.5
       svelte: 4.2.18
-      vite: 5.4.2(@types/node@22.0.0)(sass@1.77.8)
+      vite: 5.3.1(@types/node@22.0.0)(sass@1.77.8)
     transitivePeerDependencies:
       - supports-color
 
-  '@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8))':
+  '@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8))':
     dependencies:
-      '@sveltejs/vite-plugin-svelte-inspector': 2.1.0(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8))
+      '@sveltejs/vite-plugin-svelte-inspector': 2.1.0(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)))(svelte@4.2.18)(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8))
       debug: 4.3.5
       deepmerge: 4.3.1
       kleur: 4.1.5
       magic-string: 0.30.10
       svelte: 4.2.18
       svelte-hmr: 0.16.0(svelte@4.2.18)
-      vite: 5.4.2(@types/node@22.0.0)(sass@1.77.8)
-      vitefu: 0.2.5(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8))
+      vite: 5.3.1(@types/node@22.0.0)(sass@1.77.8)
+      vitefu: 0.2.5(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8))
     transitivePeerDependencies:
       - supports-color
 
@@ -3737,6 +3773,8 @@ snapshots:
       '@types/json-schema': 7.0.15
 
   '@types/estree@1.0.5': {}
+
+  '@types/google-one-tap@1.2.6': {}
 
   '@types/insane@1.0.0': {}
 
@@ -5025,6 +5063,8 @@ snapshots:
     dependencies:
       minimist: 1.2.8
 
+  js-tokens@4.0.0: {}
+
   js-tokens@9.0.0: {}
 
   js-yaml@4.1.0:
@@ -5142,6 +5182,10 @@ snapshots:
   lodash@4.17.21: {}
 
   long@4.0.0: {}
+
+  loose-envify@1.4.0:
+    dependencies:
+      js-tokens: 4.0.0
 
   loupe@2.3.7:
     dependencies:
@@ -5562,7 +5606,17 @@ snapshots:
     dependencies:
       performance-now: 2.1.0
 
+  react-dom@18.3.1(react@18.3.1):
+    dependencies:
+      loose-envify: 1.4.0
+      react: 18.3.1
+      scheduler: 0.23.2
+
   react-is@18.3.1: {}
+
+  react@18.3.1:
+    dependencies:
+      loose-envify: 1.4.0
 
   readable-stream@1.0.34:
     dependencies:
@@ -5734,6 +5788,10 @@ snapshots:
   saxes@6.0.0:
     dependencies:
       xmlchars: 2.2.0
+
+  scheduler@0.23.2:
+    dependencies:
+      loose-envify: 1.4.0
 
   seedrandom@3.0.5: {}
 
@@ -6095,19 +6153,18 @@ snapshots:
       debug: 4.3.5
       pathe: 1.1.2
       picocolors: 1.0.1
-      vite: 5.4.2(@types/node@22.0.0)(sass@1.77.8)
+      vite: 5.3.1(@types/node@22.0.0)(sass@1.77.8)
     transitivePeerDependencies:
       - '@types/node'
       - less
       - lightningcss
       - sass
-      - sass-embedded
       - stylus
       - sugarss
       - supports-color
       - terser
 
-  vite@5.4.2(@types/node@22.0.0)(sass@1.77.8):
+  vite@5.3.1(@types/node@22.0.0)(sass@1.77.8):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.41
@@ -6117,9 +6174,9 @@ snapshots:
       fsevents: 2.3.3
       sass: 1.77.8
 
-  vitefu@0.2.5(vite@5.4.2(@types/node@22.0.0)(sass@1.77.8)):
+  vitefu@0.2.5(vite@5.3.1(@types/node@22.0.0)(sass@1.77.8)):
     optionalDependencies:
-      vite: 5.4.2(@types/node@22.0.0)(sass@1.77.8)
+      vite: 5.3.1(@types/node@22.0.0)(sass@1.77.8)
 
   vitest-mock-extended@1.3.1(typescript@5.5.2)(vitest@1.6.0(@types/node@22.0.0)(jsdom@23.0.0)(sass@1.77.8)):
     dependencies:
@@ -6146,7 +6203,7 @@ snapshots:
       strip-literal: 2.1.0
       tinybench: 2.8.0
       tinypool: 0.8.4
-      vite: 5.4.2(@types/node@22.0.0)(sass@1.77.8)
+      vite: 5.3.1(@types/node@22.0.0)(sass@1.77.8)
       vite-node: 1.6.0(@types/node@22.0.0)(sass@1.77.8)
       why-is-node-running: 2.2.2
     optionalDependencies:
@@ -6156,7 +6213,6 @@ snapshots:
       - less
       - lightningcss
       - sass
-      - sass-embedded
       - stylus
       - sugarss
       - supports-color

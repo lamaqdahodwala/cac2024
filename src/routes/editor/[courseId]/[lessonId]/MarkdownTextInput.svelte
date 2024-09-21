@@ -1,12 +1,21 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
 	import { marked } from 'marked';
+	import { onMount } from 'svelte';
+	//
+	let rawContent = '';
 
-	export let rawContent = '';
 	export let lessonId: string;
+  export let initContent: string;
+
+  onMount(() => {
+    rawContent = initContent
+  })
+
 	let savingText = ' ';
 
 	async function save() {
-		savingText = 'Saving...';
+    savingText = "Saving..."
 		await fetch('/api/updateLessonContent', {
 			method: 'POST',
 			headers: {
@@ -18,9 +27,10 @@
 			})
 		});
 
-		savingText = 'Saved';
+    invalidateAll()
 
-		setTimeout(() => (savingText = ' '), 1000);
+    savingText="Saved"
+    setTimeout(() => savingText = "")
 	}
 
 	let timer: number | undefined;
@@ -32,24 +42,21 @@
 	};
 </script>
 
-<div class="savingTextContainer has-text-gray is-size-6">
-	{savingText}
-</div>
+<div>
+  {#if savingText} 
+    <small>{savingText}</small>
+  {:else} 
+    <br>
+  {/if}
+</div>  
+<textarea class="input" bind:value={rawContent} on:input={debounce}></textarea>
 
-<textarea
-	class="textarea"
-	placeholder="Type your lesson here..."
-	bind:value={rawContent}
-	on:input={debounce}
-></textarea>
-
-<hr />
-
-<div class="content">
-	{@html marked(rawContent)}
+<div>
+  {@html marked(rawContent)}
 </div>
 
 <style>
+div
 	div.savingTextContainer {
 		min-height: 2rem;
 	}

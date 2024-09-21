@@ -14,7 +14,6 @@
   import {EventsCategory} from '$lib/blocks/Events'
 	import { addPrebuiltBlocks } from '$lib/blocks/PrebuiltBlocks';
 	import FileSystem from './FileSystem.svelte';
-	import * as dfd from 'danfojs/dist/danfojs-browser/src';
 	import { CodeEvaluationBuilder, FunctionConstructorStrategy } from './CodeEval';
 	import Log from './Log.svelte';
   import {MutatedCategory} from '$lib/blocks/Mutated'
@@ -41,7 +40,7 @@
 		let evaluator = new CodeEvaluationBuilder();
 		evaluator.withCode(code);
 		evaluator.withContext({
-			dfd,
+      dfd: import("danfojs/dist/danfojs-browser/src"),
 			getFileByName,
 			appendToLog,
 			clearLog,
