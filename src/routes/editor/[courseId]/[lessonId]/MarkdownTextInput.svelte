@@ -50,7 +50,7 @@
   {/if}
 </div>  
 <textarea class="input" bind:value={rawContent} on:input={debounce}></textarea>
-
+<hr>
 <div>
   {@html marked(rawContent)}
 </div>
@@ -60,4 +60,8 @@ div
 	div.savingTextContainer {
 		min-height: 2rem;
 	}
+
+textarea {
+  width: 100%;
+}
 </style>
