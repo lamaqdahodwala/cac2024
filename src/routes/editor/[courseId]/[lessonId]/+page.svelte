@@ -4,6 +4,7 @@
 	import LessonsSidebar from './LessonsSidebar.svelte';
 	import QuizAddButton from './QuizAddButton.svelte';
 	import type { PageData } from './$types';
+	import ExerciseAddButton from './ExerciseAddButton.svelte';
 
 	export let data: PageData;
 
@@ -17,5 +18,10 @@
 </script>
 
 <p class="title is-2">{title}</p>
-<QuizAddButton hasQuizAlready={hasQuizAlready} lessonId={Number(data.lessonId)}></QuizAddButton>
+<div class="columns">
+<div class="column is-one-quarter">
+<QuizAddButton hasQuizAlready={hasQuizAlready} lessonId={Number(data.lessonId)}></QuizAddButton></div>
+<div class="column">
+<ExerciseAddButton lessonId={Number( lessonId )}/></div>
+</div>
 <MarkdownTextInput initContent={text} lessonId={data.lessonId} />
