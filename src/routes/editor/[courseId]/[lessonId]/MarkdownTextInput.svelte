@@ -12,7 +12,7 @@
     rawContent = initContent
   })
 
-	let savingText = ' ';
+	let savingText = '';
 
 	async function save() {
     savingText = "Saving..."

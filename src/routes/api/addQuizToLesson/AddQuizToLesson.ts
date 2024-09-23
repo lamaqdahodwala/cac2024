@@ -10,7 +10,7 @@ export class AddQuizToLesson implements RouteImplementation {
 		const { prisma, lessonId, user } = props;
 		const userId = user.id;
 		if (!user || user.role !== 'admin') {
-			throw error(403, 'Unauthorized: Only admins can add quizzes');
+			throw error(403, `Unauthorized: Only admins can add quizzes. You are a ${user.role} `);
 		}
 		const lesson = await prisma.lesson.findUnique({
 			where: { id: lessonId }

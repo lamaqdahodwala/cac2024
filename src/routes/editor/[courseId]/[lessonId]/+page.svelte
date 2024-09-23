@@ -9,11 +9,13 @@
 
 	$: text = data.textContent.textContent;
 	$: title = data.textContent.lessonName;
+	$: lessonId = data.lessonId;
+  $: hasQuizAlready = data.hasQuizAlready
 
 	setContext('courseId', data.courseId);
 	setContext('lessonId', data.lessonId);
 </script>
 
 <p class="title is-2">{title}</p>
-<QuizAddButton hasQuizAlready={false}></QuizAddButton>
+<QuizAddButton hasQuizAlready={hasQuizAlready} lessonId={Number(data.lessonId)}></QuizAddButton>
 <MarkdownTextInput initContent={text} lessonId={data.lessonId} />

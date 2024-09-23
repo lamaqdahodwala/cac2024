@@ -127,10 +127,6 @@
                 <div class="is-divider" data-content="OR"></div>
                 <div class="field">
                     <SignIn provider="google" class="button is-fullwidth is-info animated-button">
-                        <span class="icon">
-                            <i class="fab fa-google"></i>
-                        </span>
-                        <span>Continue with Google</span>
                     </SignIn>
                 </div>
 
