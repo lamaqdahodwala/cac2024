@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher, setContext } from 'svelte';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import LessonAddButton from './LessonAddButton.svelte';
 
 	export let courseId: number;
@@ -30,7 +30,9 @@
 		<div>
 			{#each data as lesson}
 				<ul class="menu-list">
-					<li><a href={`/editor/${courseId}/${lesson.id}`}>{lesson.title}</a></li>
+					<li>
+						<a href={`/editor/${courseId}/${lesson.id}`} on:click={invalidateAll}>{lesson.title}</a>
+					</li>
 					<li>
 						<ul>
 							{#if data.quiz}
