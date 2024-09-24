@@ -12,6 +12,9 @@
     rawContent = initContent
   })
 
+  $: { rawContent = initContent }
+
+
 	let savingText = '';
 
 	async function save() {
