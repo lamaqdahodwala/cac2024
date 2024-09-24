@@ -9,11 +9,18 @@ export const load: PageLoad = async (event) => {
 
   let hasQuizAlreadyJSON = (await hasQuizAlready.json())
 
+
+	let hasExerciseAlready = await event.fetch(`/api/getExerciseParameters?lessonId=${params.lessonId}`);
+  let hasExerciseAlreadyJSON = await hasExerciseAlready.json()
+
+
+
 	let return_object = {
 		courseId: params.courseId,
 		lessonId: params.lessonId,
 		textContent: json,
-		hasQuizAlready: !!hasQuizAlreadyJSON.quiz
+		hasQuizAlready: !!hasQuizAlreadyJSON.quiz,
+    hasExerciseAlready: !!hasExerciseAlreadyJSON.exercise
 	};
 
 	return return_object;

@@ -20,7 +20,7 @@ export class GetExerciseParameters implements RouteImplementation {
 }
 
 const GetExerciseParametersProps = searchParamProps(
-	(params) => ({ lessonId: params.get('lessonId') }),
+	(params) => ({ lessonId: Number(params.get('lessonId')) }),
 	{ checkForNull: true }
 );
 

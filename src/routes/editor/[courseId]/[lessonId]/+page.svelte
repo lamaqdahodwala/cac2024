@@ -12,6 +12,7 @@
 	$: title = data.textContent.lessonName;
 	$: lessonId = data.lessonId;
   $: hasQuizAlready = data.hasQuizAlready
+  $: hasExerciseAlready = data.hasExerciseAlready
 
 	setContext('courseId', data.courseId);
 	setContext('lessonId', data.lessonId);
@@ -22,6 +23,6 @@
 <div class="column is-one-quarter">
 <QuizAddButton hasQuizAlready={hasQuizAlready} lessonId={Number(data.lessonId)}></QuizAddButton></div>
 <div class="column">
-<ExerciseAddButton lessonId={Number( lessonId )}/></div>
+<ExerciseAddButton lessonId={Number( lessonId )} hasExerciseAlready={hasExerciseAlready}/></div>
 </div>
 <MarkdownTextInput initContent={text} lessonId={data.lessonId} />
