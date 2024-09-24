@@ -22,7 +22,11 @@ export const load: PageLoad = async (event) => {
 
 	let json2 = await res2.json();
 
+  let hasExercise = await event.fetch(`/api/getExerciseParameters?lessonId=${lessonId}`)
+
+  let hasExerciseJSON = await hasExercise.json()
+
 	return {
-		lesson: { ...json, id: lessonId, next: json2 }
+		lesson: { ...json, id: lessonId, next: json2, hasExercise: !!hasExerciseJSON.exercise }
 	};
 };

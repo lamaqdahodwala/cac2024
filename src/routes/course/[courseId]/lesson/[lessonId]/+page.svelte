@@ -3,6 +3,7 @@
 	import type { PageData } from './$types';
 	import Quizzer from './Quizzer.svelte';
 	import { setContext } from 'svelte';
+	import { page } from '$app/stores';
 	export let data: PageData;
 	let bottomDiv: HTMLDivElement;
 
@@ -19,6 +20,8 @@
 	}
 
 	setContext('lessonId', data.lesson.id);
+
+  let here = $page.url.pathname
 </script>
 
 <div class="m-5">
@@ -34,4 +37,8 @@
 
 	<div id="bottom" bind:this={bottomDiv}></div>
 	<Quizzer />
+
+  {#if data.lesson.hasExercise}
+    <a href={here + "/exercise"} class="button is-info is-inverted">Interactive Exercise</a>
+  {/if}
 </div>
