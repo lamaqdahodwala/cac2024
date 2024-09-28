@@ -3,6 +3,9 @@
 	import { fade, fly, slide, scale } from 'svelte/transition';
 	import { elasticOut, backOut } from 'svelte/easing';
 	import { page } from '$app/stores';
+	import type { LayoutData } from './$types';
+
+  export let data: LayoutData
 
 	let isNavVisible = true;
 	let activeSection: string | null = null;
@@ -342,15 +345,12 @@
 			>
 				<span class="icon">{isColorThemeLight ? '🌙' : '☀️'}</span>
 			</button>
-			<div class="notifications">
-				<button class="icon-btn" aria-label="Notifications">
-					<span class="icon">🔔</span>
-					{#if notificationCount > 0}
-						<span class="notification-badge">{notificationCount}</span>
-					{/if}
-				</button>
-			</div>
-			<a href="/signin" class="btn btn-primary">Sign Up</a>
+      {#if !data.authState}
+			  <a href="/signin" class="button is-primary is-rounded">Sign Up</a>
+      {:else}
+
+        <button class="button is-info is-rounded">{data.authState.user?.email?.substring(0, 8)}</button>
+      {/if}
 		</div>
 	</nav>
 	{#if isSearchOpen}
