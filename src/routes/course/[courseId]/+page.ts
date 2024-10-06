@@ -4,16 +4,19 @@ import type { PageLoad } from './$types';
 export const load: PageLoad = async ({ fetch, params }) => {
 	let courseId = params.courseId;
 
-	let res = await fetch(`/api/getAllLessonsInCourse?courseId=${courseId}`);
-	let json = await res.json();
+	let allLessons = await fetch(`/api/getAllLessonsInCourse?courseId=${courseId}`);
+	let allLessonsJson = await allLessons.json();
 
-	let res2 = await fetch(`/api/getCourseInfo?courseId=${courseId}`);
-	let json2 = await res2.json();
+	let courseInfo = await fetch(`/api/getCourseInfo?courseId=${courseId}`);
+	let courseInfoJson = await courseInfo.json();
 
-	let res3 = await fetch(`/api/getNextLessonInCourse?courseId=${courseId}`);
-	let json3 = await res3.json();
+	let nextLesson = await fetch(`/api/getNextLessonInCourse?courseId=${courseId}`);
+	let nextLessonJson = await nextLesson.json();
 
-	if (!json2.course) throw error(404, 'Course not found');
+  let courseCompletion = await fetch(`/api/getCourseCompletion?courseId=${courseId}`)
+  let courseCompletionJson = await courseCompletion.json()
 
-	return { lessons: json, courseInfo: json2.course, nextLesson: json3.lesson };
+	if (!courseInfoJson.course) throw error(404, 'Course not found');
+
+	return { lessons: allLessonsJson, courseInfo: courseInfoJson.course, nextLesson: nextLessonJson.lesson, percentCompleted: courseCompletionJson.percent };
 };
