@@ -61,7 +61,7 @@ export class GetSubsequentLesson implements RouteImplementation {
 
 export const GetSubsequentLessonProps = searchParamProps(
 	(params) => ({
-		lessonId: params.get('lessonId')
+		lessonId: Number( params.get('lessonId') )
 	}),
 	{ checkForNull: true }
 );

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { createEventDispatcher } from "svelte";
+
 	type Question = {
 		id: string;
 		question: string;
@@ -13,6 +15,7 @@
 	let isCorrect: boolean;
 	let incorrectAnswerExplanation: string;
 	let correctChoice: string;
+  let dispatch = createEventDispatcher()
 
 	async function submitAnswerChoice(answerId: string) {
 		userHasAnswered = true;
@@ -31,6 +34,9 @@
 		isCorrect = json.isUserCorrect;
 		incorrectAnswerExplanation = json.incorrectAnswerExplanation;
 		correctChoice = json.correctAnswerChoice;
+
+    dispatch("answer", { isCorrect })
+
 	}
 
 	function shuffleList(array: any[]) {

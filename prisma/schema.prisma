@@ -35,17 +35,17 @@ model Lesson {
   exerciseId  Int?
 }
 
-
 model Quiz {
   id        Int            @id @default(autoincrement())
   lesson    Lesson         @relation(fields: [lessonId], references: [id])
   lessonId  Int            @unique
   questions QuizQuestion[]
+  passers   User[]
 }
 
 model QuizQuestion {
-  id                         Int         @id @default(autoincrement())
-  quiz                       Quiz        @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  id                         Int          @id @default(autoincrement())
+  quiz                       Quiz         @relation(fields: [quizId], references: [id], onDelete: Cascade)
   quizId                     Int
   question                   String
   incorrectAnswerExplanation String?
@@ -54,26 +54,28 @@ model QuizQuestion {
 
 model QuizAnswer {
   id             Int          @id @default(autoincrement())
-  quizQuestion   QuizQuestion @relation(fields: [quizQuestionId], references: [id], onDelete: Cascade) 
+  quizQuestion   QuizQuestion @relation(fields: [quizQuestionId], references: [id], onDelete: Cascade)
   quizQuestionId Int
   answerText     String
   isCorrect      Boolean
 }
 
 model User {
-  id               String    @id @default(cuid())
+  id               String          @id @default(cuid())
   name             String?
-  email            String?   @unique
+  email            String?         @unique
   emailVerified    DateTime?
   image            String?
   accounts         Account[]
   sessions         Session[]
   lessonsCompleted Lesson[]
+  quizzesPassed    Quiz[]
+  exercisesPassed  CourseProblem[]
   written          Course[]
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
-  activeCourses    Course[]  @relation("ActiveCourses")
-  role             String    @default("user")
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  activeCourses    Course[]        @relation("ActiveCourses")
+  role             String          @default("user")
 }
 
 model Account {
@@ -127,4 +129,5 @@ model CourseProblem {
   trainDataset              String
   Course                    Course[]
   Lesson                    Lesson[]
+  passers                   User[]
 }
