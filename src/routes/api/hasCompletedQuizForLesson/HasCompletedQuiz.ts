@@ -41,13 +41,13 @@ export class HasCompletedQuiz implements RouteImplementation {
 		}
 
 		return {
-			hasComletedQuiz: passedQuizzes.includes({ lessonId: props.lessonId })
+			hasCompletedQuiz: passedQuizzes.includes({ lessonId: props.lessonId })
 		};
 	}
 }
 
 export const hasCompletedQuizProps = searchParamProps((params) => ({
-  lessonId: params.get("lessonId")
+  lessonId: Number( params.get("lessonId") )
 }), {checkForNull: true})
 
 export const route = new APIRoute(
