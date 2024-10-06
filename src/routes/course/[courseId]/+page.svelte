@@ -6,7 +6,7 @@
 <div class="container">
 	<div class="box">
 		<p class="title is-1">{data.courseInfo.title}</p>
-    <p>{data.percentComplete}% completion</p>
+    <p>{data.percentCompleted}% completion</p>
 		<p class="subtitle is-6 has-text-weight-light mt-4">By: {data.courseInfo.writer.name}</p>
 	</div>
 
