@@ -31,7 +31,7 @@ model Lesson {
   completedBy User[]
   quiz        Quiz?
   description String         @default("")
-  exercise    CourseProblem? @relation(fields: [exerciseId], references: [id])
+  exercise    CourseProblem? 
   exerciseId  Int?
 }
 
@@ -128,6 +128,7 @@ model CourseProblem {
   testDataset               String?
   trainDataset              String
   Course                    Course[]
-  Lesson                    Lesson[]
+  lesson                    Lesson @relation(fields: [lessonId], references: [id])
+  lessonId Int @unique
   passers                   User[]
 }

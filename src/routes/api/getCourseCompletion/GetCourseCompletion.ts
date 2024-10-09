@@ -20,8 +20,23 @@ export class GetCourseCompletion implements RouteImplementation {
               where: {
                 courseId: props.courseId
               }
+            },
+            quizzesPassed: {
+              where: {
+                lesson: {
+                  courseId: props.courseId
+                }
+              }
+            },
+            exercisesPassed: {
+              where: {
+                lesson: {
+                  courseId: props.courseId
+                }
+              }
             }
           }
+          
         }
       }
     })
@@ -31,9 +46,10 @@ export class GetCourseCompletion implements RouteImplementation {
         id: props.courseId
       },
       include: {
-        _count: {
-          select: {
-            lessons: true
+        lessons: {
+          include: {
+            quiz: true, 
+            exercise: true
           }
         }
       }
@@ -48,7 +64,20 @@ export class GetCourseCompletion implements RouteImplementation {
     }
 
     let completed = userCompletedLessons._count.lessonsCompleted
-    let total =  totalLessons?._count.lessons
+    let total =  0
+
+    totalLessons.lessons.forEach((lesson) => {
+      total += 1
+
+      if (lesson.quiz){
+        total += 1
+      }
+
+      if (lesson.exercise){
+        total += 1
+      }
+    })
+
 
     return {
       completed,
