@@ -1,21 +1,21 @@
 <script lang="ts">
-  export let lesson: {id: number, title: string, courseId: string, description: string}
+	export let lesson: { id: number; title: string; courseId: string; description: string };
 
-  let hasCompletedQuiz = false
-  let doesQuizExist = false
-  let hasCompletedExercise = false
+	let hasCompletedQuiz = false;
+	let doesQuizExist = false;
+	let hasCompletedExercise = false;
 
-  async function findOutIfHasQuiz(){
-    let res = await fetch(`/api/hasCompletedQuizForLesson?lessonId=${lesson.id}`)
+	async function findOutIfHasQuiz() {
+		let res = await fetch(`/api/hasCompletedQuizForLesson?lessonId=${lesson.id}`);
 
-    let json = await res.json()
+		let json = await res.json();
 
-    hasCompletedQuiz = json.hasCompletedQuiz
+		hasCompletedQuiz = json.hasCompletedQuiz;
 
-    if (hasCompletedQuiz) {
-      doesQuizExist = true
-    }
-  }
+		if (hasCompletedQuiz) {
+			doesQuizExist = true;
+		}
+	}
 </script>
 
 <div class="card">
@@ -24,18 +24,15 @@
 			<p class="title is-4">{lesson.title}</p>
 		</div>
 		<p>{lesson.description}</p>
-    {#await findOutIfHasQuiz() then data}
-      {#if doesQuizExist}
-
-      {#if hasCompletedQuiz}
-        <p class="has-text-success">Quiz not completed</p>
-      {:else} 
-        <p class="has-text-warning">Quiz not completed</p>
-      {/if}
-
-
-      {/if}
-    {/await}
+		{#await findOutIfHasQuiz() then data}
+			{#if doesQuizExist}
+				{#if hasCompletedQuiz}
+					<p class="has-text-success">Quiz not completed</p>
+				{:else}
+					<p class="has-text-warning">Quiz not completed</p>
+				{/if}
+			{/if}
+		{/await}
 	</div>
 
 	<footer class="card-footer">
