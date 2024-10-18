@@ -2,6 +2,7 @@
   export let lesson: {id: number, title: string, courseId: string, description: string}
 
   let hasCompletedQuiz = false
+  let doesQuizExist = false
   let hasCompletedExercise = false
 
   async function findOutIfHasQuiz(){
@@ -10,6 +11,10 @@
     let json = await res.json()
 
     hasCompletedQuiz = json.hasCompletedQuiz
+
+    if (hasCompletedQuiz) {
+      doesQuizExist = true
+    }
   }
 </script>
 
@@ -20,7 +25,16 @@
 		</div>
 		<p>{lesson.description}</p>
     {#await findOutIfHasQuiz() then data}
-      <p class="has-text-warning">Quiz not completed</p>
+      {#if doesQuizExist}
+
+      {#if hasCompletedQuiz}
+        <p class="has-text-success">Quiz not completed</p>
+      {:else} 
+        <p class="has-text-warning">Quiz not completed</p>
+      {/if}
+
+
+      {/if}
     {/await}
 	</div>
 
