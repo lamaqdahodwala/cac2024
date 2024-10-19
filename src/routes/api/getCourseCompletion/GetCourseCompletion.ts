@@ -63,7 +63,7 @@ export class GetCourseCompletion implements RouteImplementation {
       throw error(400, "Course not found")
     }
 
-    let completed = userCompletedLessons._count.lessonsCompleted
+    let completed = userCompletedLessons._count.lessonsCompleted + userCompletedLessons._count.quizzesPassed + userCompletedLessons._count.exercisesPassed
     let total =  0
 
     totalLessons.lessons.forEach((lesson) => {
