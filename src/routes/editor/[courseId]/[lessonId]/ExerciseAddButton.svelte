@@ -1,5 +1,6 @@
 <script lang="ts">
   import {page} from '$app/stores'
+  import { goto } from '$app/navigation'
 
 	export let hasExerciseAlready: boolean = false;
   export let lessonId: number
@@ -13,6 +14,8 @@
         lessonId: lessonId
       }),
     })
+
+    await goto(here + "/exercise")
   }
 </script>
 

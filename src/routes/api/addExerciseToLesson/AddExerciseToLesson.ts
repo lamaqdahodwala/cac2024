@@ -18,7 +18,7 @@ export class AddExerciseToLesson implements RouteImplementation {
 			lessonId: Number(props.lessonId)
 		});
 
-		if (exerciseExists.exercise) {
+		if (!!exerciseExists.exercise) {
 			return {
 				error: 'already exists'
 			};
@@ -27,7 +27,7 @@ export class AddExerciseToLesson implements RouteImplementation {
 			data: {
 				instructions: '',
 				trainDataset: '',
-				Lesson: {
+				lesson: {
 					connect: {
 						id: Number(props.lessonId)
 					}
