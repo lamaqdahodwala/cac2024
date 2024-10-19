@@ -91,7 +91,7 @@
 {/if}
 
 <div class="columns">
-	<div id="test" style="height: 750px; width: 800px;"></div>
+	<div id="test" style="height: 70vh; width: 800px;"></div>
 	<div class="" id="devToolsContainer">
 		<FileSystem bind:getFileByName />
 		<Log bind:appendToLog bind:clearLog bind:appendSystemLog bind:appendErrorToLog />
@@ -138,7 +138,7 @@
 	#test,
 	#devToolsContainer {
 		flex: 1;
-		height: 750px;
+		height: 70vh;
 		background-color: #fff;
 		border: 2px solid #ddd;
 		border-radius: 10px;
