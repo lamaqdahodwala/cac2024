@@ -5,9 +5,20 @@ import { PrismaProps } from '$lib/generic/PrismaProps';
 import { MultiProp } from '$lib/helpers/MultiProp';
 import type { User } from '@auth/sveltekit';
 import type { PrismaClient } from '@prisma/client';
+import { error } from '@sveltejs/kit';
 
 export class UploadQuizScore implements RouteImplementation {
-	async call(props: { prisma: PrismaClient; user: User; quizId: number }): Promise<object> {
+	async call(props: { prisma: PrismaClient; user: User; lessonId: number }): Promise<object> {
+    let quiz = await props.prisma.lesson.findUnique({
+      where: {
+        id: props.lessonId
+      }
+    }).quiz()
+
+    if (!quiz) {
+      throw error(404, "No quiz exists on this lesson")
+    }
+
     await props.prisma.user.update({
       where: {
         id: props.user.id
@@ -15,7 +26,7 @@ export class UploadQuizScore implements RouteImplementation {
       data: {
         quizzesPassed: {
           connect: {
-            id: props.quizId
+            id: quiz.id
           }
         }
       }
@@ -28,7 +39,7 @@ export class UploadQuizScore implements RouteImplementation {
 }
 
 export const uploadQuizScoreProps = jsonProps((json) => ({
-	quizId: Number(json.quizId)
+	lessonId: Number(json.lessonId)
 }));
 
 export const route = new APIRoute(

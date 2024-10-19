@@ -94,7 +94,7 @@
               <p>Your score: {calculateScore(numQuestions)}%</p>
               <button class="button is-warning" on:click={reset}>Retry</button>
             {:else} 
-              <button class="button is-primary">Submit Quiz</button>
+              <button class="button is-primary" on:click={upload}>Submit Quiz</button>
             {/if}
           {/if}
 				</div>

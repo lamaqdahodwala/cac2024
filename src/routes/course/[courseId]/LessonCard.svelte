@@ -12,7 +12,7 @@
 
 		hasCompletedQuiz = json.hasCompletedQuiz;
 
-		if (hasCompletedQuiz) {
+		if (hasCompletedQuiz !== null) {
 			doesQuizExist = true;
 		}
 	}
@@ -27,7 +27,7 @@
 		{#await findOutIfHasQuiz() then data}
 			{#if doesQuizExist}
 				{#if hasCompletedQuiz}
-					<p class="has-text-success">Quiz not completed</p>
+					<p class="has-text-success">Quiz completed</p>
 				{:else}
 					<p class="has-text-warning">Quiz not completed</p>
 				{/if}

@@ -13,10 +13,15 @@ export const load: PageLoad = async ({ fetch, params }) => {
 	let nextLesson = await fetch(`/api/getNextLessonInCourse?courseId=${courseId}`);
 	let nextLessonJson = await nextLesson.json();
 
-  let courseCompletion = await fetch(`/api/getCourseCompletion?courseId=${courseId}`)
-  let courseCompletionJson = await courseCompletion.json()
+	let courseCompletion = await fetch(`/api/getCourseCompletion?courseId=${courseId}`);
+	let courseCompletionJson = await courseCompletion.json();
 
 	if (!courseInfoJson.course) throw error(404, 'Course not found');
 
-	return { lessons: allLessonsJson, courseInfo: courseInfoJson.course, nextLesson: nextLessonJson.lesson, percentCompleted: courseCompletionJson.percent };
+	return {
+		lessons: allLessonsJson.lessons,
+		courseInfo: courseInfoJson.course,
+		nextLesson: nextLessonJson.lesson,
+		percentCompleted: courseCompletionJson.percent
+	};
 };
