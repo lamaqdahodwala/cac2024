@@ -1,9 +1,14 @@
+import { error, redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async (event) => {
 	let params = event.params;
 	let res = await event.fetch(`/api/getLessonContent?lessonId=${params.lessonId}`);
 	let json = await res.json();
+  
+  if (!res.ok) {
+    throw error(404, "Lesson not Found")
+  }
 
 	let hasQuizAlready = await event.fetch(`/api/getQuizQuestions?lessonId=${params.lessonId}`);
 
