@@ -1,5 +1,6 @@
 import { prisma } from '$lib/db';
-import type { Actions } from '@sveltejs/kit';
+import { redirect, type Actions } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
 export const actions: Actions = {
 	default: async (event) => {
@@ -44,3 +45,17 @@ export const actions: Actions = {
 		console.log(data);
 	}
 };
+
+export const load: PageServerLoad = async(event) => {
+  let res = await event.fetch(`/api/getExerciseParameters?lessonId=${event.params.lessonId}`)
+
+  let json = await res.json()
+
+  if (!res.ok) {
+    throw redirect(301, `/editor/${event.params.courseId}/${event.params.lessonId}`)
+  }
+
+  return {
+    exerciseParams: json.exercise,
+  }
+}
