@@ -22,11 +22,21 @@ export const load: PageLoad = async (event) => {
 
 	let json2 = await res2.json();
 
-  let hasExercise = await event.fetch(`/api/getExerciseParameters?lessonId=${lessonId}`)
+	let hasExercise = await event.fetch(`/api/getExerciseParameters?lessonId=${lessonId}`);
 
-  let hasExerciseJSON = await hasExercise.json()
+	let hasExerciseJSON = await hasExercise.json();
+
+	let hasCompletedQuiz = await (
+		await event.fetch(`/api/hasCompletedQuizForLesson?lessonId=${lessonId}`)
+	).json();
 
 	return {
-		lesson: { ...json, id: lessonId, next: json2, hasExercise: !!hasExerciseJSON.exercise }
+		lesson: {
+			...json,
+			id: lessonId,
+			next: json2,
+			hasExercise: !!hasExerciseJSON.exercise,
+			hasCompletedQuiz: hasCompletedQuiz.hasCompletedQuiz
+		}
 	};
 };
