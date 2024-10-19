@@ -24,11 +24,13 @@
 	setContext('courseId', courseId);
 </script>
 
-<div class="menu">
-	<p class="menu-label">Lessons</p>
-	{#await fetcher then data}
+{#await fetcher then data}
+	<div class="menu">
+    <a href="/editor/" class="">View All Courses</a>
+    <p class="title is-6">{data.course.title}</p>
+		<p class="menu-label">Lessons</p>
 		<div>
-			{#each data as lesson}
+			{#each data.lessons as lesson}
 				<ul class="menu-list">
 					<li>
 						<a href={`/editor/${courseId}/${lesson.id}`} on:click={invalidateAll}>{lesson.title}</a>
@@ -51,5 +53,5 @@
 		</div>
 
 		<LessonAddButton on:lessonCreated={(e) => navigate(e.detail.lessonId)} />
-	{/await}
-</div>
+	</div>
+{/await}

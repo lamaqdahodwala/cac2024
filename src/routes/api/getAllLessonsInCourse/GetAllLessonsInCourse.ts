@@ -7,24 +7,34 @@ import type { PrismaClient } from '@prisma/client';
 
 export class GetAllLessonsInCourse implements RouteImplementation {
 	async call(props: { prisma: PrismaClient; courseId: string }): Promise<object> {
-		return await props.prisma.lesson.findMany({
+		let course = await props.prisma.course.findUnique({
+			where: {
+				id: Number(props.courseId)
+			}
+		});
+		let lessons = await props.prisma.lesson.findMany({
 			where: {
 				courseId: Number(props.courseId)
 			},
-      include: {
-        quiz: {
-          select: {
-            id: true, 
-            _count: {
-              select: {
-                questions: true
-              }
-            }
-          }
-        },
-        exercise: true
-      }
+			include: {
+				quiz: {
+					select: {
+						id: true,
+						_count: {
+							select: {
+								questions: true
+							}
+						}
+					}
+				},
+				exercise: true
+			}
 		});
+
+		return {
+			lessons: lessons,
+      course: course
+		};
 	}
 }
 
