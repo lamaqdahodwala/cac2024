@@ -32,4 +32,4 @@
 </script>
 
 
-<Playground categories={getCategories(data.exerciseParams)}/>
+<Playground categories={getCategories(data.exerciseParams)} instructions={data.exerciseParams.instructions} passRequirement={data.exerciseParams.passRequirement}/>
