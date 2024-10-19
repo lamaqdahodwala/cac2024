@@ -1,29 +1,33 @@
 <script lang="ts">
-	import { invalidate, invalidateAll } from "$app/navigation";
+	import { invalidate, invalidateAll } from '$app/navigation';
 
 	let isCreatingCourse = false;
 	let courseName: string;
-  let description: string = ""
+	let description: string = '';
 
-  async function createCourse(){
-    await fetch("/api/createCourse", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        courseTitle: courseName,
-        description: description
-      })
-    })
+	async function createCourse() {
+		await fetch('/api/createCourse', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				courseTitle: courseName,
+				description: description
+			})
+		});
 
-    invalidateAll()
-  }
+		invalidateAll();
+	}
 </script>
 
-<button class="button is-outline my-2" on:click={() => (isCreatingCourse = !isCreatingCourse)}
-	>Create Course</button
->
+<button class="button is-outline my-2" on:click={() => (isCreatingCourse = !isCreatingCourse)}>
+  {#if isCreatingCourse}
+    {"Cancel"}
+  {:else} 
+    {"Create Course"}
+  {/if}
+</button>
 <div class="container">
 	{#if isCreatingCourse}
 		<form on:submit|preventDefault={createCourse}>
@@ -32,12 +36,12 @@
 				<input type="text" class="input" bind:value={courseName} />
 			</label>
 
-      <label for="">
-        Description (optional)
-        <input type="text" class="input" bind:value={description}>
-      </label>
+			<label for="">
+				Description (optional)
+				<input type="text" class="input" bind:value={description} />
+			</label>
 
-      <button class="button is-primary">Create</button>
+			<button class="button is-primary">Create</button>
 		</form>
 	{/if}
 </div>
