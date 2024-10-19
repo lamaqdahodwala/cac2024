@@ -3,7 +3,7 @@
 	import { javascriptGenerator } from 'blockly/javascript';
 	let workspace: Blockly.Workspace 
 	import { onMount } from 'svelte';
-	import { ToolboxCreator } from '$lib/abstract/BlocklyInterface';
+	import { ToolboxCreator, type CustomCategory } from '$lib/abstract/BlocklyInterface';
 	import { LoadingDataCategory } from '$lib/blocks/LoadingData';
 	import { DataTransformationCategory } from '$lib/blocks/DataTransformation';
 	import { DataCleaningCategory } from '$lib/blocks/DataCleaning';
@@ -18,7 +18,8 @@
 	import Log from './Log.svelte';
   import {MutatedCategory} from '$lib/blocks/Mutated'
 
-	let toolbox = new ToolboxCreator([LoadingDataCategory, DataCleaningCategory, DataTransformationCategory, OutputCategory, LayersCategory, ModelTrainingCategory, MutatedCategory, EventsCategory, OptimizerCategory]);
+  export let categories: CustomCategory[]
+	let toolbox = new ToolboxCreator(categories);
 
 	onMount(() => {
 		workspace = Blockly.inject('test', {
