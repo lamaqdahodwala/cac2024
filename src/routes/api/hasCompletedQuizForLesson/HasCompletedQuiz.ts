@@ -15,18 +15,22 @@ export class HasCompletedQuiz implements RouteImplementation {
 				}
 			})
 			.quizzesPassed({
-				select: {
-					lessonId: true
+				where: {
+					lessonId: props.lessonId
 				}
 			});
 
-		let lessonHasQuiz = await props.prisma.lesson
-			.findUnique({
-				where: {
-					id: props.lessonId
-				}
-			})
-			.quiz();
+    let lesson = await props.prisma.lesson.findUnique({
+      where: {
+        id: props.lessonId
+      }, 
+
+      include: {
+        quiz: true
+      }
+    })
+
+    let lessonHasQuiz = lesson?.quiz
 
 		if (!lessonHasQuiz) {
 			return {
@@ -40,9 +44,11 @@ export class HasCompletedQuiz implements RouteImplementation {
 			};
 		}
 
-		return {
-			hasCompletedQuiz: passedQuizzes.includes({ lessonId: props.lessonId })
+		let return_object =  {
+			hasCompletedQuiz: true
 		};
+
+    return return_object
 	}
 }
 
