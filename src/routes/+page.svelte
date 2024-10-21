@@ -51,6 +51,7 @@ const communityPosts = [
 
 <svelte:head>
   <title>BrainBlox: Fun AI Learning for Young Minds</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto:wght@300&display=swap" rel="stylesheet">
 </svelte:head>
 
 <main class="dashboard-wrapper">
@@ -394,19 +395,28 @@ const communityPosts = [
     animation: float 6s ease-in-out infinite;
   }
   .title {
-    font-weight: 700;
-    letter-spacing: -1px;
-  }
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+}
 
-  .subtitle {
-    font-weight: 300;
-  }
+.subtitle {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
 
   .icon-text {
     display: flex;
     align-items: center;
   }
 
+  .buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
   .icon-text .icon {
     margin-right: 0.5rem;
   }
