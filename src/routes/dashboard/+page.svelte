@@ -237,7 +237,7 @@
 					id: 1,
 					title: 'Introduction to Machine Learning',
 					progress: 65,
-					lastAccessed: '2023-07-03',
+					lastAccessed: '2024-10-24',
 					imageUrl:
 						'https://www.iberdrola.com/documents/20125/40921/machine_learning_746x419.jpg/15ff7571-4cfc-d9f0-5ef4-9c2e9306ad88?t=1627968463400'
 				},
@@ -245,7 +245,7 @@
 					id: 2,
 					title: 'Neural Networks Fundamentals',
 					progress: 30,
-					lastAccessed: '2023-07-01',
+					lastAccessed: '2024-10-23',
 					imageUrl:
 						'https://media.geeksforgeeks.org/wp-content/cdn-uploads/20230602113310/Neural-Networks-Architecture.png'
 				},
@@ -253,7 +253,7 @@
 					id: 3,
 					title: 'Deep Learning with PyTorch',
 					progress: 85,
-					lastAccessed: '2023-07-04',
+					lastAccessed: '2024-10-23',
 					imageUrl: 'https://miro.medium.com/v2/resize:fit:691/1*TmPTEZkQ4kBiQqZlwVH0MQ.png'
 				}
 			];
@@ -1431,7 +1431,7 @@
 	}
 
 	.subtitle {
-		font-weight: 400 !important;
+		font-weight: 500 !important;
 	}
 
 	.button {
@@ -1475,18 +1475,19 @@
 	ul,
 	ol {
 		line-height: 1.5;
+		font-weight: 500;
 	}
 
 	/* Ensure consistent font weights for form elements */
 	input,
 	select,
 	textarea {
-		font-weight: 400 !important;
+		font-weight: 500 !important;
 	}
 
 	/* Prevent bold text in placeholders */
 	::placeholder {
-		font-weight: 400 !important;
+		font-weight: 500 !important;
 	}
 
 	/* Ensure consistent font weight in all browsers */

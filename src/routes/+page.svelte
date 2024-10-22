@@ -57,36 +57,41 @@ const communityPosts = [
 <main class="dashboard-wrapper">
   {#if showHero}
   <section class="hero is-fullheight-with-navbar">
-      <div class="hero-background">
-        <div class="floating-element" style="--i:1;"></div>
-        <div class="floating-element" style="--i:2;"></div>
-        <div class="floating-element" style="--i:3;"></div>
-      </div>
-      <div class="hero-body">
-        <div class="content-container">
-          <h1 class="title is-1 glitch" data-text="Welcome to BrainBlox">Welcome to BrainBlox</h1>
-          <h2 class="subtitle typewriter">Discover the Magic of Artificial Intelligence</h2>
-          <div class="feature-highlights">
-            <div class="feature-item">
-              <i class="fas fa-brain"></i>
-              <span>Learn AI Concepts</span>
-            </div>
-            <div class="feature-item">
-              <i class="fas fa-code"></i>
-              <span>Build with Blocks</span>
-            </div>
-            <div class="feature-item">
-              <i class="fas fa-robot"></i>
-              <span>Create AI Projects</span>
-            </div>
+    <div class="hero-background">
+      <div class="floating-element" style="--i:1;"></div>
+      <div class="floating-element" style="--i:2;"></div>
+      <div class="floating-element" style="--i:3;"></div>
+      <div class="decorative-circle" style="--i:4;"></div>
+      <div class="decorative-triangle" style="--i:5;"></div>
+      <div class="decorative-star" style="--i:6;"></div>
+      <div class="decorative-square" style="--i:7;"></div>
+      <div class="decorative-wave" style="--i:8;"></div>
+      <!-- New decorative elements -->
+      <div class="decorative-hexagon" style="--i:9;"></div>
+      <div class="decorative-diamond" style="--i:10;"></div>
+    </div>
+    <div class="hero-body">
+      <div class="content-container">
+        <h1 class="title is-1">Welcome to BrainBlox</h1>
+        <h2 class="subtitle typewriter">Discover the Magic of Artificial Intelligence</h2>
+        <div class="feature-highlights">
+          <div class="feature-item">
+            <span class="feature-text">Learn AI Concepts</span>
           </div>
-          <div class="buttons">
-            <a href="#learn-more" class="button is-primary is-large pulse-animation">Start Your AI Adventure</a>
-            <a href="#how-it-works" class="button is-info is-large">How It Works</a>
+          <div class="feature-item">
+            <span class="feature-text">Build with Blocks</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-text">Create AI Projects</span>
           </div>
         </div>
+        <div class="buttons">
+          <a href="/signin" class="button is-primary is-large pulse-animation">Start Your Adventure</a>
+          <a href="#how-it-works" class="button is-info is-large">How It Works</a>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
   {/if}
 
   {#if showFeatures}
@@ -149,7 +154,7 @@ const communityPosts = [
           </div>
         </div>
         <div class="has-text-centered mt-6">
-          <a href="#playground" class="button is-large is-info">Try the AI Playground</a>
+          <a href="/playground" class="button is-large is-info">Try the AI Playground</a>
         </div>
       </div>
     </section>
@@ -194,7 +199,7 @@ const communityPosts = [
         <div class="cta-container">
           <h2 class="title is-2">Ready to Become an AI Whiz?</h2>
           <p class="subtitle">Join thousands of young learners and start your exciting AI journey today!</p>
-          <a href="#sign-up" class="button is-primary is-large cta-button">Get Started for Free</a>
+          <a href="/signin" class="button is-primary is-large cta-button">Get Started for Free</a>
         </div>
       </div>
     </section>
@@ -232,10 +237,11 @@ const communityPosts = [
     align-items: center;
     justify-content: center;
     text-align: center;
+    padding: 5rem 1.5rem; /* Added padding for better spacing */
   }
 
   .content-container {
-    max-width: 800px;
+    max-width: 900px; /* Increased max-width for more content space */
     margin: 0 auto;
     width: 100%;
   }
@@ -711,6 +717,7 @@ html {
   white-space: nowrap;
   margin: 0 auto;
   letter-spacing: .15em;
+  line-height: 4.5;
   animation: 
     typing 3.5s steps(40, end),
     blink-caret .75s step-end infinite;
@@ -729,8 +736,8 @@ html {
 .feature-highlights {
   display: flex;
   justify-content: space-around;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-top: 3rem; /* Increased margin for better spacing */
+  margin-bottom: 3rem;
 }
 
 .feature-item {
@@ -741,12 +748,196 @@ html {
 }
 
 .feature-item i {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+  font-size: 3rem;
+  margin-bottom: 1rem; 
+}
+
+.feature-text {
+  font-size: 1.5rem; 
+  font-weight: bold; 
+  line-height: 3px;
+}
+
+.title.is-1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  color: white; /* Ensured text color is white */
+}
+
+.subtitle {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: white; /* Ensured text color is white */
 }
 
 .parallax-bg {
   transform: translateZ(-1px) scale(2);
   z-index: -1;
 }
+
+.decorative-circle {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  animation: float 20s infinite;
+  top: 20%;
+  left: 10%;
+}
+
+.decorative-triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 100px solid rgba(255, 255, 255, 0.2);
+  animation: float 25s infinite;
+  top: 60%;
+  right: 15%;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-1000px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.typewriter {
+  overflow: hidden;
+  border-right: .15em solid #20b2aa;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: .15em;
+  animation: 
+    typing 3.5s steps(40, end),
+    blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #20b2aa; }
+}
+
+/* New decorative elements */
+.decorative-star {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: url('/images/star.png') no-repeat center center;
+  background-size: contain;
+  animation: float 18s infinite;
+  top: 5%;
+  left: 5%;
+}
+
+.decorative-square {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.3);
+  animation: float 22s infinite;
+  top: 10%;
+  right: 10%;
+}
+
+.decorative-wave {
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  background: url('/images/wave.png') no-repeat center center;
+  background-size: contain;
+  animation: float 20s infinite;
+  bottom: 5%;
+  left: 15%;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-1000px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.typewriter {
+  overflow: hidden;
+  border-right: .15em solid #20b2aa;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: .15em;
+  animation: 
+    typing 3.5s steps(40, end),
+    blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #20b2aa; }
+}
+
+.additional-content {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  text-align: right;
+  color: white;
+}
+
+.additional-text {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.additional-image {
+  max-width: 150px;
+  height: auto;
+}
+
+.decorative-hexagon {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: url('/images/hexagon.png') no-repeat center center;
+  background-size: contain;
+  animation: float 20s infinite;
+  top: 15%;
+  left: 5%;
+}
+
+.decorative-diamond {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: url('/images/diamond.png') no-repeat center center;
+  background-size: contain;
+  animation: float 22s infinite;
+  top: 25%;
+  right: 10%;
+}
 </style>
+
+
+

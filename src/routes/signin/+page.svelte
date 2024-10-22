@@ -4,7 +4,7 @@
     import { spring } from 'svelte/motion';
     import { onMount } from 'svelte';
 
-    let isSignIn = true;
+    let isSignIn = false;
     let email = '';
     let password = '';
     let confirmPassword = '';
@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="left-content">
-            <h1 class="title">Welcome to Brain Blox</h1>
+            <h1 class="title">Welcome to BrainBlox</h1>
             <p class="subtitle">Learn about AI in a fun, interactive way. Train your own AI models, explore AI concepts, and share your projects with friends!</p>
             <ul class="features">
                 <li>Interactive Tutorials</li>
@@ -84,7 +84,7 @@
         </div>
         <div class="auth-container">
             <div class="auth-box" in:slide={{ duration: 500 }} out:slide={{ duration: 500 }}>
-                <h1 class="title has-text-centered">{isSignIn ? 'Welcome Back!' : 'Join the AI Adventure!'}</h1>
+                <h1 class="title has-text-centered">{isSignIn ? 'Welcome Back!' : 'Join the Adventure!'}</h1>
                 <form on:submit|preventDefault={handleSubmit}>
                     <div class="field animated-field">
                         <label for="email" class="label">Email</label>
@@ -264,25 +264,30 @@
         z-index: 2;
     }
     .left .title {
-        font-size: 2.5rem;
+        font-size: 3.2rem;
         color: var(--text-color);
-        margin-bottom: 1rem;
+        margin-bottom: 3.2rem;
         transition: all 0.3s ease;
+        line-height: 60px;
+        font-weight: 650;
     }
     .left .subtitle {
-        font-size: 1.25rem;
+        font-size: 1.4rem;
         color: #7f8c8d;
         margin-bottom: 2rem;
         transition: all 0.3s ease;
+        line-height: 1.5;
+        font-weight: 500;
     }
     .features {
         list-style: none;
         padding: 0;
     }
     .features li {
-        font-size: 1.1rem;
+        font-size: 1.25rem;
         color: #34495e;
         margin-bottom: 0.75rem;
+        font-weight: 500;
         transition: all 0.3s ease;
     }
     .interactive-demo {
