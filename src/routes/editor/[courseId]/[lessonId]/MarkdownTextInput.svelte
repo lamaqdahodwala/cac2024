@@ -54,7 +54,7 @@
 </div>  
 <textarea class="input" bind:value={rawContent} on:input={debounce}></textarea>
 <hr>
-<div>
+<div class="content">
   {@html marked(rawContent)}
 </div>
 
