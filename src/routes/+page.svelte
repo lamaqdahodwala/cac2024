@@ -575,6 +575,8 @@
               <div class="output-preview">
                 <div class="code-blocks">
                   <div class="block">Output</div>
+                </div>
+              </div>
             </div>
             <button class="button is-primary is-fullwidth">Try Image Generation</button>
           </div>
@@ -603,70 +605,18 @@
             <button class="button is-primary is-fullwidth">Build Your Chatbot</button>
           </div>
         </div>
-
-        <div class="playground-card">
-          <div class="playground-header">
-            <span class="playground-icon">👁️</span>
-            <h3 class="title is-4">Computer Vision</h3>
-          </div>
-          <div class="playground-content">
-            <div class="playground-demo">
-              <div class="code-blocks">
-                <div class="block">Load Image</div>
-                <div class="block">Detect Objects</div>
-                <div class="block">Analyze Scene</div>
-              </div>
-              <div class="vision-preview">
-                <div class="upload-zone">
-                  <span class="icon">📷</span>
-                  <span>Drop image or click to upload</span>
-                </div>
-              </div>
-            </div>
-            <button class="button is-primary is-fullwidth">Start Vision Project</button>
-          </div>
-        </div>
-
-        <div class="playground-card">
-          <div class="playground-header">
-            <span class="playground-icon">🎵</span>
-            <h3 class="title is-4">Music Generation</h3>
-          </div>
-          <div class="playground-content">
-            <div class="playground-demo">
-              <div class="code-blocks">
-                <div class="block">Set Genre</div>
-                <div class="block">Compose Melody</div>
-                <div class="block">Add Instruments</div>
-              </div>
-              <div class="music-preview">
-                <div class="music-controls">
-                  <button class="button is-small is-rounded">▶️</button>
-                  <div class="music-wave"></div>
-                  <button class="button is-small is-rounded">⏸️</button>
-                </div>
-              </div>
-            </div>
-            <button class="button is-primary is-fullwidth">Create Music</button>
-          </div>
-        </div>
       </div>
 
       <div class="playground-features mt-6">
         <div class="feature">
           <span class="icon">🔒</span>
           <h4>Safe Environment</h4>
-          <p>Practice AI concepts in a controlled, educational space</p>
+          <p>Practice AI concepts in a controlled space</p>
         </div>
         <div class="feature">
           <span class="icon">💡</span>
           <h4>Real-time Feedback</h4>
-          <p>Get instant results and suggestions as you experiment</p>
-        </div>
-        <div class="feature">
-          <span class="icon">📱</span>
-          <h4>Mobile Friendly</h4>
-          <p>Access the playground from any device, anywhere</p>
+          <p>Get instant results as you experiment</p>
         </div>
       </div>
 
@@ -806,6 +756,8 @@
   :global(html) {
     overflow-y: scroll;
     scrollbar-gutter: stable;
+    overflow-x: hidden;
+    width: 100%;
   }
   
   :global(body) {
@@ -814,6 +766,8 @@
     padding: 0;
     background: #f5f7fa;
     overflow-x: hidden;
+    min-height: 100vh;
+    width: 100%;
   }
 
   .dashboard-wrapper {
@@ -821,6 +775,8 @@
     flex-direction: column;
     min-height: 100vh;
     width: 100%;
+    overflow-x: hidden;
+    position: relative;
   }
 
   .hero {
@@ -828,6 +784,8 @@
     color: white;
     position: relative;
     overflow: hidden;
+    min-height: calc(100vh - var(--navbar-height, 64px));
+    contain: layout;
   }
 
   .hero-body {
@@ -836,12 +794,16 @@
     justify-content: center;
     text-align: center;
     padding: 5rem 1.5rem; /* Added padding for better spacing */
+    position: relative;
+    z-index: 2;
+    min-height: 500px;
   }
 
   .content-container {
     max-width: 900px; /* Increased max-width for more content space */
     margin: 0 auto;
     width: 100%;
+    contain: layout;
   }
 
   .section {
@@ -862,6 +824,8 @@
     gap: 2rem;
     margin-top: 2rem;
     color: black;
+    width: 100%;
+    contain: layout;
   }
 
   .feature-card,
@@ -1364,6 +1328,8 @@ html {
   justify-content: space-around;
   margin-top: 3rem; /* Increased margin for better spacing */
   margin-bottom: 3rem;
+  width: 100%;
+  contain: layout;
 }
 
 .feature-item {
@@ -1371,6 +1337,10 @@ html {
   flex-direction: column;
   align-items: center;
   color: white;
+  flex: 1;
+  margin: 0 1rem;
+  min-width: 200px;
+  text-align: center;
 }
 
 .feature-item i {
@@ -1920,6 +1890,8 @@ html {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     margin: 3rem 0;
+    width: 100%;
+    contain: layout;
   }
 
   .feature-card {
@@ -1929,6 +1901,11 @@ html {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     border-top: 4px solid var(--feature-color);
+    height: 100%;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    contain: layout;
   }
 
   .feature-card:hover {
@@ -2263,6 +2240,8 @@ html {
   gap: 2rem;
   position: relative;
   z-index: 1;
+  width: 100%;
+  contain: layout;
 }
 
 .step-card {
@@ -2272,6 +2251,11 @@ html {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-top: 4px solid var(--card-color);
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  contain: layout;
 }
 
 .step-card:hover {
@@ -2358,6 +2342,8 @@ html {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
+  width: 100%;
+  contain: layout;
 }
 
 .playground-card {
@@ -2366,6 +2352,11 @@ html {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease;
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  contain: layout;
 }
 
 .playground-card:hover {
@@ -2480,6 +2471,8 @@ html {
   gap: 2rem;
   text-align: center;
   margin-top: 3rem;
+  width: 100%;
+  contain: layout;
 }
 
 .feature {
@@ -2585,6 +2578,8 @@ html {
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   padding: 1rem;
+  width: 100%;
+  contain: layout;
 }
 
 .course-card {
@@ -2594,6 +2589,11 @@ html {
   overflow: hidden;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  contain: layout;
 }
 
 .course-card:hover {
@@ -2794,6 +2794,8 @@ html {
     grid-template-columns: 1.2fr 0.8fr; /* Adjusted ratio for better content space */
     gap: 5rem;
     align-items: center;
+    width: 100%;
+    contain: layout;
   }
 
   .banner-text h3 {
@@ -2823,7 +2825,7 @@ html {
     padding: 1rem;
     background: rgba(255, 255, 255, 0.5);
     border-radius: 0.5rem;
-    transition: transform 0.3s ease, background 0.3s ease;
+    transition: transform 0.3s ease;
   }
 
   .banner-features li:hover {
@@ -2903,7 +2905,7 @@ html {
     border-radius: 0.8rem;
     font-weight: bold;
     font-size: 1.2rem;
-    box-shadow: 0 4px 8px rgba(21, 101, 192, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease;
   }
 
