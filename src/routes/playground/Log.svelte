@@ -120,7 +120,7 @@
 	#messages {
 		position: absolute;
 		top: 0px;
-		width: 100%;
+    overflow-y: auto;
 	}
 	#logContainer {
 		position: relative;

@@ -17,6 +17,8 @@
 	import { CodeEvaluationBuilder, FunctionConstructorStrategy } from './CodeEval';
 	import Log from './Log.svelte';
 	import { MutatedCategory } from '$lib/blocks/Mutated';
+  import * as dfd from 'danfojs/dist/danfojs-browser/src'
+  import * as tf from '@tensorflow/tfjs'
 
 	export let categories: CustomCategory[];
 	export let instructions: string | null = null;
@@ -44,11 +46,11 @@
 		let evaluator = new CodeEvaluationBuilder();
 		evaluator.withCode(code);
 		evaluator.withContext({
-			dfd: import('danfojs/dist/danfojs-browser/src'),
+			dfd: dfd, 
 			getFileByName,
 			appendToLog,
 			clearLog,
-			tf: import('@tensorflow/tfjs'),
+			tf: tf,
 			appendErrorToLog
 		});
 		evaluator.wrapCodeAsync();
