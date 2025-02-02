@@ -255,6 +255,7 @@
 <svelte:head>
   <title>BrainBlox: Fun AI Learning for Young Minds</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </svelte:head>
 
 <main class="dashboard-wrapper">
@@ -300,12 +301,12 @@
     <div class="banner-content">
       <div class="banner-grid">
         <div class="banner-text">
-          <h3>Empowering Young Minds with AI</h3>
+          <h3 class="title is-4 mt-4">Empowering Young Minds with AI</h3>
           <p class="banner-description">Our interactive platform makes learning AI concepts fun and engaging for students of all ages.</p>
           <ul class="banner-features">
-            <li><span class="feature-icon">🎯</span> Personalized Learning Paths</li>
-            <li><span class="feature-icon">🏆</span> Achievement System</li>
-            <li><span class="feature-icon">📊</span> Progress Tracking</li>
+            <li><span class="feature-icon" style="background: #1565c0;">🎯</span> Personalized Learning Paths</li>
+            <li><span class="feature-icon" style="background: #1565c0;">🏆</span> Progress Tracking</li>
+            <li><span class="feature-icon" style="background: #1565c0;">👥</span> Community Support</li>
           </ul>
         </div>
         <div class="banner-stats">
@@ -352,7 +353,7 @@
               <ul class="feature-details">
                 {#each feature.details as detail}
                   <li>
-                    <span class="check-icon">✓</span>
+                    <span class="check-icon" style="color: #1565c0;">✓</span>
                     {detail}
                   </li>
                 {/each}
@@ -380,12 +381,12 @@
     <div class="banner-content">
       <div class="banner-grid">
         <div class="banner-text">
-          <h3>Learn at Your Own Pace</h3>
+          <h3 class="title is-4 mt-4">Learn at Your Own Pace</h3>
           <p class="banner-description">From beginner-friendly tutorials to advanced projects, find the perfect learning path for your journey.</p>
           <ul class="banner-features">
-            <li><span class="feature-icon">⚡</span> Adaptive Learning System</li>
-            <li><span class="feature-icon">📚</span> Comprehensive Resources</li>
-            <li><span class="feature-icon">🎮</span> Interactive Exercises</li>
+            <li><span class="feature-icon" style="background: #1565c0;">⚡</span> Adaptive Learning System</li>
+            <li><span class="feature-icon" style="background: #1565c0;">📚</span> Comprehensive Resources</li>
+            <li><span class="feature-icon" style="background: #1565c0;">🎮</span> Interactive Exercises</li>
           </ul>
         </div>
         <div class="banner-illustration">
@@ -538,12 +539,12 @@
     <div class="banner-content">
       <div class="banner-grid">
         <div class="banner-text">
-          <h3>Hands-on Experience</h3>
+          <h3 class="title is-4 mt-4">Hands-on Experience</h3>
           <p class="banner-description">Put your knowledge into practice with our interactive AI playground and real-world projects.</p>
           <ul class="banner-features">
-            <li><span class="feature-icon">🤖</span> AI Model Building</li>
-            <li><span class="feature-icon">🔬</span> Experimentation Tools</li>
-            <li><span class="feature-icon">🎨</span> Creative Projects</li>
+            <li><span class="feature-icon" style="background: #1565c0;">🤖</span> AI Model Building</li>
+            <li><span class="feature-icon" style="background: #1565c0;">🔬</span> Experimentation Tools</li>
+            <li><span class="feature-icon" style="background: #1565c0;">🎨</span> Creative Projects</li>
           </ul>
         </div>
         <div class="banner-tools">
@@ -668,9 +669,9 @@
           <h3>Stay Connected with AI Enthusiasts</h3>
           <p class="banner-description">Join a vibrant community of learners, share your achievements, and collaborate on exciting AI projects together.</p>
           <ul class="banner-features">
-            <li><span class="feature-icon">👥</span> Global Community</li>
-            <li><span class="feature-icon">💬</span> Live Discussions</li>
-            <li><span class="feature-icon">🤝</span> Collaborative Projects</li>
+            <li><span class="feature-icon" style="background: #1565c0;">👥</span> Global Community</li>
+            <li><span class="feature-icon" style="background: #1565c0;">💬</span> Live Discussions</li>
+            <li><span class="feature-icon" style="background: #1565c0;">🤝</span> Collaborative Projects</li>
           </ul>
         </div>
         <div class="banner-community">
@@ -786,8 +787,7 @@
 }
 
 .section {
-  padding: 4rem 0;
-  position: relative;
+  padding: 5rem 5rem;
 }
 
 /* Hero Section */
@@ -824,6 +824,8 @@
   letter-spacing: -1px;
   text-transform: uppercase;
   color: white;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
 }
 
 .subtitle {
@@ -831,7 +833,8 @@
   font-weight: 300;
   letter-spacing: 1px;
   color: inherit;
-  line-height: 1.6;
+  line-height: 4;
+  margin-bottom: 1rem;
 }
 
 .feature-highlights {
@@ -901,7 +904,7 @@
 .info-banner {
   width: 100%;
   background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-  padding: 8rem 0;
+  padding: 4rem 0;
   margin: 0;
   overflow: hidden;
   position: relative;
@@ -948,7 +951,7 @@
   color: #1565c0;
   font-size: 3rem;
   font-weight: 800;
-  margin-bottom: 2rem;
+  margin-bottom: 0.75rem;
   font-family: 'Montserrat', sans-serif;
   line-height: 1.2;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
@@ -957,8 +960,8 @@
 .banner-description {
   color: #2c3e50;
   font-size: 1.6rem;
-  line-height: 1.6;
-  margin-bottom: 3rem;
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
   max-width: 600px;
 }
 
@@ -1243,7 +1246,7 @@
 .feature-description {
   color: #606f7b;
   margin-bottom: 1.5rem;
-  line-height: 1.6;
+  line-height: 1.4;
 }
 
 .progress-container {
@@ -1285,7 +1288,7 @@
 }
 
 .check-icon {
-  color: var(--feature-color);
+  color: #1565c0;
   margin-right: 0.75rem;
   font-weight: bold;
 }
@@ -1499,14 +1502,14 @@
 }
 
 .button.is-primary {
-  background: #2196F3;
+  background-color: #2196F3;
   color: white;
   border: none;
   transition: background 0.3s ease;
 }
 
 .button.is-primary:hover {
-  background: #1976D2;
+  background-color: #1976D2;
 }
 
 .button.is-light {
@@ -1971,6 +1974,7 @@
   border-right: .15em solid #20b2aa;
   white-space: nowrap;
   margin: 0 auto;
+  line-height: 4;
   letter-spacing: .15em;
   animation: 
     typing 3.5s steps(40, end),
