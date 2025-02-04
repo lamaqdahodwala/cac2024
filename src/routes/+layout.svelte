@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { fade, fly, slide, scale } from 'svelte/transition';
+	import { fade, fly, scale } from 'svelte/transition';
 	import { elasticOut, backOut } from 'svelte/easing';
 	import { page } from '$app/stores';
 	import type { LayoutData } from './$types';
@@ -235,626 +235,664 @@
 
 <svelte:window on:scroll={handleScroll} />
 
-<header
-	class:hidden={!isNavVisible}
-	class:light={isColorThemeLight}
-	class:dark={!isColorThemeLight}
->
-	<div class="progress-container">
-		<div class="progress-bar"></div>
-	</div>
-	<nav>
-		<div class="logo" in:fly={{ y: -50, duration: 500, delay: 200 }}>
-			<a href="/" aria-label="Home">
-				<svg width="40" height="40" viewBox="0 0 100 100">
-					<circle cx="50" cy="50" r="45" fill="#4CAF50" />
-					<text x="50" y="65" font-size="50" text-anchor="middle" fill="white">B</text>
-				</svg>
-				<span>BrainBlox</span>
-			</a>
-		</div>
-		<div class="nav-links">
-			{#each navItems as item}
-				<!-- svelte-ignore a11y-no-static-element-interactions -->
-				<div
-					class="nav-item"
-					class:active={$page.url.pathname.startsWith(item.href)}
-					on:mouseenter={() => (activeSection = item.name)}
-					on:mouseleave={() => (activeSection = null)}
-				>
-					{#if item.name === 'Courses' || item.name === 'About'}
-						<span class="nav-link">
-							<span class="icon">{item.icon}</span>
-							<span class="text">{item.name}</span>
-						</span>
-					{:else}
-						<a href={item.href} class="nav-link">
-							<span class="icon">{item.icon}</span>
-							<span class="text">{item.name}</span>
-						</a>
-					{/if}
-					{#if item.children && activeSection === item.name}
-						<div
-							class="submenu"
-							in:scale={{ duration: 200, start: 0.95 }}
-							out:scale={{ duration: 150, start: 0.95 }}
-						>
-							{#each item.children as child}
-								<a href={child.href} class="submenu-item">
-									<span class="icon">{child.icon}</span>
-									<span class="text">{child.name}</span>
-								</a>
-							{/each}
-						</div>
-					{/if}
-					{#if item.name === 'Courses' && activeSection === item.name}
-						<div
-							class="course-explorer"
-							in:scale={{ duration: 200, start: 0.95, easing: backOut }}
-							out:scale={{ duration: 150, start: 0.95 }}
-						>
-							<div class="categories">
-								{#each categories as category}
-									<div
-										class="category-item"
-										on:mouseenter={() => handleCategoryHover(category.name)}
-										class:active={activeCategory === category.name}
-										style="--category-color: {category.color}"
-									>
-										<span class="category-icon">{category.name[0]}</span>
-										<span class="category-name">{category.name}</span>
-									</div>
-								{/each}
-							</div>
-							<div class="courses">
-								{#if activeCategory}
-									<div class="courses-grid">
-										{#each categories.find((cat) => cat.name === activeCategory)?.courses || [] as course (course.name)}
-											<a
-												href={course.href}
-												class="course"
-												style="--course-color: {course.color}"
-												on:mouseenter={() => handleCourseHover(course.name)}
-												on:mouseleave={handleCourseLeave}
-											>
-												<span class="course-icon">{course.icon}</span>
-												<span class="course-name">{course.name}</span>
-												{#if hoveredCourse === course.name}
-													<span class="course-details">Click to explore</span>
-												{/if}
-											</a>
-										{/each}
-									</div>
-								{:else}
-									<div class="course-placeholder">Hover over a category to see courses</div>
-								{/if}
-							</div>
-						</div>
-					{/if}
-				</div>
-			{/each}
-		</div>
-		<div class="nav-controls">
-			<button class="icon-btn search-btn" on:click={toggleSearch} aria-label="Search">
-				<span class="icon">🔍</span>
-			</button>
-			<button
-				class="icon-btn theme-btn"
-				on:click={toggleColorTheme}
-				aria-label="Toggle color theme"
-			>
-				<span class="icon">{isColorThemeLight ? '🌙' : '☀️'}</span>
-			</button>
-      {#if !data.authState}
-			  <a href="/signin" class="button is-primary is-rounded">Sign Up</a>
-      {:else}
+<div class="app-container">
+  <header class:hidden={!isNavVisible}>
+    <div class="progress-container">
+      <div class="progress-bar"></div>
+    </div>
+    <nav>
+      <div class="logo" in:fly={{ y: -50, duration: 500, delay: 200 }}>
+        <a href="/" aria-label="Home">
+          <svg width="40" height="40" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" fill="#4CAF50" />
+            <text x="50" y="65" font-size="50" text-anchor="middle" fill="white">B</text>
+          </svg>
+          <span>BrainBlox</span>
+        </a>
+      </div>
+      <div class="nav-links">
+        {#each navItems as item}
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <div
+            class="nav-item"
+            class:active={$page.url.pathname.startsWith(item.href)}
+            on:mouseenter={() => (activeSection = item.name)}
+            on:mouseleave={() => (activeSection = null)}
+          >
+            {#if item.name === 'Courses' || item.name === 'About'}
+              <span class="nav-link">
+                <span class="icon">{item.icon}</span>
+                <span class="text">{item.name}</span>
+              </span>
+            {:else}
+              <a href={item.href} class="nav-link">
+                <span class="icon">{item.icon}</span>
+                <span class="text">{item.name}</span>
+              </a>
+            {/if}
+            {#if item.children && activeSection === item.name}
+              <div
+                class="submenu"
+                in:scale={{ duration: 200, start: 0.95 }}
+                out:scale={{ duration: 150, start: 0.95 }}
+              >
+                {#each item.children as child}
+                  <a href={child.href} class="submenu-item">
+                    <span class="icon">{child.icon}</span>
+                    <span class="text">{child.name}</span>
+                  </a>
+                {/each}
+              </div>
+            {/if}
+            {#if item.name === 'Courses' && activeSection === item.name}
+              <div
+                class="course-explorer"
+                in:scale={{ duration: 200, start: 0.95, easing: backOut }}
+                out:scale={{ duration: 150, start: 0.95 }}
+              >
+                <div class="categories">
+                  {#each categories as category}
+                    <div
+                      class="category-item"
+                      on:mouseenter={() => handleCategoryHover(category.name)}
+                      class:active={activeCategory === category.name}
+                      style="--category-color: {category.color}"
+                    >
+                      <span class="category-icon">{category.name[0]}</span>
+                      <span class="category-name">{category.name}</span>
+                    </div>
+                  {/each}
+                </div>
+                <div class="courses">
+                  {#if activeCategory}
+                    <div class="courses-grid">
+                      {#each categories.find((cat) => cat.name === activeCategory)?.courses || [] as course (course.name)}
+                        <a
+                          href={course.href}
+                          class="course"
+                          style="--course-color: {course.color}"
+                          on:mouseenter={() => handleCourseHover(course.name)}
+                          on:mouseleave={handleCourseLeave}
+                        >
+                          <span class="course-icon">{course.icon}</span>
+                          <span class="course-name">{course.name}</span>
+                          {#if hoveredCourse === course.name}
+                            <span class="course-details">Click to explore</span>
+                          {/if}
+                        </a>
+                      {/each}
+                    </div>
+                  {:else}
+                    <div class="course-placeholder">Hover over a category to see courses</div>
+                  {/if}
+                </div>
+              </div>
+            {/if}
+          </div>
+        {/each}
+      </div>
+      <div class="nav-controls">
+        <button class="icon-btn search-btn" on:click={toggleSearch} aria-label="Search">
+          <span class="icon">🔍</span>
+        </button>
+        <button
+          class="icon-btn theme-btn"
+          on:click={toggleColorTheme}
+          aria-label="Toggle color theme"
+        >
+          <span class="icon">{isColorThemeLight ? '🌙' : '☀️'}</span>
+        </button>
+        {#if !data.authState}
+          <a href="/signin" class="button is-primary is-rounded">Sign Up</a>
+        {:else}
 
-        <button class="button is-info is-rounded">{data.authState.user?.email?.substring(0, 8)}</button>
-      {/if}
-		</div>
-	</nav>
-	{#if isSearchOpen}
-		<div class="search-overlay" transition:fade={{ duration: 200 }}>
-			<input
-				type="search"
-				placeholder="Search..."
-				bind:value={searchQuery}
-				on:keydown={(e) => e.key === 'Enter' && handleSearch()}
-			/>
-			<button class="close-search" on:click={toggleSearch}>✕</button>
-		</div>
-	{/if}
-</header>
+          <button class="button is-info is-rounded">{data.authState.user?.email?.substring(0, 8)}</button>
+        {/if}
+      </div>
+    </nav>
+    {#if isSearchOpen}
+      <div class="search-overlay" transition:fade={{ duration: 200 }}>
+        <input
+          type="search"
+          placeholder="Search..."
+          bind:value={searchQuery}
+          on:keydown={(e) => e.key === 'Enter' && handleSearch()}
+        />
+        <button class="close-search" on:click={toggleSearch}>✕</button>
+      </div>
+    {/if}
+  </header>
 
-<main>
-	<slot />
-</main>
+  <main class="main-content">
+    <slot />
+  </main>
+</div>
 
 <style>
-	:root {
-		--primary-color: #4caf50;
-		--secondary-color: #2196f3;
-		--accent-color: #ffc107;
-		--text-color: #333;
-		--background-color: #ffffff;
-		--nav-height: 70px;
-	}
+  :root {
+    --primary-color: #4caf50;
+    --secondary-color: #2196f3;
+    --accent-color: #ffc107;
+    --navbar-height: 64px;
+  }
 
-	.dark-theme {
-		--primary-color: #66bb6a;
-		--secondary-color: #42a5f5;
-		--accent-color: #ffca28;
-		--text-color: #e0e0e0;
-		--background-color: #121212;
-	}
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow-x: hidden;
+  }
 
-	header {
-		top: 0;
-		left: 0;
-		right: 0;
-		z-index: 1000;
-		background-color: var(--background-color);
-		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-		transition: all 0.3s ease;
-	}
+  .main-content {
+    flex: 1;
+    width: 100%;
+    position: relative;
+    contain: layout;
+  }
 
-	header.hidden {
-		transform: translateY(-100%);
-	}
+  :global(html) {
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+  }
 
-	.progress-container {
-		width: 100%;
-		height: 4px;
-		background: #ccc;
-	}
+  :global(body) {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
 
-	.progress-bar {
-		height: 4px;
-		background: var(--primary-color);
-		width: 0%;
-	}
+  :global(*) {
+    box-sizing: border-box;
+  }
 
-	nav {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 0 2rem;
-		height: var(--nav-height);
-	}
+  :root {
+    --primary-color: #4caf50;
+    --secondary-color: #2196f3;
+    --accent-color: #ffc107;
+    --text-color: #333;
+    --background-color: #ffffff;
+    --nav-height: 70px;
+  }
 
-	.logo a {
-		display: flex;
-		align-items: center;
-		text-decoration: none;
-		color: var(--primary-color);
-		font-weight: bold;
-		font-size: 1.5rem;
-	}
+  .dark-theme {
+    --primary-color: #66bb6a;
+    --secondary-color: #42a5f5;
+    --accent-color: #ffca28;
+    --text-color: #e0e0e0;
+    --background-color: #121212;
+  }
 
-	.logo svg {
-		margin-right: 0.5rem;
-	}
+  header {
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: var(--background-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
 
-	.nav-links {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-grow: 1;
-	}
+  header.hidden {
+    transform: translateY(-100%);
+  }
 
-	.nav-link {
-		text-decoration: none;
-		color: var(--text-color);
-		font-weight: 500;
-		font-size: 1rem;
-		padding: 0.5rem 1rem;
-		border-radius: 20px;
-		transition: all 0.3s ease;
-		display: flex;
-		align-items: center;
-		cursor: pointer;
-	}
+  .progress-container {
+    width: 100%;
+    height: 4px;
+    background: #ccc;
+  }
 
-	.nav-item.active .nav-link {
-		background-color: rgba(76, 175, 80, 0.1);
-		color: var(--primary-color);
-	}
+  .progress-bar {
+    height: 4px;
+    background: var(--primary-color);
+    width: 0%;
+  }
 
-	.nav-link:hover {
-		background-color: rgba(76, 175, 80, 0.1);
-		color: var(--primary-color);
-		transform: translateY(-2px);
-	}
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: var(--nav-height);
+  }
 
-	.nav-item {
-		position: relative;
-		margin: 0 0.5rem;
-	}
+  .logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
 
-	.nav-item a {
-		text-decoration: none;
-		color: var(--text-color);
-		font-weight: 500;
-		font-size: 1rem;
-		padding: 0.5rem 1rem;
-		border-radius: 20px;
-		transition: all 0.3s ease;
-		display: flex;
-		align-items: center;
-	}
+  .logo svg {
+    margin-right: 0.5rem;
+  }
 
-	.nav-item.active a {
-		background-color: rgba(76, 175, 80, 0.1);
-		color: var(--primary-color);
-	}
+  .nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+  }
 
-	.nav-item a:hover {
-		background-color: rgba(76, 175, 80, 0.1);
-		color: var(--primary-color);
-		transform: translateY(-2px);
-	}
+  .nav-link {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
 
-	.icon {
-		margin-right: 0.5rem;
-		font-size: 1.2rem;
-	}
+  .nav-item.active .nav-link {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--primary-color);
+  }
 
-	.submenu {
-		position: absolute;
-		top: 100%;
-		left: 50%;
-		transform: translateX(-50%);
-		background-color: var(--background-color);
-		border-radius: 10px;
-		padding: 1rem;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-		z-index: 10;
-		min-width: 200px;
-		display: grid;
-		grid-template-columns: repeat(1, 1fr);
-		gap: 0.5rem;
-	}
+  .nav-link:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+  }
 
-	.submenu-item {
-		display: flex;
-		align-items: center;
-		padding: 0.5rem 1rem;
-		color: var(--text-color);
-		text-decoration: none;
-		transition: all 0.2s ease;
-		border-radius: 8px;
-		white-space: nowrap;
-	}
+  .nav-item {
+    position: relative;
+    margin: 0 0.5rem;
+  }
 
-	.submenu-item:hover {
-		background-color: rgba(76, 175, 80, 0.1);
-		color: var(--primary-color);
-		transform: translateX(5px);
-	}
+  .nav-item a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
 
-	.nav-controls {
-		display: flex;
-		align-items: center;
-	}
+  .nav-item.active a {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--primary-color);
+  }
 
-	.icon-btn {
-		background: none;
-		border: none;
-		cursor: pointer;
-		font-size: 1.2rem;
-		margin: 0 0.5rem;
-		padding: 0.5rem;
-		border-radius: 50%;
-		transition: all 0.3s ease;
-	}
+  .nav-item a:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+  }
 
-	.icon-btn:hover {
-		background-color: rgba(76, 175, 80, 0.1);
-	}
+  .icon {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+  }
 
-	.notifications {
-		position: relative;
-	}
+  .submenu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--background-color);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    min-width: 200px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 0.5rem;
+  }
 
-	.notification-badge {
-		position: absolute;
-		top: -5px;
-		right: -5px;
-		background-color: #ffc107;
-		color: var(--text-color);
-		font-size: 0.7rem;
-		padding: 2px 5px;
-		border-radius: 50%;
-	}
+  .submenu-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
 
-	.btn {
-		text-decoration: none;
-		padding: 0.5rem 1rem;
-		border-radius: 20px;
-		font-weight: bold;
-		transition: all 0.3s ease;
-		white-space: nowrap;
-	}
+  .submenu-item:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--primary-color);
+    transform: translateX(5px);
+  }
 
-	.btn-primary {
-		background-color: var(--primary-color);
-		color: white;
-	}
+  .nav-controls {
+    display: flex;
+    align-items: center;
+  }
 
-	.btn-primary:hover {
-		background-color: #45a049;
-		transform: translateY(-2px);
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	}
+  .icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin: 0 0.5rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
 
-	.search-overlay {
-		position: absolute;
-		top: 100%;
-		left: 0;
-		right: 0;
-		background-color: var(--background-color);
-		padding: 1rem;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	}
+  .icon-btn:hover {
+    background-color: rgba(76, 175, 80, 0.1);
+  }
 
-	.search-overlay input {
-		width: 100%;
-		max-width: 600px;
-		padding: 0.5rem 1rem;
-		font-size: 1rem;
-		border: none;
-		border-radius: 20px;
-		background-color: rgba(76, 175, 80, 0.1);
-	}
+  .notifications {
+    position: relative;
+  }
 
-	.close-search {
-		background: none;
-		border: none;
-		font-size: 1.5rem;
-		cursor: pointer;
-		margin-left: 1rem;
-	}
+  .notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ffc107;
+    color: var(--text-color);
+    font-size: 0.7rem;
+    padding: 2px 5px;
+    border-radius: 50%;
+  }
 
-	.course-explorer {
-		position: absolute;
-		top: 100%;
-		left: 50%;
-		transform: translateX(-50%);
-		background-color: var(--background-color);
-		border-radius: 15px;
-		padding: 1.5rem;
-		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-		z-index: 10;
-		width: 800px;
-		display: flex;
-		justify-content: space-between;
-		overflow: hidden;
-	}
+  .btn {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
 
-	.categories {
-		width: 30%;
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
+  .btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+  }
 
-	.category-item {
-		display: flex;
-		align-items: center;
-		padding: 0.75rem 1rem;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		border-radius: 10px;
-		background-color: rgba(var(--category-color), 0.1);
-	}
+  .btn-primary:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
-	.category-item:hover,
-	.category-item.active {
-		background-color: var(--category-color);
-		color: white;
-		transform: translateX(5px);
-	}
+  .search-overlay {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--background-color);
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
-	.category-icon {
-		width: 30px;
-		height: 30px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background-color: rgba(255, 255, 255, 0.2);
-		border-radius: 50%;
-		margin-right: 0.75rem;
-		font-weight: bold;
-	}
+  .search-overlay input {
+    width: 100%;
+    max-width: 600px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 20px;
+    background-color: rgba(76, 175, 80, 0.1);
+  }
 
-	.category-name {
-		font-weight: 500;
-	}
+  .close-search {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 1rem;
+  }
 
-	.courses {
-		width: 65%;
-		display: flex;
-		flex-direction: column;
-	}
+  .course-explorer {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--background-color);
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    width: 800px;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+  }
 
-	.courses-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-		gap: 0.75rem;
-	}
+  .categories {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
 
-	.course {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		padding: 0.75rem;
-		color: var(--text-color);
-		text-decoration: none;
-		transition: all 0.3s ease;
-		border-radius: 10px;
-		background-color: rgba(var(--course-color), 0.1);
-		text-align: center;
-		position: relative;
-		overflow: hidden;
-		height: 100px;
-	}
+  .category-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    background-color: rgba(var(--category-color), 0.1);
+  }
 
-	.course:hover {
-		background-color: rgba(var(--course-color), 0.3);
-		color: var(--text-color);
-		transform: translateY(-3px);
-		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-	}
+  .category-item:hover,
+  .category-item.active {
+    background-color: var(--category-color);
+    color: white;
+    transform: translateX(5px);
+  }
 
-	.course-icon {
-		font-size: 1.8rem;
-		margin-bottom: 0.3rem;
-	}
+  .category-icon {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    font-weight: bold;
+  }
 
-	.course-name {
-		font-weight: 500;
-		font-size: 0.9rem;
-		transition: all 0.3s ease;
-	}
+  .category-name {
+    font-weight: 500;
+  }
 
-	.course-details {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		background-color: rgba(0, 0, 0, 0.7);
-		color: white;
-		padding: 0.3rem;
-		font-size: 0.8rem;
-		transform: translateY(100%);
-		transition: all 0.3s ease;
-	}
+  .courses {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+  }
 
-	.course:hover .course-details {
-		transform: translateY(0);
-	}
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
+  }
 
-	.course-placeholder {
-		color: var(--text-color);
-		opacity: 0.7;
-		text-align: center;
-		padding: 1rem;
-		font-style: italic;
-	}
+  .course {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    background-color: rgba(var(--course-color), 0.1);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    height: 100px;
+  }
 
-	@media (max-width: 900px) {
-		.course-explorer {
-			width: 90vw;
-			flex-direction: column;
-		}
+  .course:hover {
+    background-color: rgba(var(--course-color), 0.3);
+    color: var(--text-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
 
-		.categories {
-			width: 100%;
-			flex-direction: row;
-			overflow-x: auto;
-			padding-bottom: 1rem;
-			margin-bottom: 1rem;
-		}
+  .course-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+  }
 
-		.category-item {
-			flex-shrink: 0;
-		}
+  .course-name {
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
 
-		.courses {
-			width: 100%;
-		}
+  .course-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.3rem;
+    font-size: 0.8rem;
+    transform: translateY(100%);
+    transition: all 0.3s ease;
+  }
 
-		.courses-grid {
-			grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-		}
-	}
+  .course:hover .course-details {
+    transform: translateY(0);
+  }
 
-	nav {
-		justify-content: center;
-	}
+  .course-placeholder {
+    color: var(--text-color);
+    opacity: 0.7;
+    text-align: center;
+    padding: 1rem;
+    font-style: italic;
+  }
 
-	.logo {
-		margin-right: auto;
-	}
+  @media (max-width: 900px) {
+    .course-explorer {
+      width: 90vw;
+      flex-direction: column;
+    }
 
-	.nav-controls {
-		margin-left: auto;
-	}
+    .categories {
+      width: 100%;
+      flex-direction: row;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
 
-	header nav .nav-link {
-		font-weight: 600;
-		font-family:
-			'BlinkMacSystemFont',
-			-apple-system,
-			'Segoe UI',
-			'Roboto',
-			'Oxygen',
-			'Ubuntu',
-			'Cantarell',
-			'Fira Sans',
-			'Droid Sans',
-			'Helvetica Neue',
-			sans-serif;
-		font-size: 16px;
-	}
+    .category-item {
+      flex-shrink: 0;
+    }
 
-	header nav .nav-item a {
-		font-weight: 600;
-		font-family:
-			'BlinkMacSystemFont',
-			-apple-system,
-			'Segoe UI',
-			'Roboto',
-			'Oxygen',
-			'Ubuntu',
-			'Cantarell',
-			'Fira Sans',
-			'Droid Sans',
-			'Helvetica Neue',
-			sans-serif;
-	}
+    .courses {
+      width: 100%;
+    }
 
-	:global(*) {
-		font-family:
-			'BlinkMacSystemFont',
-			-apple-system,
-			'Segoe UI',
-			'Roboto',
-			'Oxygen',
-			'Ubuntu',
-			'Cantarell',
-			'Fira Sans',
-			'Droid Sans',
-			'Helvetica Neue',
-			sans-serif !important;
-	}
-	header,
-	nav,
-	.nav-link,
-	.nav-item a,
-	.btn,
-	.submenu-item,
-	.category-name,
-	.course-name {
-		font-family:
-			'BlinkMacSystemFont',
-			-apple-system,
-			'Segoe UI',
-			'Roboto',
-			'Oxygen',
-			'Ubuntu',
-			'Cantarell',
-			'Fira Sans',
-			'Droid Sans',
-			'Helvetica Neue',
-			sans-serif !important;
-		font-size: 16px;
-		font-weight: 600;
-	}
+    .courses-grid {
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+  }
+
+  nav {
+    justify-content: center;
+  }
+
+  .logo {
+    margin-right: auto;
+  }
+
+  .nav-controls {
+    margin-left: auto;
+  }
+
+  header nav .nav-link {
+    font-weight: 600;
+    font-family:
+      'BlinkMacSystemFont',
+      -apple-system,
+      'Segoe UI',
+      'Roboto',
+      'Oxygen',
+      'Ubuntu',
+      'Cantarell',
+      'Fira Sans',
+      'Droid Sans',
+      'Helvetica Neue',
+      sans-serif;
+    font-size: 16px;
+  }
+
+  header nav .nav-item a {
+    font-weight: 600;
+    font-family:
+      'BlinkMacSystemFont',
+      -apple-system,
+      'Segoe UI',
+      'Roboto',
+      'Oxygen',
+      'Ubuntu',
+      'Cantarell',
+      'Fira Sans',
+      'Droid Sans',
+      'Helvetica Neue',
+      sans-serif;
+  }
+
+  :global(*) {
+    font-family:
+      'BlinkMacSystemFont',
+      -apple-system,
+      'Segoe UI',
+      'Roboto',
+      'Oxygen',
+      'Ubuntu',
+      'Cantarell',
+      'Fira Sans',
+      'Droid Sans',
+      'Helvetica Neue',
+      sans-serif !important;
+  }
+  header,
+  nav,
+  .nav-link,
+  .nav-item a,
+  .btn,
+  .submenu-item,
+  .category-name,
+  .course-name {
+    font-family:
+      'BlinkMacSystemFont',
+      -apple-system,
+      'Segoe UI',
+      'Roboto',
+      'Oxygen',
+      'Ubuntu',
+      'Cantarell',
+      'Fira Sans',
+      'Droid Sans',
+      'Helvetica Neue',
+      sans-serif !important;
+    font-size: 16px;
+    font-weight: 600;
+  }
 </style>
