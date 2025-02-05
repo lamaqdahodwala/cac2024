@@ -66,7 +66,7 @@ class TrainModelBlock implements CustomBlock {
 		const variable_model = generator.getVariableName(block.getFieldValue('model'));
 		const variable_dataset = generator.getVariableName(block.getFieldValue('dataset'));
 		const variable_target = generator.getVariableName(block.getFieldValue('target'));
-    const variable_config = generator.valueToCode(block, "config", Order.ATOMIC)
+		const variable_config = generator.valueToCode(block, 'config', Order.ATOMIC);
 
 		const code = `await model.fit(${variable_dataset}, ${variable_target}, ${variable_config})`;
 		return code;
@@ -111,10 +111,10 @@ class TrainingLoopBlock implements CustomBlock {
 		};
 	}
 
-	getCodeForGenerator(block: Block, generator: JavascriptGenerator) {
+	getCodeForGenerator(block: Block, generator: JavascriptGenerator): BlockReturningValue {
 		const epochs = block.getFieldValue('epochs');
 		const batchSize = block.getFieldValue('batch');
-		return `{epochs: ${epochs},batchSize: ${batchSize}};`;
+		return [ `{epochs: ${epochs},batchSize: ${batchSize}}`, Order.NONE];
 	}
 }
 
