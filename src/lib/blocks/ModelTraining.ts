@@ -114,7 +114,51 @@ class TrainingLoopBlock implements CustomBlock {
 	getCodeForGenerator(block: Block, generator: JavascriptGenerator): BlockReturningValue {
 		const epochs = block.getFieldValue('epochs');
 		const batchSize = block.getFieldValue('batch');
-		return [ `{epochs: ${epochs},batchSize: ${batchSize}}`, Order.NONE];
+		return [`{epochs: ${epochs},batchSize: ${batchSize}}`, Order.NONE];
+	}
+}
+
+class CompilationBlock implements CustomBlock {
+	getJSON(): BlocklyJson {
+		return {
+			type: 'compileBlock',
+			tooltip: '',
+			helpUrl: '',
+			message0: 'Compile model %1 %2 with optimizer %3 with loss function %4',
+			args0: [
+				{
+					type: 'field_variable',
+					name: 'model',
+					variable: 'model'
+				},
+				{
+					type: 'input_dummy',
+					name: 'NAME'
+				},
+				{
+					type: 'input_value',
+					name: 'optimizer',
+					align: 'RIGHT'
+				},
+				{
+					type: 'input_value',
+					name: 'loss',
+					align: 'RIGHT'
+				}
+			],
+			previousStatement: null,
+			nextStatement: null,
+			colour: 225
+		};
+	}
+
+	getCodeForGenerator(block: Block, generator: JavascriptGenerator): string | BlockReturningValue {
+		const variable_model = generator.getVariableName(block.getFieldValue('model'));
+		const value_optimizer = generator.valueToCode(block, 'optimizer', Order.ATOMIC);
+		const value_loss = generator.valueToCode(block, 'loss', Order.ATOMIC);
+
+		const code = `${variable_model}.compile({ optimizer: ${value_optimizer}, loss: ${value_loss}})`
+		return code;
 	}
 }
 
