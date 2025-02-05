@@ -4,7 +4,7 @@
 <section class="section playground-section">
   <div class="container">
     <h2 class="title is-2 has-text-centered">AI Playground</h2>
-    <p class="subtitle is-4 has-text-centered mb-6">Experience the Power of AI with Our Interactive Tools</p>
+    <p class="subtitle is-4 has-text-centered mb-6">Experience the Power of AI With Our Interactive Tools</p>
     <div class="playground-grid">
       <div class="playground-card">
         <div class="playground-header">
@@ -81,6 +81,20 @@
   padding: 4rem 2rem;
 }
 
+.playground-section .title {
+  margin-bottom: 1.5rem;
+  font-size: 3rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+
+.playground-section .subtitle {
+  font-size: 1.5rem;
+  color: #4a5568;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+}
+
 .playground-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -114,6 +128,13 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.playground-header .title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  transform: translateY(7.5px);
 }
 
 .playground-icon {

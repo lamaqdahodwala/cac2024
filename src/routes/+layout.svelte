@@ -431,7 +431,7 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    background-color: var(--background-color);
+    background-color: #F5F7FA;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
   }
