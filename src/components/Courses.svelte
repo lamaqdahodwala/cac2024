@@ -27,7 +27,7 @@
         nextStartDate: '2024-02-20'
       },
       { 
-        title: 'Neural Networks Deep Dive',
+        title: 'Neural Networks',
         level: 'Advanced',
         duration: '8 weeks',
         image: 'https://static.vecteezy.com/system/resources/previews/008/163/388/non_2x/neural-network-in-machine-learning-artificial-intelligence-concept-illustration-with-gradient-for-computer-science-poster-or-graphic-element-vector.jpg',
@@ -188,7 +188,7 @@
 }
 
 .course-card .title.is-4 {
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 
@@ -255,6 +255,7 @@
 .card-image {
   position: relative;
   overflow: hidden;
+  margin-bottom: 2rem;
 }
 
 .image-overlay {
@@ -270,6 +271,7 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  border-radius: 16px;
 }
 
 .course-card:hover .image-overlay {
@@ -389,5 +391,10 @@
 
 .button.is-light:hover {
   background: #e0e0e0;
+}
+
+.image-overlay .title.is-5 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
   </style>
