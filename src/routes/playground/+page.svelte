@@ -7,6 +7,7 @@
 	import { OptimizerCategory } from '$lib/blocks/Optimizers';
 	import { OutputCategory } from '$lib/blocks/Output';
 	import { LayersCategory } from '$lib/blocks/Layers';
+	import { MutatedCategory } from '$lib/blocks/Mutated';
 </script>
 
 <Playground
@@ -17,6 +18,7 @@
 		ModelTrainingCategory,
 		OptimizerCategory,
 		OutputCategory,
-		LayersCategory
+		LayersCategory,
+    MutatedCategory
 	]}
 />

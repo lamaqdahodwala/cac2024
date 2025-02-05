@@ -3,20 +3,19 @@ import {
 	type BlocklyJson,
 	type BlockReturningValue,
 	type CustomBlock,
-    type InputMapMutator,
-    type InputMapType
+	type InputMapMutator,
+	type InputMapType
 } from '../abstract/BlocklyInterface';
 import type { Block } from 'blockly';
 import { Order, type JavascriptGenerator } from 'blockly/javascript';
 
-
 class TrainModelBlock implements CustomBlock {
 	getJSON(): BlocklyJson {
 		return {
-			type: 'my_block',
+			type: 'trainModelBlock',
 			tooltip: '',
 			helpUrl: '',
-			message0: 'Train ML model %1 Model variable: %2 %3 on data %4 %5 Target values %6 %7',
+			message0: 'Train ML model %1 Model variable: %2 %3 on data %4 %5 Target values %6 %7 With Config %8',
 			args0: [
 				{
 					type: 'input_dummy',
@@ -49,6 +48,11 @@ class TrainModelBlock implements CustomBlock {
 				{
 					type: 'input_dummy',
 					name: 'targetvalue'
+				},
+				{
+					type: 'input_value',
+					name: 'config',
+					align: 'RIGHT'
 				}
 			],
 			previousStatement: null,
@@ -62,8 +66,7 @@ class TrainModelBlock implements CustomBlock {
 		const variable_dataset = generator.getVariableName(block.getFieldValue('dataset'));
 		const variable_target = generator.getVariableName(block.getFieldValue('target'));
 
-
-		const code = '...';
+		const code = `await model.fit(${variable_dataset}, ${variable_target})`;
 		return code;
 	}
 }
